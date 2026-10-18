@@ -35,11 +35,38 @@ Test set: 550 images (stratified 70/15/15 split, seed 42), never used for any de
 5. **The model ranks severity well but decides poorly:** macro AUC is about 0.94 while macro-F1 is about 0.65, and the remaining errors sit in the rare grades.
 6. **APTOS contains 123 groups of byte-identical images**, 30 of them with conflicting grades. 29 of the 550 test images (5.3%) have a twin in the training set.
 
-## Stage 4: ordinal regression (in progress)
+## Stage 4: ordinal regression
 
-**Hypothesis** ([`dr-repro/stage4_hypothesis.md`](dr-repro/stage4_hypothesis.md), written before any Stage 4 run): replacing the five-class cross-entropy output with ordinal regression raises QWK and reduces large grading errors. Ordinal regression here means one output, trained with mean-squared error against the grade and decoded with cut-offs tuned on the validation set. It should help because the loss then matches the ordered grades and the quadratic penalty inside QWK.
+**Hypothesis** ([`dr-repro/stage4_hypothesis.md`](dr-repro/stage4_hypothesis.md), committed before any Stage 4 run): replacing the five-class cross-entropy output with ordinal regression raises QWK and reduces large grading errors. Ordinal regression here means one output, trained with mean-squared error against the grade and decoded with cut-offs tuned on the validation set. It should help because the loss then matches the ordered grades and the quadratic penalty inside QWK.
 
-[`dr-repro/stage4_ordinal.ipynb`](dr-repro/stage4_ordinal.ipynb) tests this against the `2_aug_lr1e-4` baseline. It uses four arms that separate the loss from the decision rule, and three training seeds on the Stage 3 split, plus one pair of runs on de-duplicated data. It reports paired-bootstrap tests, an automatic check of each pre-registered prediction, referable-DR sensitivity, specificity and AUC, and a failure analysis (duplicates, image quality, Grad-CAM). It takes about 4 hours on a Colab T4, resumes after disconnects, and reuses the Stage 3 image cache on Drive.
+[`dr-repro/stage4_ordinal.ipynb`](dr-repro/stage4_ordinal.ipynb) tests this against the `2_aug_lr1e-4` baseline. Four arms separate the loss from the decision rule. There are three training seeds on the Stage 3 split, plus one pair of runs on de-duplicated data.
+
+**Results** ([`dr-repro/stage4_results.md`](dr-repro/stage4_results.md), raw files in [`dr-repro/results/stage4/`](dr-repro/results/stage4/)); 10-snapshot ensemble, mean ± std over 3 seeds:
+
+| Arm | QWK | Severe recall | PDR recall | Errors ≥ 2 grades | Referable sensitivity / specificity / AUC |
+|---|---|---|---|---|---|
+| A: cross-entropy, majority vote (baseline) | 0.897 ± 0.004 | 0.28 | 0.61 | 21.7 | 0.946 / 0.904 / 0.979 |
+| B: cross-entropy, tuned cut-offs | 0.907 ± 0.007 | 0.44 | 0.57 | 15.7 | 0.982 / 0.879 / 0.979 |
+| C: ordinal, rounding | 0.896 ± 0.001 | 0.47 | 0.17 | 17.0 | 0.900 / 0.948 / 0.984 |
+| **D: ordinal, tuned cut-offs (hypothesis)** | **0.914 ± 0.004** | 0.40 | 0.58 | 16.0 | 0.963 / 0.909 / 0.984 |
+
+- **The main prediction (P1) was not confirmed.** D − A is +0.016 and positive for every seed and for the de-duplicated data, but its paired-bootstrap interval excludes 0 for only 1 of 3 seeds.
+- **Five of eight predictions were confirmed:** fewer far errors (−26%), higher Severe recall (+13 points), slightly lower PDR recall, an unchanged referable AUC, and the same sign on de-duplicated data.
+- **Neither part works alone.** The ordinal loss with plain rounding ties the baseline, because the regression output shrinks towards the mean grade: PDR recall drops to 0.17. The tuned cut-offs undo this shrinkage.
+- **The gain appears only in the ensemble.** As single models, all arms tie at about 0.90.
+- **The first Grad-CAM figure shows a padding artefact** of EfficientNet-B3 at 300 px (the peak is always in the top-left corner), not lesions.
+- **Post-hoc checks, pending a re-run with no training:** a soft-vote baseline to separate "averaging vs. voting" from the loss, and Grad-CAM restricted to the retina.
+
+## Stage 4b: closing the gap to the paper (planned)
+
+[`dr-repro/stage4b_plan.md`](dr-repro/stage4b_plan.md) (written before any run) and [`dr-repro/stage4b_push.ipynb`](dr-repro/stage4b_push.ipynb) try to reach the paper's 0.954 under a strict protocol: ImageNet-pretrained backbones, APTOS data only, the same 550 test images, and the test set locked until the end. It has four parts:
+
+0. **Protocol gap:** how much optimistic evaluation (a model or cut-offs chosen on the test set) would add to the Stage 4 numbers.
+1. **Cheap levers** at 300 px with 2 seeds each: peak lr, stronger augmentation, label cleaning, longer training, Ben Graham pre-processing. Levers are adopted by a rule fixed in advance.
+2. **Resolution and backbone:** B3 at 300 and 384 px, B4 (Noisy Student) at 380 px, EfficientNetV2-S (ImageNet-21k) at 384 px.
+3. **5-fold cross-validation ensemble** of the two best, with cut-offs tuned on 3,112 out-of-fold predictions. The headline row is fixed in advance.
+
+Expected time: about 7–9 hours on a Colab T4, resumable across sessions.
 
 ## Repository layout
 
@@ -52,7 +79,11 @@ Test set: 550 images (stratified 70/15/15 split, seed 42), never used for any de
     ├── colab_dr_grading.ipynb   # the full pipeline and all experiments, with saved outputs
     ├── colab_dr_grading.html    # the same notebook exported for reading without Jupyter
     ├── stage4_hypothesis.md     # M3: hypothesis, predictions, experiment plan, draft Introduction
-    ├── stage4_ordinal.ipynb     # M4/M5: ordinal-regression experiments, ablation, statistics, failure analysis
+    ├── stage4_ordinal.ipynb     # M4/M5: ordinal-regression experiments, ablation, statistics, failure analysis (with outputs)
+    ├── stage4_results.md        # M4/M5: results, prediction check, failure analysis, limitations
+    ├── results/stage4/          # Stage 4 CSVs, cut-offs and figures (from MyDrive/dr-grading/stage4/)
+    ├── stage4b_plan.md          # Stage 4b: plan, selection rules and predictions for closing the gap to 0.954
+    ├── stage4b_push.ipynb       # Stage 4b: protocol gap, lever screening, backbones, 5-fold CV ensemble
     ├── archive/                 # superseded notebooks (iteration-2 run with its training logs; Kaggle iteration-1 version)
     ├── runs/  results/          # Stage 3 local run (224 px): per-run outputs, figures, duplicate audit, leakage re-scoring
     └── reports/                 # LaTeX sources of the Stage 2 + 3 report
