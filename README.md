@@ -35,6 +35,12 @@ Test set: 550 images (stratified 70/15/15 split, seed 42), never used for any de
 5. **The model ranks severity well but decides poorly:** macro AUC is about 0.94 while macro-F1 is about 0.65, and the remaining errors sit in the rare grades.
 6. **APTOS contains 123 groups of byte-identical images**, 30 of them with conflicting grades. 29 of the 550 test images (5.3%) have a twin in the training set.
 
+## Stage 4: ordinal regression (in progress)
+
+**Hypothesis** ([`dr-repro/stage4_hypothesis.md`](dr-repro/stage4_hypothesis.md), written before any Stage 4 run): replacing the five-class cross-entropy output with ordinal regression raises QWK and reduces large grading errors. Ordinal regression here means one output, trained with mean-squared error against the grade and decoded with cut-offs tuned on the validation set. It should help because the loss then matches the ordered grades and the quadratic penalty inside QWK.
+
+[`dr-repro/stage4_ordinal.ipynb`](dr-repro/stage4_ordinal.ipynb) tests this against the `2_aug_lr1e-4` baseline. It uses four arms that separate the loss from the decision rule, and three training seeds on the Stage 3 split, plus one pair of runs on de-duplicated data. It reports paired-bootstrap tests, an automatic check of each pre-registered prediction, referable-DR sensitivity, specificity and AUC, and a failure analysis (duplicates, image quality, Grad-CAM). It takes about 4 hours on a Colab T4, resumes after disconnects, and reuses the Stage 3 image cache on Drive.
+
 ## Repository layout
 
 ```
@@ -45,6 +51,8 @@ Test set: 550 images (stratified 70/15/15 split, seed 42), never used for any de
 └── dr-repro/
     ├── colab_dr_grading.ipynb   # the full pipeline and all experiments, with saved outputs
     ├── colab_dr_grading.html    # the same notebook exported for reading without Jupyter
+    ├── stage4_hypothesis.md     # M3: hypothesis, predictions, experiment plan, draft Introduction
+    ├── stage4_ordinal.ipynb     # M4/M5: ordinal-regression experiments, ablation, statistics, failure analysis
     ├── archive/                 # superseded notebooks (iteration-2 run with its training logs; Kaggle iteration-1 version)
     ├── runs/  results/          # Stage 3 local run (224 px): per-run outputs, figures, duplicate audit, leakage re-scoring
     └── reports/                 # LaTeX sources of the Stage 2 + 3 report
