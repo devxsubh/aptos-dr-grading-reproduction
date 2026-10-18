@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Per-class test metrics, strategy 2 (faithful split).}
+\label{tab:perclass}
+\footnotesize
+\begin{tabular}{llcccc}
+\toprule
+Grade & Model & Prec. & Recall & F1 & $n$ \\
+\midrule
+No DR & best val & 0.96 & 0.96 & 0.96 & 271 \\
+Mild & best val & 0.54 & 0.23 & 0.33 & 56 \\
+Moderate & best val & 0.62 & 0.93 & 0.75 & 150 \\
+Severe & best val & 0.00 & 0.00 & 0.00 & 29 \\
+PDR & best val & 0.39 & 0.30 & 0.34 & 44 \\
+\midrule
+No DR & snapshot vote & 0.95 & 0.97 & 0.96 & 271 \\
+Mild & snapshot vote & 0.52 & 0.29 & 0.37 & 56 \\
+Moderate & snapshot vote & 0.59 & 0.96 & 0.73 & 150 \\
+Severe & snapshot vote & 0.00 & 0.00 & 0.00 & 29 \\
+PDR & snapshot vote & 0.00 & 0.00 & 0.00 & 44 \\
+\bottomrule
+\end{tabular}
+\end{table}

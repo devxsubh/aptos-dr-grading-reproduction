@@ -1,0 +1,86 @@
+\section{Stage 3: Results}
+\label{sec:results}
+
+\IfFileExists{generated/main_table.tex}{\input{generated/main_table.tex}}{}
+\IfFileExists{generated/per_class_table.tex}{\input{generated/per_class_table.tex}}{}
+
+\subsection{Faithful reproduction}
+Table~\ref{tab:main} summarises the test results. With the paper's hyper-parameters, the single model reaches
+QWK~\SIIBestQWK{} (accuracy \SIIBestAcc{}, macro-F1 \SIIBestMF{}), against 0.954 reported in~\cite{chilukoti2024}:
+a gap of roughly 0.13 QWK. In this run the best-validation epoch was the final epoch, so both rows coincide.
+The 10-snapshot majority vote, the paper's central contribution, \emph{lowers} QWK to \SIIVoteQWK{}.
+
+Training was unstable (Fig.~\ref{fig:curves}): validation QWK dropped sharply at epochs 2, 5, 10, 17 and 23
+(to $-0.006$ at epoch~5, when the model predicted almost only one grade) and recovered within one or two epochs,
+while training loss was still 0.61 after 30 epochs. Test QWK of the individual snapshots (epochs 3, 6, \dots, 30)
+was 0.645, 0.757, 0.772, 0.789, 0.754, 0.770, 0.748, 0.761, 0.750 and 0.827: only the last snapshot is strong,
+so a majority vote is dominated by weaker models. Snapshot ensembling assumes comparably good, diverse
+members~\cite{huang2017snapshot}, which an unstable trajectory without a cyclic learning-rate schedule does not provide.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{s2_faithful_curves.pdf}
+\caption{Training loss and validation metrics, strategy~2 with the paper's lr $10^{-3}$.}
+\label{fig:curves}
+\end{figure}
+
+\subsection{Per-grade behaviour}
+QWK and accuracy hide a severe minority-grade failure (Table~\ref{tab:perclass}, Fig.~\ref{fig:cm}).
+No DR (recall 0.96) and Moderate (0.93) are learned well, but \textbf{Severe NPDR is never predicted}
+(recall 0.00 in every snapshot), PDR recall is 0.30 for the single model and 0.00 for the vote, and Mild
+recall is 0.23. Severe cases are split between Moderate (15/29) and PDR (13/29), and 27 of 44 PDR eyes are
+called Moderate. The errors are mostly adjacent-grade, which is why QWK stays near 0.83 even though two of five
+grades are essentially unrecognised; this is exactly the ``accuracy (and even QWK) can be misleading'' gap
+identified in our literature review.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.78\columnwidth]{s2_faithful_best_val_cm.pdf}
+\caption{Test confusion matrix of the reproduced single model (paper hyper-parameters).}
+\label{fig:cm}
+\end{figure}
+
+\IfFileExists{sections/diagnostic.tex}{\input{sections/diagnostic.tex}}{}
+
+\subsection{Reproduction-gap analysis}
+\label{sec:gap}
+\begin{itemize}
+\item \textbf{Duplicate leakage does not explain it.} Excluding the 29 test images with an identical copy in
+training changes QWK from 0.827 to 0.828. The leaked images are actually predicted \emph{worse} (65.5\%
+accuracy), because several copies carry conflicting grades.
+\item \textbf{Optimisation (learning rate).} Full fine-tuning with Adam at $10^{-3}$, gradient clipping at 0.1
+and batch size 8 is unstable (repeated collapses). The paper's own Table~3, where VGG and ResNet models predict
+only class~0 under the same settings, is consistent with this. See the diagnostic run below.
+\item \textbf{Resolution and schedule.} We trained at 224\,px for 30 epochs instead of 300\,px for 60; small
+lesions (microaneurysms) that separate Mild from No DR and Severe from Moderate are less visible at lower
+resolution.
+\item \textbf{Unreported details.} Split, batch size, loss, CLAHE parameters, and whether the reported model is
+the final or the best-validation one are not stated; each can move QWK by a few points on a 550-image test set.
+\item \textbf{Reported numbers.} The internal inconsistencies noted in Sec.~2 (e.g.\ identical precision, recall
+and QWK; macro AUC below 0.5) mean the reported 0.954 may itself not be reliable.
+\end{itemize}
+
+\subsection{Failure cases}
+Fig.~\ref{fig:fail} shows the most confidently wrong test predictions. Most are PDR eyes predicted as Mild or
+Moderate, including one with a large pre-retinal haemorrhage; several are dim, low-contrast or partially cropped
+photographs, where neovascularisation is hard to see at 224\,px.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{s2_faithful_failures.pdf}
+\caption{Ten largest-error test predictions of the reproduced single model (true grade, predicted grade, confidence).}
+\label{fig:fail}
+\end{figure*}
+
+\section{Limitations}
+Single dataset (APTOS~2019) and a single seed; no external validation; 224\,px / 30-epoch protocol instead of
+300\,px / 60 epochs because of local hardware; the EyePACS-pretrained configuration (0.967) was not reproduced.
+The 550-image test set contains only 29 Severe and 44 PDR images, so per-grade recall estimates are noisy.
+This is a reproduction study; no clinical claims are made.
+
+\section{Next Step (Stage 4 preview)}
+The reproduction shows that the paper's pipeline fails on exactly the grades that matter most clinically. Our
+Stage~4 hypothesis will therefore change one variable, the training loss, from cross-entropy to a
+class-balanced, ordinal-aware objective, on top of the stable lr-$10^{-4}$ baseline (QWK 0.887, Severe recall
+0.31), and will be stated with a predicted
+direction and magnitude before any code is run.

@@ -1,0 +1,16 @@
+\subsection{Diagnostic: learning rate $10^{-4}$}
+To test whether optimisation explains the gap, we repeated strategy~2 with a single change, lr
+$10^{-3}\to10^{-4}$ (same split, seed, resolution, epochs and snapshots). Training became stable (no collapses;
+training loss 0.27--0.32 after 20 epochs versus 0.61 at the end of the paper-setting run) and every
+metric improved (Table~\ref{tab:main}): QWK \SIIlowBestQWK{} for the best-validation model (epoch 11) and
+\SIIlowVoteQWK{} for the 10-snapshot vote, accuracy \SIIlowVoteAcc{}, macro-F1 \SIIlowBestMF{}.
+Minority recall (mean of Severe and PDR) rose from \SIIBestMinRec{} to \SIIlowBestMinRec{}: Severe 0.00$\to$0.31
+and PDR 0.30$\to$0.55 for the single model, and predictions off by two or more grades halved (48$\to$24).
+With stable training the snapshots are uniformly good (test QWK 0.834--0.875), and the vote now matches the
+best single model, consistent with the snapshot-ensemble assumption that members are of comparable quality.
+
+This closes about half of the gap to 0.954 (remaining $\approx$0.07 QWK) and indicates that the paper's stated
+learning rate, at least at our batch size, is the main cause of the faithful run's poor result. Severe NPDR
+remains the weakest grade (single-model recall 0.31; 0.10 for the vote), and Mild is still mostly confused with
+Moderate (24/56). Leakage again has no measurable effect (QWK 0.887 with and without the 29 duplicated test
+images). This run is the baseline we will carry into Stage~4.

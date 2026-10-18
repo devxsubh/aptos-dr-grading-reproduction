@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{Reproduced test-set results on APTOS 2019 (550 test images, faithful split). Paper: QWK 0.954 (single model, ImageNet init) and 0.967 (EyePACS init + snapshot ensemble).}
+\label{tab:main}
+\footnotesize
+\begin{tabular}{llcccccc}
+\toprule
+Configuration & Prediction & QWK & Acc. & Macro-F1 & Macro AUC & Minority recall & $|\Delta|\geq2$ errors \\
+\midrule
+Strategy 2, lr $10^{-3}$ (paper) & final epoch & 0.827 & 0.771 & 0.473 & 0.897 & 0.148 & 48 \\
+ & best val QWK & 0.827 & 0.771 & 0.473 & 0.897 & 0.148 & 48 \\
+ & snapshot vote & 0.788 & 0.767 & 0.412 & 0.913 & 0.000 & 50 \\
+ & snapshot mean & 0.791 & 0.769 & 0.416 & 0.913 & 0.000 & 49 \\
+\midrule
+Strategy 2, lr $10^{-4}$ (diagnostic) & final epoch & 0.862 & 0.798 & 0.603 & 0.897 & 0.370 & 30 \\
+ & best val QWK & 0.887 & 0.815 & 0.630 & 0.894 & 0.428 & 24 \\
+ & snapshot vote & 0.887 & 0.822 & 0.613 & 0.930 & 0.347 & 27 \\
+ & snapshot mean & 0.887 & 0.820 & 0.611 & 0.930 & 0.347 & 27 \\
+\bottomrule
+\end{tabular}
+\end{table*}

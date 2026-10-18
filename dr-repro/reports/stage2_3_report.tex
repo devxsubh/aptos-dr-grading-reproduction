@@ -1,0 +1,35 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../results/figures/}}
+\IfFileExists{generated/numbers.tex}{\input{generated/numbers.tex}}{}
+
+\begin{document}
+\title{Reproducing Transfer-Learning and Snapshot-Ensemble Diabetic Retinopathy Grading on APTOS 2019:\\
+Stage 2 (Base Paper \& Reproducibility Check) and Stage 3 (Baseline Reproduction)}
+\author{\IEEEauthorblockN{Shivansh, Divyanshi, Vivek, Shubham}
+\IEEEauthorblockA{CV Research-Reproduction Project --- Diabetic Retinopathy Grading}}
+\maketitle
+
+\begin{abstract}
+We select Chilukoti \emph{et al.} (2024), which reports a quadratic weighted kappa (QWK) of 0.954 on APTOS~2019
+with an ImageNet-initialised EfficientNet-B3 and 0.967 with EyePACS pre-training and snapshot ensembling, as
+our base paper, document its reproducibility, and re-implement it from the text because no code is public.
+Under hardware limits (Apple M2, 8\,GB), we reproduce the method at 224\,px for 30 epochs. With the paper's
+hyper-parameters we obtain test QWK 0.827 (macro-F1 0.473), Severe NPDR is never predicted, and the paper's
+snapshot ensemble lowers QWK to 0.788 because training is unstable. Changing only the learning rate to
+$10^{-4}$ stabilises training and yields QWK 0.887 (macro-F1 0.630, Severe/PDR recall 0.31/0.55), closing about
+half of the gap. We also find 123 groups of byte-identical images in APTOS (30 with conflicting grades),
+whose leakage into the test set has no measurable effect. No clinical claims are made.
+\end{abstract}
+
+\input{sections/stage2.tex}
+\input{sections/protocol.tex}
+\IfFileExists{sections/results.tex}{\input{sections/results.tex}}{}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+\end{document}
