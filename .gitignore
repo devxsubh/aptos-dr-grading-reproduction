@@ -16,5 +16,6 @@ dr-repro/reports/*.log
 dr-repro/reports/*.bbl
 dr-repro/reports/*.blg
 dr-repro/reports/*.out
+dr-repro/reports/*.pdf
 
 dr-repro.zip

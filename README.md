@@ -1,6 +1,6 @@
 # Reproducing Diabetic Retinopathy Grading on APTOS 2019
 
-A research-reproduction study of **Chilukoti et al., "A reliable diabetic retinopathy grading via transfer learning and ensemble learning with quadratic weighted kappa metric"**, *BMC Medical Informatics and Decision Making* 24:37 (2024). The paper fine-tunes an EfficientNet-B3 with CLAHE + Gaussian-blur preprocessing and a snapshot ensemble, reporting **QWK 0.954** on APTOS 2019 (ImageNet init) and **0.967** (EyePACS init + ensemble).
+A research-reproduction study of **Chilukoti et al., "A reliable diabetic retinopathy grading via transfer learning and ensemble learning with quadratic weighted kappa metric"**, *BMC Medical Informatics and Decision Making* 24:37 (2024), [open access](https://doi.org/10.1186/s12911-024-02446-x). The paper fine-tunes an EfficientNet-B3 with CLAHE + Gaussian-blur preprocessing and a snapshot ensemble, reporting **QWK 0.954** on APTOS 2019 (ImageNet init) and **0.967** (EyePACS init + ensemble).
 
 The paper has no public code, so the method was re-implemented from the text. This repository covers Stage 2 (base-paper selection and reproducibility checklist), Stage 3 (baseline reproduction) and the diagnostic iterations that set the Stage 4 baseline.
 
@@ -41,10 +41,7 @@ Test set: 550 images (stratified 70/15/15 split, seed 42), never used for any de
 .
 ├── Stage2_3_Report.pdf                          # Stage 2 + 3 report (IEEE format)
 ├── DR_Grading_Stage2_3_Presentation.{pdf,pptx}  # Stage 2 + 3 slides
-├── base paper.pdf                               # Chilukoti et al. 2024 (CC BY 4.0)
 ├── Diabetic Retinopathy Grading Phase 1 (1).pdf # Stage 1 literature review
-├── CV_Student_Handout_Project.docx.pdf          # Course brief
-├── CV_Sample_Flow.docx.pdf                      # Course worked example
 └── dr-repro/
     ├── colab_dr_grading.ipynb   # the full pipeline and all experiments, with saved outputs
     ├── colab_dr_grading.html    # the same notebook exported for reading without Jupyter
