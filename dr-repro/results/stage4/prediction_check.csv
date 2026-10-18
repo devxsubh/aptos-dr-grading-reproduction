@@ -1,0 +1,9 @@
+id,prediction,observed,confirmed
+P1,"QWK improves by +0.01 to +0.03, significant in >= 2 seeds",ΔQWK +0.016; CI above 0 in 1 of 3 seeds,False
+P2,errors of >= 2 grades fall by >= 25%,21.7 -> 16.0,True
+P3,Severe recall rises by >= 10 points,0.276 -> 0.402,True
+P4,risk: PDR recall falls,0.606 -> 0.576,True
+P5,referable-DR AUC changes by <= 0.01,0.979 -> 0.984,True
+P6,decision rule alone (B - A) gains < half of D - A,B - A +0.009 vs D - A +0.016,False
+P7,ordinal loss helps even with plain rounding (C > A),C - A -0.001,False
+P8,same sign of D - A on de-duplicated data,"main +0.016, de-duplicated +0.010",True
