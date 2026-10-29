@@ -1,0 +1,10 @@
+comparison,delta_qwk,ci_low,ci_high,excludes_0
+"POST-TEST 4d: zero-shot EyePACS weights (OOF cut-offs, TTA) - Stage 4c blend (HEADLINE 4c): b4ns_380 + b3_384 + C_b4ns512",-0.05846813614631774,-0.07775099734326789,-0.03980700540075658,True
+"POST-TEST 4d: zero-shot EyePACS weights (OOF cut-offs, TTA) - CV ensemble b4ns_380 (OOF cut-offs, TTA)",-0.04966552643015132,-0.06954133326312652,-0.030245647382790578,True
+"POST-TEST 4d: zero-shot EyePACS weights (OOF cut-offs, TTA) - 4c arm X_b4ns380_eyepacs (OOF cut-offs, TTA)",-0.0294214946950061,-0.052464057024856,-0.006296438504189547,True
+"POST-TEST 4d arm X2_b4ns380_eyepacs_lowlr, lr 3e-5 (OOF cut-offs, TTA) - Stage 4c blend (HEADLINE 4c): b4ns_380 + b3_384 + C_b4ns512",-0.034654495008004216,-0.05096660377207181,-0.01966068852318246,True
+"POST-TEST 4d arm X2_b4ns380_eyepacs_lowlr, lr 3e-5 (OOF cut-offs, TTA) - CV ensemble b4ns_380 (OOF cut-offs, TTA)",-0.025851885291837795,-0.04268137848604432,-0.010239561152154488,True
+"POST-TEST 4d arm X2_b4ns380_eyepacs_lowlr, lr 3e-5 (OOF cut-offs, TTA) - 4c arm X_b4ns380_eyepacs (OOF cut-offs, TTA)",-0.005607853556692577,-0.01915488128182501,0.006821766684717988,False
+POST-TEST 4d blend with external data: b4ns_380 + b3_384 + C_b4ns512 - Stage 4c blend (HEADLINE 4c): b4ns_380 + b3_384 + C_b4ns512,0.0,0.0,0.0,False
+"POST-TEST 4d blend with external data: b4ns_380 + b3_384 + C_b4ns512 - CV ensemble b4ns_380 (OOF cut-offs, TTA)",0.00880260971616642,0.0030422457958534767,0.015512446902472145,True
+"POST-TEST 4d blend with external data: b4ns_380 + b3_384 + C_b4ns512 - 4c arm X_b4ns380_eyepacs (OOF cut-offs, TTA)",0.02904664145131164,0.013673454808008575,0.04518777147101117,True

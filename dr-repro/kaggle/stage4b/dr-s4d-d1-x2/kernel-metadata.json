@@ -1,0 +1,22 @@
+{
+  "id": "subhammahapatra004/dr-s4d-d1-x2",
+  "title": "dr-s4d-d1-x2",
+  "code_file": "notebook.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "subhammahapatra004/dr-stage4-outputs"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "subhammahapatra004/dr-s4c-c1-ab",
+    "subhammahapatra004/dr-s4c-c1-b2c",
+    "subhammahapatra004/dr-s4c-c1-x"
+  ],
+  "model_sources": []
+}

@@ -1,0 +1,6 @@
+run,lr,fold0_qwk_cf_tta
+"X2 lr 1e-5, no warm-up",1e-05,0.9110216771412495
+"X2 lr 3e-5, no warm-up",3e-05,0.9152131813310437
+"X2 lr 1e-4, no warm-up",0.0001,0.9083836716851919
+"X: lr 3e-4, 1-epoch warm-up",0.0003,0.9135991795692421
+b4ns_380 from ImageNet,0.0003,0.9310907638342758

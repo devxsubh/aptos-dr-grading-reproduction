@@ -1,0 +1,18 @@
+{
+  "id": "subhammahapatra004/dr-s4d-d0-quick",
+  "title": "dr-s4d-d0-quick",
+  "code_file": "notebook.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "subhammahapatra004/dr-s4c-c0-quick"
+  ],
+  "model_sources": []
+}
