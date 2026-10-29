@@ -1,0 +1,108 @@
+# Protocol, not modelling, explains most of the gap
+
+Our strict-protocol out-of-fold (OOF) QWK of about 0.925 already sits at the ceiling that carefully evaluated work reaches without external data. Modelling changes that keep to the strict protocol can plausibly add **+0.003 to +0.010**. Most of the remaining **0.029** gap to Chilukoti et al.'s 0.954 is better explained by the paper's unreported evaluation protocol, by test-sampling noise on a few hundred images, and by choices made on the reporting split. No published k-fold or held-out-test result we found reaches 0.954 on APTOS 2019. The Kaggle winner, with about 88,700 extra EyePACS images and an 8-model ensemble, scored **0.936** on the hidden test set ([Fang et al., NeurIPS 2023](https://proceedings.neurips.cc/paper_files/paper/2023/file/4eb33c53ed5b14ce9028309431f565cc-Paper-Datasets_and_Benchmarks.pdf)). The paper itself gives no APTOS split, test size, model-selection rule or confidence interval, and reports a 5-class accuracy (94.2%) that is 5–9 points above any other high-QWK APTOS paper ([Chilukoti et al. 2024, PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC11323616/)). External fundus data (EyePACS 2015, RETFound) is the one ingredient that separated 0.925 from 0.933 in the 2019 competition. On a random APTOS split it is worth roughly +0.002 to +0.01, which buys robustness rather than closing a 0.03 gap. The evidence supports a small, capped Stage 4c of about 4–8 T4 GPU-hours. It should target ensemble diversity (un-pre-processed images and a non-EfficientNet backbone), not 0.954. After it, unlock the test set once, with an honest expected score of about **0.905–0.945** and under a 5% chance of reaching 0.954.
+
+## Our 0.925 already matches the best strict results in the literature
+
+Under protocols that resemble ours, the published numbers cluster tightly. Fang, Kornblith and Schmidt fine-tuned 19 ImageNet architectures on an 80/20 APTOS split. The best, ConvNeXt-Tiny, scored **0.9297**, and that is already the maximum over a hyperparameter grid scored on the reporting split ([Fang et al., ar5iv](https://ar5iv.arxiv.org/html/2301.04644)). SSiT has the protocol closest to ours: a random 70/15/15 split, about 550 test images, a separate validation set and 5 repeats. Even with self-supervised pre-training on all 88,702 EyePACS images, it reaches **0.930 ± 0.003** ([Huang et al., arXiv 2210.10969](https://arxiv.org/pdf/2210.10969)). nnMobileNet reports 0.934 with 5-fold CV ([Zhu et al., arXiv 2306.01289](https://arxiv.org/pdf/2306.01289)). The 7th-place Kaggle team's repository, trained on APTOS 2019 only, gives 4-fold CV of **0.921–0.923** for SE-ResNeXt50 regression ([BloodAxe README](https://github.com/BloodAxe/Kaggle-2019-Blindness-Detection)).
+
+The top-20 teams that report CV on 2019 train all pre-trained on 2015 EyePACS. They land at **0.933** (4th place, 5-fold) ([Qishen Ha](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107987)) and **0.9346** (17th place) ([Xuan Cao](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107916)). Our 0.925, with ImageNet-family weights and APTOS images only, is therefore about 0.008 below what external data plus a large ensemble achieves on comparable CV.
+
+The only APTOS-train QWKs above 0.954 in the sources come from single random holdouts. One example is the 58th-place team: 0.960–0.971 on a 736-image holdout, from a system that scored only **0.925** on the Kaggle private leaderboard ([Tymchenko et al., arXiv 2003.02261](https://ar5iv.labs.arxiv.org/html/2003.02261)).
+
+The recipe is not what is holding us back. Our design (B3/B4 at 380–384 px, single-output MSE regression, heavy augmentation, TTA, tuned cut-offs) matches the gold-medal recipes almost component for component. No top team credited its rank to architecture, resolution or loss. The 9th-place team said "the type of model is not that important in this competition" ([Psi](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107990)). Across Fang's 19 models, the correlation between ImageNet accuracy and APTOS QWK was **0.06** ([Fang et al., ar5iv](https://ar5iv.arxiv.org/html/2301.04644)). Label noise sets a hard floor. Setting about 30 test labels from their duplicates in train moved the 9th-place leaderboard score by nearly 0.01 ([Psi](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107990)). Our own duplicate audit found 123 identical groups, 30 of them with conflicting grades.
+
+## Protocol effects can plausibly supply 0.02–0.04 of the gap
+
+### The paper's 0.954 cannot be checked
+
+For APTOS, Chilukoti et al. state no split method, no test-set size, no validation procedure, no epoch- or checkpoint-selection rule and no uncertainty estimate. The only three-way split they describe (70/15/15) is for EyePACS. The headline 0.954 appears in Table 6 under "Pretrained Model = None", a label the paper never defines, and the prose never discusses that number ([PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC11323616/)). The paper also says parameters were chosen "that give the best accuracy" without naming the data used for that choice.
+
+The tables also contain inconsistencies. The EyePACS ensemble is 0.867 in Table 3 but 0.901 in the abstract, several ResNets show a QWK of exactly 0, and nnMobileNet is cited at 0.934 in a table but 0.925 in the text ([PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC11323616/)).
+
+The strongest plausibility check is accuracy. Papers reporting QWK of about 0.93 on APTOS report 5-class accuracy of 85–89%: MIL-VT 85.5%, RadFuse 87.07%, nnMobileNet 89.1% ([nnMobileNet](https://arxiv.org/pdf/2306.01289); [RadFuse, arXiv 2504.15883](https://arxiv.org/pdf/2504.15883)). Chilukoti reports **94.2% accuracy at QWK 0.954**. A leap that large in accuracy points to a different evaluation set or selection procedure, not a modestly better model. This is an inference, but it is the most direct test available without the authors' code.
+
+### What our own outputs say about each protocol lever
+
+Re-scoring the saved Stage 4 outputs gives estimates for each lever. The analysis is a bootstrap over the arm-D runs (`stage4_runs/mse_s4*/outputs.npz`, script `/private/tmp/claude-501/-Users-subhammahapatra-Downloads-dr-grading-reproduction/ca81f130-82a7-4675-aff6-3e142e324b4e/scratchpad/scripts/opt.py`). These are project measurements, not literature values.
+
+| Protocol effect | Estimated contribution to a reported QWK | Basis |
+|---|---|---|
+| Cut-offs tuned on the test set | **+0.005 to +0.011** | 3 seeds, Stage 4 arm D |
+| Best of 10 snapshots chosen on the test set | **+0.003 to +0.015** | same |
+| Both together | **up to +0.023** | same; best-of-60-epochs not measured, so this is a lower bound |
+| Test-sampling noise at n ≈ 550 | **±0.02** (95% half-width) | bootstrap, e.g. 0.909 [0.887, 0.928] |
+| Validation vs test split difficulty | validation 0.01–0.017 above test | same runs |
+| Exact-duplicate leakage | **< 0.001** | Stage 2: 0.8275 on 550 vs 0.8284 on 521 non-leaked (`dr-repro/results/leakage_s2_faithful.json`) |
+
+Two consequences follow. First, duplicate leakage, the most obvious suspect, contributes almost nothing. Many leaked twins carry conflicting grades, so memorising them does not raise QWK reliably. Second, selection on the reporting split is common in this literature. Fang et al. report the grid maximum on their reporting split ([NeurIPS 2023](https://proceedings.neurips.cc/paper_files/paper/2023/file/4eb33c53ed5b14ce9028309431f565cc-Paper-Datasets_and_Benchmarks.pdf)). Chaturvedi et al. select on and report the same 550 images ([arXiv 2004.06334](https://arxiv.org/pdf/2004.06334)). Majumder and Kehtarnavaz save "the model with the highest validation accuracy" and report on that validation set ([arXiv 2103.04207](https://arxiv.org/pdf/2103.04207)). Selection on the reporting split, plus a favourable draw of a single split, can together add **0.02–0.04**. That covers most or all of the gap.
+
+This is a plausibility argument, not a measured decomposition. We cannot rule out that the authors used a genuinely clean protocol and got a lucky split. Even so, their own EyePACS-pre-trained row (0.956) beats the "None" row by only 0.002. That is the size of effect we would expect if external data is not the driver and the split is.
+
+The wider medical-imaging literature makes the same point. Across Kaggle medical challenges, evaluation noise often exceeds the gap between winners ([Varoquaux & Cheplygina, npj Digit Med 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9005663/)). A public-data reproduction of Gulshan et al.'s DR model lost 0.04–0.14 AUC ([Voets et al., arXiv 1803.04337](https://arxiv.org/pdf/1803.04337)).
+
+**Our working split of the 0.029 gap:** roughly **0.005–0.010** is addressable by modelling under the strict protocol. That figure is the distance to the 0.930–0.935 that external data and large ensembles reach. The remaining **0.02–0.025** is best attributed to protocol and sampling.
+
+## Strict-protocol levers are worth a few thousandths each
+
+The 2019 competition evidence points to a small set of untested strict-protocol changes, and none of them is a +0.03 lever. Fang et al.'s often-quoted "+0.03 from stronger augmentation" was measured against a weakly augmented ResNet-50 ([ar5iv](https://ar5iv.arxiv.org/html/2301.04644)). We already banked that gain when Stage 4b adopted strong augmentation.
+
+Model diversity is where the remaining room lies. Our two members correlate at 0.984, so the observed blend gain of about +0.001 is what the competition reports predict. The teams that report real ensemble gains (+0.003 at 1st place, +0.003–0.004 at 4th) mixed architecture families or pre-processing variants. The winner noted that "Inceptions and ResNets usually blend well" ([Guanshuo Xu](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/108065)). The 4th-place team gained from 0.932 to 0.933 on the private leaderboard by swapping in two Ben's-pre-processed models ([Qishen Ha](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107987)).
+
+| Lever (strict protocol unless noted) | Evidence | Expected Δ OOF QWK | T4 cost, 5 folds × 20 epochs | External fundus data? |
+|---|---|---|---|---|
+| **Raw circle-crop images instead of Ben Graham** (B4-NS 380) | 4th place: raw ~0.933 vs Ben's ~0.927 CV; 2nd, 7th and 58th found Ben's neutral or harmful ([4th](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107987), [7th](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/108058)) | 0 to +0.006 alone; +0.002 to +0.004 as a blend member | ~1.4 h (50 s/epoch measured) | No |
+| **Non-EfficientNet member**: SE-ResNeXt50 at 512 or ConvNeXt-Tiny/Small at 448–512, with GeM pooling and SmoothL1 | Winner used GeM + SmoothL1 on Inception/SE-ResNeXt; SE-ResNeXt50 512 px CV 0.9231 ([1st](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/108065), [BloodAxe](https://github.com/BloodAxe/Kaggle-2019-Blindness-Detection)); ConvNeXt-Tiny best of 19 ([Fang](https://ar5iv.arxiv.org/html/2301.04644)) | +0.002 to +0.005 (blend) | ~1.7 h (ConvNeXt-T) to ~2.2 h (SE-ResNeXt50); extrapolated | No |
+| **Auxiliary classification / cumulative-link head** alongside MSE | CLM beat CE by +0.084 at 128 px on EyePACS, but with no MSE baseline ([Vargas et al.](https://ar5iv.labs.arxiv.org/html/1905.13392)); 5th place used multi-loss ([Gary](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107960)) | 0 to +0.003, mainly diversity | ~free if added to another arm | No |
+| **512 px** for B4-NS | Sahlsten: macro-AUC +0.032 from 299 to 512 on 41k images ([PMC6656880](https://pmc.ncbi.nlm.nih.gov/articles/PMC6656880/)); 1st place found little gain past 384 ([Xu](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/108065)) | 0 to +0.006 | ~2.5 h (~90 s/epoch, extrapolated) | No |
+| Lighter augmentation | Heavy augmentation cut 2019 CV 0.934 → 0.89 while raising the leaderboard, because CV rewards acquisition cues ([DrHB](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/100815)) | could raise our number, but by fitting dataset artefacts | ~1.4 h | No |
+| Larger EfficientNets (B5–B7) | No comparable APTOS evidence; heavy models "over-fitting badly" ([7th](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/108058)) | ~0 | 3–5 h+ | No |
+| SWA, layer-wise lr, mixup, plain label smoothing | No DR ablation for SWA or layer-wise lr; mixup and plain smoothing measured slightly harmful on DR ([arXiv 2309.10619](https://arxiv.org/pdf/2309.10619), [Galdran et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7414697/)) | ~0 | — | No |
+| More cut-off tuning | Optima sit near [0.5, 1.5, 2.5, 3.5]; varying the threshold source changed QWK by 0.002 ([BloodAxe](https://github.com/BloodAxe/Kaggle-2019-Blindness-Detection)) | ~0 (already done) | free | No |
+
+T4 times come from our two measured points (B3 at 300 px about 25 s/epoch, B4-NS at 380 px about 50 s/epoch). They are scaled from timm's RTX 3090 AMP training benchmark using a measured ratio of about 3.7× ([timm benchmark CSV](https://github.com/huggingface/pytorch-image-models/blob/main/results/benchmark-train-amp-nchw-pt112-cu113-rtx3090.csv)). They are extrapolations: measure the first epoch before committing.
+
+The lighter-augmentation row needs care. Our test set is a random split of the same 3,662 images, so it shares the acquisition artefacts that inflate CV. The 2019 images come in two aspect ratios after cropping, and "~99% of 1:1 images are Class 1" ([Xuan Cao](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107916)). A choice that exploits those artefacts would raise our honest score without making the model better. It belongs in a reproduction report as a diagnostic, not as a headline improvement. The same logic suggests, as an inference, that our Ben Graham circle crop may cost a little CV by normalising away field-of-view cues. That is one more reason the raw-crop arm is informative.
+
+Taken together, these strict-protocol levers plausibly add **+0.003 to +0.010** to OOF. The upper end needs everything to go right, and the levers will not add linearly.
+
+## External fundus data buys robustness, not 0.03
+
+Every gold-medal team in 2019 used the 2015 EyePACS data, and it is the reported factor that separates about 0.925 from 0.930–0.934 on the private leaderboard. The 9th-place team reached 0.931 with 2015 pre-training and no pseudo-labels ([Psi](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107990)). On an in-distribution APTOS split, though, the measured benefit is small. The target paper's own controlled row moves from **0.954 to 0.956** with EyePACS initialisation ([PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC11323616/)). BloodAxe's SE-ResNeXt50 moved from 0.9225 to 0.9244 CV with 2015 data. Adding 2015, IDRiD and Messidor together *lowered* ResNeXt50 CV from 0.9234 to 0.9129 while raising the leaderboard score ([BloodAxe](https://github.com/BloodAxe/Kaggle-2019-Blindness-Detection)). The best guess for our OOF is **+0.002 to +0.010**.
+
+The cost is substantial. By our extrapolation, one pass over the 35k 2015 training images at 380 px takes roughly 11–12 minutes for B4-NS on a T4. Ten pre-training epochs plus a 5-fold fine-tune come to about 3.5 h, before the download and pre-processing overhead.
+
+Retinal foundation models carry the same caveat and add more. **RETFound** is pre-trained on 904,170 fundus photos, 88,702 of them from Kaggle EyePACS. It reports APTOS performance only as AUROC (**0.943**) at 224 px, and it is licensed CC BY-NC 4.0 ([Zhou et al., Nature 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC10550819/); [RETFound repo](https://github.com/rmaphoh/RETFound)). Its own T4 figure, about 70 minutes per 1,000 images over 50 epochs, implies roughly 3 h per fold and about 14 h for 5 folds. That is more than one 12-hour Kaggle session. **DINOv2-L**, which never saw a fundus image, matched or beat RETFound on APTOS (AUROC 0.952 vs 0.944) ([Ophthalmology Science 2025](https://www.ophthalmologyscience.org/article/S2666-9145(25)00221-0/fulltext)). That undercuts the case for paying the RETFound cost. **FLAIR** must be avoided. Its pre-training corpus includes APTOS itself, so it would leak the test domain and likely its labels ([FLAIR repo](https://github.com/jusiro/FLAIR)).
+
+Pseudo-labelling sits in between. On the Kaggle private leaderboard it added +0.001 to +0.009 per model ([DrHB](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/108030); [Camaro](https://www.kaggle.com/c/aptos2019-blindness-detection/discussion/107944)). Its value there came from adapting to a shifted test distribution, and our random-split test does not have that shift. Pseudo-labelling the locked 550 images is transductive and would muddy the protocol. Pseudo-labelling unlabelled APTOS images from the Kaggle test set is cleaner, but the expected in-distribution gain is too small to justify before unlocking.
+
+External-data results should therefore be a separately labelled track if pursued at all. The literature says they will not reach 0.954 on a strict split either.
+
+## A capped, pre-registered Stage 4c, then unlock
+
+The decision hinges on one fact. The best realistic Stage 4c gain (+0.003 to +0.010) is smaller than the test set's 95% half-width (±0.02). So Stage 4c cannot change the scientific conclusion. What it can do is make that conclusion stronger. It would let the report say that the two documented strict-protocol levers we had not tried were tested before unlocking. It would also test, under pre-registration, whether diversity rather than backbone strength drives blend gains.
+
+A case can be made for unlocking now: the answer is already clear and the compute is not free. We still recommend a small Stage 4c, because its first two arms are cheap and are the only untried levers with competition-grade support. Keep it tightly capped so it cannot turn into test-set fishing by another name.
+
+| Priority | Arm | Change from the Stage 4b recipe | T4 time | Expected effect |
+|---|---|---|---|---|
+| 1 | **4c-A: raw-crop B4-NS 380** | circle crop and resize only, no Ben Graham; add an auxiliary 5-class head (loss weight ~0.3), decoding the regression output only | ~1.5 h | +0 to +0.006 alone; lowers correlation with the Ben's members |
+| 2 | **4c-B: ConvNeXt-Tiny 448 or SE-ResNeXt50 512** (ImageNet-1k weights) | raw crop, GeM pooling, SmoothL1 loss, same folds | ~1.7–2.2 h | +0.002 to +0.005 in the blend |
+| 3 (optional) | **4c-C: B4-NS 512** | resolution only, Ben's or raw, whichever wins arm A | ~2.5 h | 0 to +0.006 |
+| Separate track (optional) | **4c-X: EyePACS-2015-pre-trained B4-NS** | external data; reported in its own row, never in the headline | ~3.5 h + download | +0.002 to +0.010 |
+
+Run arms A and B on the Stage 4b folds, which keep duplicate groups together. Use final EMA weights with no best-epoch selection, 8-view TTA, and cut-offs cross-fitted on the 3,112 OOF predictions.
+
+Fix these rules before training. Blend by **simple mean** of member outputs. A new member enters the headline blend only if it raises cross-fitted OOF blend QWK by at least **+0.002**. Arm C runs only if A and B finish under budget. Stop at **8 T4 GPU-hours** for the strict track, then unlock regardless of results. Generate test predictions for every arm, including 4c-X, before the unlock, so nothing is ever evaluated on an already-opened test set.
+
+When the test set is opened, the final table should report the pre-registered headline with a bootstrap 95% CI, 5-class accuracy (for direct comparison with the paper's 94.2%), QWK on the de-duplicated subset, and the Stage 4b blend without Stage 4c. It should also report the explicitly labelled optimistic variants: cut-offs tuned on the test set, and the best member chosen on the test set.
+
+The optimistic rows matter. They will show, on our own model, how close a paper-style protocol gets to 0.954.
+
+**Honest expected range.** After Stage 4c, OOF should land around **0.927–0.935**, with 0.930 most likely. The validation sets in Stage 4 scored 0.01–0.017 above test, so the strict test QWK on the 550 locked images is most likely **0.915–0.930**, within a plausible observed range of about **0.905–0.945**. The probability of reaching 0.954 under the strict protocol is **below 5%**. That is well under the 20–30% the Stage 4b plan assigned before its results were known. Test-tuned cut-offs and member selection could plausibly lift the optimistic rows into the **0.935–0.950** range.
+
+## Conclusion
+
+A failure to reach 0.954 is itself the reproduction result. With ImageNet-family weights and APTOS images only, our pipeline reaches the level that careful published protocols and 2019 gold-medal CVs reach. The documented route past it relies on external fundus data and test-distribution adaptation, which add about a hundredth on CV, not three. The more useful contribution Stage 4c can make is a measured protocol-sensitivity table on our own model, not a higher headline. If paper-style choices made on the test set lift our 0.92-level model into the mid-0.94s, the gap is accounted for by method rather than by argument.
+
+For the field, the paper's 94.2% accuracy is a cheap screening statistic worth applying to any APTOS claim. QWK is forgiving of off-by-one errors on an imbalanced 5-class scale. Accuracy is not, and the evidence puts it at about 85–89% for every carefully evaluated model at QWK 0.92–0.93. Stage 4c should spend at most about 8 GPU-hours on diversity, and then the test set should be opened once.

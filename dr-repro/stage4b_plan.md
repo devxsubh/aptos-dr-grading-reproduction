@@ -83,3 +83,14 @@ Using Noisy Student and ImageNet-21k weights goes beyond "ImageNet-1k only". Thi
 | Block 3 | 10 | about 3–5 h (depends on which candidates win) |
 
 Every run checkpoints after each epoch to `MyDrive/dr-grading/stage4b/`, so the blocks can be spread over several Colab sessions. "Run all" always continues where it stopped.
+
+## 9. Platform change: Kaggle instead of Colab (added 22 Oct 2026, before any Stage 4b run)
+
+Stage 4b runs on Kaggle GPUs (T4) instead of Colab. Nothing in sections 2–7 changes: the same data source (Hugging Face mirror, so the same 550 test images), recipe, levers, candidates, selection rules, headline and predictions. The Kaggle kernels are generated from `stage4b_push.ipynb` by [`kaggle/stage4b/build_kernels.py`](kaggle/stage4b/build_kernels.py), which changes only infrastructure:
+
+- results are written to each kernel's output, and the next kernel copies the finished runs from it;
+- the work is split into a chain of kernels so two can run at once (Block 1 by seed, Blocks 2 and 3 by candidate);
+- a time guard stops starting runs before Kaggle's 12-hour limit;
+- the test set section runs only in the last kernel (`k4-final`), once.
+
+Part 0 and the two Stage 4 rows of the final table need the Stage 4 `outputs.npz` files, which are on Google Drive and not in this chain. They are skipped unless those files are added as a Kaggle input.

@@ -1,0 +1,19 @@
+{
+  "id": "subhammahapatra004/dr-s4b-k2-a",
+  "title": "dr-s4b-k2-a",
+  "code_file": "notebook.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "subhammahapatra004/dr-s4b-k1-s42",
+    "subhammahapatra004/dr-s4b-k1-s43"
+  ],
+  "model_sources": []
+}
