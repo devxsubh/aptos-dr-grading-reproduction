@@ -19,3 +19,6 @@ dr-repro/reports/*.out
 dr-repro/reports/*.pdf
 
 dr-repro.zip
+
+# credentials
+.env
