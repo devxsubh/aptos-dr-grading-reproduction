@@ -36,7 +36,7 @@
 
 <h1>Diabetic Retinopathy Grading on APTOS 2019:<br>Reproduction of a Published Method and Nine Hypotheses Tested</h1>
 <div class="meta">Computer Vision research-reproduction project &middot; Team: Shivansh, Divyanshi, Vivek, Shubham &middot; November 2026<br>
-Report for approval. Reproduction study, <b>no clinical claims are made</b>. All numbers come from files in the project repository (<code>dr-repro/results/</code>).</div>
+Final project report (final phase). Reproduction study, <b>no clinical claims are made</b>. All numbers come from files in the project repository (<code>dr-repro/results/</code>).</div>
 
 <h2>1. Summary</h2>
 <p><b>What we did.</b> We selected one published method, re-implemented it (it has no public code), ran it on the public APTOS 2019 dataset, and measured how far our result is from the paper's. We then tested a series of hypotheses, each written down with numeric predictions <i>before</i> it was run, and report each result as it fell, including the failures.</p>
@@ -62,10 +62,7 @@ Report for approval. Reproduction study, <b>no clinical claims are made</b>. All
 </table>
 <p class="cap">Test QWK is on the same 550 images throughout, 10-snapshot ensemble with validation-tuned cut-offs unless noted (H8, H9 are single models with TTA; H8 uses 5 snapshots). "vs baseline" compares with the 0.897 baseline unless another reference is named. The baseline re-run on Kaggle (seed 42) scored 0.908 instead of 0.898, so platform and re-run noise is about &plusmn;0.01.</p>
 
-<div class="box"><p><b>Decisions we ask you to approve</b> (details in Section 8):<br>
-1. Frame the work as a reproduction with an honest gap analysis, plus pre-registered hypotheses with mostly negative results.<br>
-2. Make <b>H1 (ordinal regression)</b> the main hypothesis of the paper (the pre-registered Stage 4 test), with H6 (soft labels) as its refinement and H2, H3, H7, H8, H9 as ablations and negative results.<br>
-3. Proceed to the IEEE-format paper and the defence on this basis.</p></div>
+<div class="box"><p><b>Final conclusion in one paragraph.</b> We could not reproduce the paper's QWK of 0.954 under a strict protocol: the method as published gives 0.81&ndash;0.82, our tuned baseline 0.897 &plusmn; 0.004, and the best result we reached is 0.918 [0.900, 0.935]. Of nine hypotheses, the order of the grades was the one useful signal (ordinal regression 0.914, soft ordinal labels 0.916, both with about 26&ndash;32% fewer large errors); the other seven ideas gave no gain beyond noise. The work is complete and every claim is backed by the result files in the repository. Full conclusion in Section 8.</p></div>
 
 <h2 class="pb">2. The base paper we selected</h2>
 <h3>2.1 The paper</h3>
@@ -338,23 +335,58 @@ Report for approval. Reproduction study, <b>no clinical claims are made</b>. All
 <li>H8 used a third-party mirror of the RETFound weights, one control seed and an untuned fine-tuning recipe.</li>
 </ul>
 
-<h2 class="pb">8. Conclusions and what we ask you to approve</h2>
-<h3>8.1 Conclusions</h3>
+<h2 class="pb">8. Conclusion</h2>
+<p>This is the final phase of the project. We close by stating what the work established, what it did not, and how far each result can be trusted.</p>
+
+<h3>8.1 What we set out to do, and what we found</h3>
 <ol>
-<li><b>We selected and re-implemented a published method with no public code.</b> Run as published it gives QWK 0.81&ndash;0.82 against the reported 0.954. A lower learning rate and augmentation raise it to 0.897 &plusmn; 0.004, and the best strict-protocol model reaches 0.918 [0.900, 0.935].</li>
-<li><b>The reproduction gap (0.036 QWK, about 13 points of accuracy) is not closed by any method we tested</b> and is not explained by test-set selection or duplicate leakage.</li>
-<li><b>The order of the grades is the useful signal.</b> Ordinal regression (H1) and soft ordinal labels (H6) improve QWK by about 0.016&ndash;0.019 over the baseline and cut large errors by about 26&ndash;32%, at the cost of Mild recall and accuracy. These gains are of the size of run-to-run noise, so we describe them as consistent, not conclusive.</li>
-<li><b>Five ideas gave no gain:</b> focal loss, class weighting, blur-aware training, a retina-pretrained backbone, and stacking the recipe levers. Each is reported with its pre-registered predictions and a failure analysis.</li>
+<li><b>Reproduction.</b> We selected Chilukoti et al. (2024) and re-implemented it from the text, since no code is public. Run exactly as published (300 px, 60 epochs, batch 16, lr 1e-3, snapshot vote), it reaches QWK <b>0.81&ndash;0.82</b> against the reported <b>0.954</b>, with unstable training and no Severe-grade predictions. A learning rate of 1e-4 plus flip/rotation augmentation gives our baseline, <b>0.897 &plusmn; 0.004</b> over three seeds.</li>
+<li><b>Best strict-protocol result.</b> With stronger recipes, larger backbones and a 5-fold ensemble, and the test set opened once, we reached <b>0.918 [0.900, 0.935]</b>. The paper's 0.954 lies outside that interval. The remaining gap (0.036 QWK and about 13 points of accuracy) is not explained by test-set selection (which reaches at most 0.928) or by duplicate leakage (at most 0.007).</li>
+<li><b>Hypotheses.</b> We tested nine single-change hypotheses, each with numeric predictions written before the run. One gave a consistent gain, one refined it, and seven did not help (Table in Section 1).</li>
 </ol>
-<h3>8.2 Decisions requested</h3>
+
+<h3>8.2 Answer to our research question</h3>
+<p>Our literature review ended with the question: <i>can class-balanced ordinal learning improve Severe NPDR and PDR recognition while reducing clinically large grading errors?</i> Our evidence answers it in parts.</p>
 <table>
-<tr><th>#</th><th>Decision</th><th>Our recommendation</th></tr>
-<tr><td>1</td><td>Overall framing of the paper</td><td>A reproduction study with an honest gap analysis and a pre-registered hypothesis series, including negative results</td></tr>
-<tr><td>2</td><td>Which hypothesis is the <i>main</i> one</td><td>H1, ordinal regression (the pre-registered Stage 4 test, 5 of 8 predictions held); H6 as its refinement; H2, H3, H7, H8, H9 as ablations and negative results</td></tr>
-<tr><td>3</td><td>Headline number to quote</td><td>Baseline 0.897 &plusmn; 0.004; best single-configuration 0.914&ndash;0.916; best overall 0.918 [0.900, 0.935], with the 0.01 noise level stated</td></tr>
-<tr><td>4</td><td>Deliverables</td><td>Proceed to the IEEE-format paper and the defence, extending the existing final report with Stages 5&ndash;8</td></tr>
-<tr><td>5</td><td>Optional extra work</td><td>A 5-fold out-of-fold evaluation of the main arms (to put proper significance intervals on every comparison); no further hypotheses unless requested</td></tr>
+<tr><th>Part of the question</th><th>Answer</th><th>Evidence</th></tr>
+<tr><td>Reduce large grading errors</td><td class="yes">Yes</td><td>Errors of two or more grades fall from 21.7 to 16.0 (ordinal regression, &minus;26%) and to 14.7 (soft labels, &minus;32%)</td></tr>
+<tr><td>Improve Severe NPDR recall</td><td class="part">Partly</td><td>0.28 &rarr; 0.40 (ordinal) and 0.39 (soft labels), but with seed std 0.05&ndash;0.07; class balancing adds more (0.46) in only one of three seeds</td></tr>
+<tr><td>Improve PDR recall</td><td class="no">No</td><td>0.61 &rarr; 0.58 (ordinal) and 0.62 (soft labels); no arm improved it beyond noise</td></tr>
+<tr><td>Without losing overall agreement</td><td class="part">At a cost</td><td>QWK rises by 0.017&ndash;0.019, but accuracy falls (0.828 &rarr; 0.804&ndash;0.811) and Mild recall drops to 0.27&ndash;0.39</td></tr>
 </table>
+
+<h3>8.3 The result we stand behind</h3>
+<div class="box"><p><b>Using the order of the grades is the one idea that helped.</b> Training with an ordered-aware objective, either ordinal regression (Stage 4, H1) or Gaussian soft ordinal labels (Stage 5, H6), and decoding the grade with cut-offs tuned on the validation set, gives QWK <b>0.914 &plusmn; 0.004</b> and <b>0.916 &plusmn; 0.005</b> against the baseline's 0.897, with 26&ndash;32% fewer large errors. The two approaches are statistically equivalent. The honest strength of this claim is "consistent and in the same direction in every seed and on de-duplicated data", not "conclusive": the gain is of the order of the run-to-run noise (about &plusmn;0.01), and the paired-bootstrap interval excludes zero in only some comparisons.</p></div>
+<p>Two supporting findings come with it. <b>The decision rule matters more than the loss:</b> every arm with validation-tuned cut-offs scored 0.907&ndash;0.916, every vote or rounding arm 0.888&ndash;0.908. And <b>neither half works alone:</b> the ordinal loss with plain rounding ties the baseline, because a single regression output shrinks towards the middle grades.</p>
+
+<h3>8.4 What did not work, and why that is useful</h3>
+<ul>
+<li><b>Focal loss (H2)</b> tied cross-entropy (+0.004) and did not raise Severe recall under the paper's vote. <b>Class weighting</b> moved errors between grades without reducing them.</li>
+<li><b>Blur-aware label width (H7)</b> was motivated by a real effect: 26% of the blurriest test images are graded wrongly against 7% of the sharpest. Training changes did not reduce it, which suggests the information is missing from the image, not from the loss.</li>
+<li><b>A retina-pretrained backbone, RETFound (H8)</b>, did not beat ImageNet pre-training at the same architecture and scored lower on Severe and PDR recall. Under our untuned fine-tuning recipe, pre-training domain was not the bottleneck.</li>
+<li><b>Stacking the Stage 4b training levers on soft labels (H9)</b> gave 0.903, below the 0.916 of Stage 5, so levers that each helped on validation did not add up on test.</li>
+<li><b>EyePACS pre-training (H5)</b> was a worse starting point than ImageNet at every learning rate tried.</li>
+</ul>
+<p>Taken together, loss functions, input handling, backbones and recipe tuning all end between 0.90 and 0.92. That plateau, reached by independent routes, is itself the main evidence that the remaining gap to the paper is not a modelling gap we can close with documented methods.</p>
+
+<h3>8.5 Where the paper's 0.954 stands</h3>
+<p>We do not claim the paper is wrong. We report that its number could not be reproduced under a strict, documented protocol, that the measurable effects (test-set selection, duplicates, split luck) account for at most a small part of the difference, and that the paper leaves the APTOS split, test-set size, epoch count and duplicate handling unstated while some of its printed tables are internally inconsistent. Settling the question would need the authors' code or split, which are not public.</p>
+
+<h3>8.6 Limits of these conclusions</h3>
+<ul>
+<li>One dataset, no external validation, and a 550-image test set (29 Severe, 44 PDR) that resolves QWK differences only down to about 0.01.</li>
+<li>Three seeds or fewer per setting; bootstrap intervals cover test-set noise on seed 42 only; baselines and later runs came from different platforms (up to 0.011 QWK apart for the same seed).</li>
+<li>Stages 4d&ndash;8 are post-test experiments and drove no earlier choice. The RETFound result used a third-party copy of the weights and an untuned recipe, so it says "not helpful in our setup", not "RETFound does not work".</li>
+<li><b>No clinical claim is made.</b> This is a reproduction study on a public research dataset; none of these models is validated for patient care.</li>
+</ul>
+
+<h3>8.7 What we would do next</h3>
+<ol>
+<li>Evaluate the main arms on out-of-fold predictions for all 3,662 images, which roughly halves the test-set noise and would put a significance interval on every comparison made here.</li>
+<li>Audit and relabel the contradictory duplicate images with a second grader, since label quality, not modelling, looks like the limiting factor.</li>
+<li>Re-test the retina-pretrained backbone with a proper learning-rate search and the original gated weights.</li>
+<li>Ask the paper's authors for their APTOS split and code.</li>
+</ol>
 
 <h2>Appendix A. Where everything is</h2>
 <table>
