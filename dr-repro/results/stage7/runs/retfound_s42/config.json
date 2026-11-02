@@ -1,0 +1,21 @@
+{
+  "image_size": 224,
+  "epochs": 25,
+  "batch_size": 16,
+  "lr": 0.0003,
+  "weight_decay": 0.05,
+  "grad_clip": 1.0,
+  "n_snapshots": 5,
+  "seed": 42,
+  "backbone": "retfound",
+  "pretrained": true,
+  "use_amp": true,
+  "augment": true,
+  "loss": "soft",
+  "layer_decay": 0.65,
+  "warmup_epochs": 3,
+  "drop_path": 0.2,
+  "sigma": 0.5,
+  "dedupe": false,
+  "max_train_batches": 0
+}

@@ -1,0 +1,8 @@
+id,prediction,observed,confirmed
+S1,"RETFound beats ImageNet ViT-L by >= +0.01 QWK (tuned, seed 42)",0.892 vs 0.910 (-0.018),False
+S2,"mean(Severe, PDR) recall gain >= +0.05 (seed 42)",0.548 -> 0.371 (-0.178),False
+S3,RETFound within 0.015 QWK of the EfficientNet-B3 (mean over seeds),0.899 vs 0.916 (-0.017),False
+S4,errors >= 2 grades <= 1.10 x the CNN,14.7 -> 16.3,False
+S5,std over seeds of RETFound tuned QWK > 0.005,std 0.0060 over 3 seeds,True
+S6,referable AUC >= CNN - 0.005,0.983 -> 0.986,True
+S7,sanity: mirror weights differ from ImageNet (patch embedding),relative difference 2.000,True
