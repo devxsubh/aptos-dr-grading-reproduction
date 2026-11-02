@@ -1,0 +1,24 @@
+{
+  "backbone": "efficientnet_b3",
+  "image_size": 300,
+  "preproc": "graham",
+  "aug": "strong",
+  "epochs": 20,
+  "warmup_epochs": 1,
+  "batch_size": 16,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "grad_clip": 0.1,
+  "ema_decay": 0.998,
+  "sigma": 0.5,
+  "clean_labels": true,
+  "seed": 44,
+  "pretrained": true,
+  "use_amp": true,
+  "max_train_batches": 0,
+  "train_md5": "3828cb1cc8867eb2c932ad5e802525fd",
+  "eval_sets": {
+    "val": "b9354e73d6ad7fd37e41b76423fec13c",
+    "test": "b46efe84e522fc2210d41707c5b2ca30"
+  }
+}

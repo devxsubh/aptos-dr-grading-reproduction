@@ -1,0 +1,9 @@
+id,prediction,observed,confirmed
+T1,FULL H test QWK >= 0.920,0.903,False
+T2,FULL H - R0 H >= +0.005,0.903 - 0.904 = -0.001,False
+T3,R0 H within 0.01 of Stage 5 H,0.904 vs 0.916 (-0.012),False
+T4,errors >= 2 grades of FULL H <= 16.2,16.7 (Stage 5 H: 14.7),False
+T5,at least 3 of 4 leave-one-out runs have lower cross-fitted val QWK than FULL,FULL 0.917; dropping aug lowers it (1 of 4),False
+T6,seed 42: FULL H - A (CE control) >= +0.015,0.902 - 0.908 = -0.006,False
+T7,TTA raises FULL H test QWK by >= +0.002,+0.0013,False
+T8,sanity: label cleaning drops 40-90 training images,44,True
