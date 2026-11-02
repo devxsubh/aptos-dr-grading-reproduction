@@ -1,0 +1,170 @@
+{
+  "main seed=42 single B": [
+    0.76,
+    1.05,
+    2.53,
+    3.14
+  ],
+  "main seed=42 ensemble B": [
+    0.27,
+    1.11,
+    2.12,
+    3.06
+  ],
+  "main seed=43 single B": [
+    0.58,
+    1.53,
+    2.33,
+    3.06
+  ],
+  "main seed=43 ensemble B": [
+    0.63,
+    1.5,
+    2.2,
+    3.08
+  ],
+  "main seed=44 single B": [
+    0.12,
+    1.12,
+    2.18,
+    3.08
+  ],
+  "main seed=44 ensemble B": [
+    0.56,
+    1.24,
+    2.43,
+    3.3
+  ],
+  "main seed=42 single D": [
+    0.23,
+    1.57,
+    2.55,
+    3.18
+  ],
+  "main seed=42 ensemble D": [
+    0.27,
+    1.14,
+    2.28,
+    2.87
+  ],
+  "main seed=43 single D": [
+    0.13,
+    1.39,
+    2.53,
+    3.58
+  ],
+  "main seed=43 ensemble D": [
+    0.28,
+    1.34,
+    2.34,
+    2.92
+  ],
+  "main seed=44 single D": [
+    0.38,
+    1.41,
+    2.12,
+    3.56
+  ],
+  "main seed=44 ensemble D": [
+    0.5,
+    1.34,
+    2.25,
+    2.85
+  ],
+  "main seed=42 single E_tuned": [
+    0.77,
+    1.7,
+    2.87,
+    3.17
+  ],
+  "main seed=42 ensemble E_tuned": [
+    0.52,
+    1.27,
+    2.08,
+    3.16
+  ],
+  "main seed=42 single F_tuned": [
+    0.79,
+    1.34,
+    2.61,
+    3.6
+  ],
+  "main seed=42 ensemble F_tuned": [
+    0.5,
+    1.29,
+    2.39,
+    3.09
+  ],
+  "main seed=43 single E_tuned": [
+    0.85,
+    1.33,
+    2.43,
+    3.44
+  ],
+  "main seed=43 ensemble E_tuned": [
+    0.65,
+    1.25,
+    2.19,
+    3.15
+  ],
+  "main seed=43 single F_tuned": [
+    0.73,
+    1.58,
+    2.62,
+    3.44
+  ],
+  "main seed=43 ensemble F_tuned": [
+    0.15,
+    1.25,
+    2.18,
+    2.88
+  ],
+  "main seed=44 single E_tuned": [
+    0.77,
+    1.5,
+    2.19,
+    3.27
+  ],
+  "main seed=44 ensemble E_tuned": [
+    0.41,
+    1.45,
+    2.13,
+    2.83
+  ],
+  "main seed=44 single F_tuned": [
+    0.7,
+    1.48,
+    2.45,
+    3.61
+  ],
+  "main seed=44 ensemble F_tuned": [
+    0.32,
+    1.28,
+    2.26,
+    3.03
+  ],
+  "control seed=42 single B": [
+    0.5,
+    1.24,
+    2.21,
+    2.96
+  ],
+  "control seed=42 ensemble B": [
+    0.4,
+    1.28,
+    2.21,
+    3.17
+  ],
+  "control seed=42 single D": [
+    0.7,
+    1.47,
+    2.42,
+    3.65
+  ],
+  "control seed=42 ensemble D": [
+    0.32,
+    1.53,
+    2.3,
+    2.71
+  ]
+}

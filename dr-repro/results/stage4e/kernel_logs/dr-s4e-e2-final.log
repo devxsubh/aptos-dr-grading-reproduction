@@ -1,0 +1,71 @@
+[{"stream_name":"stderr","time":10.584851428,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":10.584908717,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":10.584915353,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":10.584919147,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":11.472896386,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":11.472932512,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":11.472938558,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":11.472969804,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":33.949182407,"data":"device: cpu | no GPU\n"}
+,{"stream_name":"stdout","time":33.973874147,"data":"{\n"}
+,{"stream_name":"stdout","time":33.973907822,"data":"  \"image_size\": 300,\n"}
+,{"stream_name":"stdout","time":33.973913406,"data":"  \"epochs\": 60,\n"}
+,{"stream_name":"stdout","time":33.973916938,"data":"  \"batch_size\": 16,\n"}
+,{"stream_name":"stdout","time":33.973920605,"data":"  \"lr\": 0.0001,\n"}
+,{"stream_name":"stdout","time":33.973924201,"data":"  \"weight_decay\": 0.0001,\n"}
+,{"stream_name":"stdout","time":33.973928234,"data":"  \"grad_clip\": 0.1,\n"}
+,{"stream_name":"stdout","time":33.973931964,"data":"  \"n_snapshots\": 10,\n"}
+,{"stream_name":"stdout","time":33.973935866,"data":"  \"seed\": 42,\n"}
+,{"stream_name":"stdout","time":33.973959196,"data":"  \"backbone\": \"efficientnet_b3\",\n"}
+,{"stream_name":"stdout","time":33.973966937,"data":"  \"pretrained\": true,\n"}
+,{"stream_name":"stdout","time":33.973970895,"data":"  \"use_amp\": false,\n"}
+,{"stream_name":"stdout","time":33.973974685,"data":"  \"augment\": true,\n"}
+,{"stream_name":"stdout","time":33.973978398,"data":"  \"loss\": \"ce\",\n"}
+,{"stream_name":"stdout","time":33.973982591,"data":"  \"dedupe\": false,\n"}
+,{"stream_name":"stdout","time":33.973986571,"data":"  \"max_train_batches\": 0\n"}
+,{"stream_name":"stdout","time":33.973990502,"data":"}\n"}
+,{"stream_name":"stdout","time":33.973994168,"data":"experiments: focal_s42, mse_cb_s42, focal_s43, mse_cb_s43, focal_s44, mse_cb_s44, ce_s42_k, mse_s42_k | this kernel trains: []\n"}
+,{"stream_name":"stdout","time":39.697793174,"data":"Stage 4 runs found: ['ce_s42', 'ce_s43', 'ce_s44', 'mse_s42', 'mse_s43', 'mse_s44']\n"}
+,{"stream_name":"stdout","time":44.481153893,"data":"Stage 4e runs restored: ['ce_s42_k', 'focal_s42', 'focal_s43', 'focal_s44', 'mse_cb_s42', 'mse_cb_s43', 'mse_cb_s44', 'mse_s42_k']\n"}
+,{"stream_name":"stdout","time":48.265160369,"data":"image cache: /kaggle/input/notebooks/subhammahapatra004/dr-s4e-e0-quick/dr-grading/aptos512.zip | Grad-CAM weights: /kaggle/input/datasets/subhammahapatra004/dr-stage4-weights/mse_s42_best_val_weights.pt\n"}
+,{"stream_name":"stdout","time":48.465498826,"data":"restoring cached images from /kaggle/input/notebooks/subhammahapatra004/dr-s4e-e0-quick/dr-grading/aptos512.zip\n"}
+,{"stream_name":"stdout","time":51.864098258,"data":"3662 images, 3534 distinct files\n"}
+,{"stream_name":"stdout","time":52.757211422,"data":"123 groups of identical images, 30 of them with conflicting grades\n"}
+,{"stream_name":"stdout","time":52.757249311,"data":"\n"}
+,{"stream_name":"stdout","time":52.757274308,"data":"all images (Stage 3 split): 3662 images, 29 test images with a twin in training\n"}
+,{"stream_name":"stdout","time":52.757279255,"data":"       No DR  Mild  Moderate  Severe  PDR\n"}
+,{"stream_name":"stdout","time":52.757283052,"data":"train   1263   258       699     135  207\n"}
+,{"stream_name":"stdout","time":52.757286794,"data":"val      271    56       150      29   44\n"}
+,{"stream_name":"stdout","time":52.757290517,"data":"test     271    56       150      29   44\n"}
+,{"stream_name":"stdout","time":52.757294308,"data":"\n"}
+,{"stream_name":"stdout","time":52.757297869,"data":"de-duplicated: 3504 images, 0 test images with a twin in training\n"}
+,{"stream_name":"stdout","time":52.757301721,"data":"       No DR  Mild  Moderate  Severe  PDR\n"}
+,{"stream_name":"stdout","time":52.757305408,"data":"train   1257   236       646     124  189\n"}
+,{"stream_name":"stdout","time":52.757307743,"data":"val      269    51       138      27   41\n"}
+,{"stream_name":"stdout","time":52.757310216,"data":"test     270    51       138      26   41\n"}
+,{"stream_name":"stdout","time":69.24722179,"data":"(3662, 300, 300, 3), 0.99 GB, 16s\n"}
+,{"stream_name":"stdout","time":69.526602128,"data":"=== focal_s42 === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.526641499,"data":"=== mse_cb_s42 === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.526647047,"data":"=== focal_s43 === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.526650906,"data":"=== mse_cb_s43 === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.526654814,"data":"=== focal_s44 === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.52665825,"data":"=== mse_cb_s44 === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.52666215,"data":"=== ce_s42_k === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.526665732,"data":"=== mse_s42_k === finished earlier, loaded\n"}
+,{"stream_name":"stdout","time":69.526669976,"data":"finished Stage 4e runs: ['ce_s42_k', 'focal_s42', 'focal_s43', 'focal_s44', 'mse_cb_s42', 'mse_cb_s43', 'mse_cb_s44', 'mse_s42_k']\n"}
+,{"stream_name":"stdout","time":76.877112998,"data":"Main split, mean ± std over seeds (post-test):\n"}
+,{"stream_name":"stdout","time":91.059645408,"data":"seeds with every arm: [42, 43, 44]\n"}
+,{"stream_name":"stderr","time":118.748869601,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":118.748912679,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":118.96231371,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":118.962383316,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":119.863160563,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":120.016671882,"data":"[NbConvertApp] Writing 2605841 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":123.2014446,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":124.176715554,"data":"[NbConvertApp] Support files will be in __results___files/\n"}
+,{"stream_name":"stderr","time":124.176744695,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":124.176992382,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":124.17720449,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":124.177392107,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":124.178273542,"data":"[NbConvertApp] Writing 621554 bytes to __results__.html\n"}
+]

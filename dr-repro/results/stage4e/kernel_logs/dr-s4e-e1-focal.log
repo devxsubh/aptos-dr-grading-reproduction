@@ -1,0 +1,307 @@
+[{"stream_name":"stderr","time":8.240285832,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.24036444,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.240370986,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.240374857,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.911597604,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.911629644,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.911633551,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.911635984,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":32.811344086,"data":"device: cuda | Tesla T4\n"}
+,{"stream_name":"stdout","time":32.83463461,"data":"{\n"}
+,{"stream_name":"stdout","time":32.834691078,"data":"  \"image_size\": 300,\n"}
+,{"stream_name":"stdout","time":32.834696689,"data":"  \"epochs\": 60,\n"}
+,{"stream_name":"stdout","time":32.834700724,"data":"  \"batch_size\": 16,\n"}
+,{"stream_name":"stdout","time":32.834704608,"data":"  \"lr\": 0.0001,\n"}
+,{"stream_name":"stdout","time":32.834708417,"data":"  \"weight_decay\": 0.0001,\n"}
+,{"stream_name":"stdout","time":32.83471218,"data":"  \"grad_clip\": 0.1,\n"}
+,{"stream_name":"stdout","time":32.834715828,"data":"  \"n_snapshots\": 10,\n"}
+,{"stream_name":"stdout","time":32.834719539,"data":"  \"seed\": 42,\n"}
+,{"stream_name":"stdout","time":32.834723392,"data":"  \"backbone\": \"efficientnet_b3\",\n"}
+,{"stream_name":"stdout","time":32.834727567,"data":"  \"pretrained\": true,\n"}
+,{"stream_name":"stdout","time":32.834735064,"data":"  \"use_amp\": true,\n"}
+,{"stream_name":"stdout","time":32.834737706,"data":"  \"augment\": true,\n"}
+,{"stream_name":"stdout","time":32.834740213,"data":"  \"loss\": \"ce\",\n"}
+,{"stream_name":"stdout","time":32.834742783,"data":"  \"dedupe\": false,\n"}
+,{"stream_name":"stdout","time":32.834746072,"data":"  \"max_train_batches\": 0\n"}
+,{"stream_name":"stdout","time":32.834759442,"data":"}\n"}
+,{"stream_name":"stdout","time":32.834764004,"data":"experiments: focal_s42, mse_cb_s42, focal_s43, mse_cb_s43, focal_s44, mse_cb_s44, ce_s42_k, mse_s42_k | this kernel trains: ['focal_s42', 'focal_s43', 'focal_s44', 'ce_s42_k']\n"}
+,{"stream_name":"stdout","time":33.831850532,"data":"Stage 4 runs found: []\n"}
+,{"stream_name":"stdout","time":34.213042728,"data":"Stage 4e runs restored: []\n"}
+,{"stream_name":"stdout","time":34.815722357,"data":"image cache: /kaggle/input/notebooks/subhammahapatra004/dr-s4e-e0-quick/dr-grading/aptos512.zip | Grad-CAM weights: None\n"}
+,{"stream_name":"stdout","time":35.01593525,"data":"restoring cached images from /kaggle/input/notebooks/subhammahapatra004/dr-s4e-e0-quick/dr-grading/aptos512.zip\n"}
+,{"stream_name":"stdout","time":37.952165232,"data":"3662 images, 3534 distinct files\n"}
+,{"stream_name":"stdout","time":38.803182651,"data":"123 groups of identical images, 30 of them with conflicting grades\n"}
+,{"stream_name":"stdout","time":38.803204844,"data":"\n"}
+,{"stream_name":"stdout","time":38.803208379,"data":"all images (Stage 3 split): 3662 images, 29 test images with a twin in training\n"}
+,{"stream_name":"stdout","time":38.803235807,"data":"       No DR  Mild  Moderate  Severe  PDR\n"}
+,{"stream_name":"stdout","time":38.803261489,"data":"train   1263   258       699     135  207\n"}
+,{"stream_name":"stdout","time":38.803266224,"data":"val      271    56       150      29   44\n"}
+,{"stream_name":"stdout","time":38.803270253,"data":"test     271    56       150      29   44\n"}
+,{"stream_name":"stdout","time":38.803274247,"data":"\n"}
+,{"stream_name":"stdout","time":38.803282122,"data":"de-duplicated: 3504 images, 0 test images with a twin in training\n"}
+,{"stream_name":"stdout","time":38.803284974,"data":"       No DR  Mild  Moderate  Severe  PDR\n"}
+,{"stream_name":"stdout","time":38.803287659,"data":"train   1257   236       646     124  189\n"}
+,{"stream_name":"stdout","time":38.803290231,"data":"val      269    51       138      27   41\n"}
+,{"stream_name":"stdout","time":38.803292855,"data":"test     270    51       138      26   41\n"}
+,{"stream_name":"stdout","time":55.380296018,"data":"(3662, 300, 300, 3), 0.99 GB, 17s\n"}
+,{"stream_name":"stdout","time":56.107484441,"data":"\n"}
+,{"stream_name":"stdout","time":56.107519754,"data":"=== focal_s42 ===  loss=focal  seed=42  dedupe=False  lr=0.0001  epochs=60\n"}
+,{"stream_name":"stdout","time":120.233274264,"data":"[focal_s42] epoch  1/60 | loss 0.534 | val QWK 0.798 (best 0.798 @ep1) | val acc 0.758 | 59s | ~58 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":144.255693559,"data":"[focal_s42] epoch  2/60 | loss 0.290 | val QWK 0.876 (best 0.876 @ep2) | val acc 0.813 | 24s | ~40 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":169.390878297,"data":"[focal_s42] epoch  3/60 | loss 0.248 | val QWK 0.886 (best 0.886 @ep3) | val acc 0.798 | 25s | ~34 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":195.551459729,"data":"[focal_s42] epoch  4/60 | loss 0.213 | val QWK 0.913 (best 0.913 @ep4) | val acc 0.825 | 26s | ~31 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":219.533833838,"data":"[focal_s42] epoch  5/60 | loss 0.202 | val QWK 0.899 (best 0.913 @ep4) | val acc 0.829 | 24s | ~29 min left |\n"}
+,{"stream_name":"stdout","time":244.715761924,"data":"[focal_s42] epoch  6/60 | loss 0.178 | val QWK 0.889 (best 0.913 @ep4) | val acc 0.831 | 25s | ~27 min left | snapshot 1/10\n"}
+,{"stream_name":"stdout","time":268.945915316,"data":"[focal_s42] epoch  7/60 | loss 0.171 | val QWK 0.895 (best 0.913 @ep4) | val acc 0.827 | 24s | ~26 min left |\n"}
+,{"stream_name":"stdout","time":292.968628537,"data":"[focal_s42] epoch  8/60 | loss 0.156 | val QWK 0.881 (best 0.913 @ep4) | val acc 0.816 | 24s | ~25 min left |\n"}
+,{"stream_name":"stdout","time":316.993196087,"data":"[focal_s42] epoch  9/60 | loss 0.158 | val QWK 0.893 (best 0.913 @ep4) | val acc 0.811 | 24s | ~24 min left |\n"}
+,{"stream_name":"stdout","time":341.095412741,"data":"[focal_s42] epoch 10/60 | loss 0.131 | val QWK 0.909 (best 0.913 @ep4) | val acc 0.833 | 24s | ~23 min left |\n"}
+,{"stream_name":"stdout","time":365.068623833,"data":"[focal_s42] epoch 11/60 | loss 0.129 | val QWK 0.883 (best 0.913 @ep4) | val acc 0.813 | 24s | ~23 min left |\n"}
+,{"stream_name":"stdout","time":390.442769182,"data":"[focal_s42] epoch 12/60 | loss 0.114 | val QWK 0.863 (best 0.913 @ep4) | val acc 0.784 | 25s | ~22 min left | snapshot 2/10\n"}
+,{"stream_name":"stdout","time":414.605612412,"data":"[focal_s42] epoch 13/60 | loss 0.113 | val QWK 0.891 (best 0.913 @ep4) | val acc 0.827 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":438.611115118,"data":"[focal_s42] epoch 14/60 | loss 0.109 | val QWK 0.880 (best 0.913 @ep4) | val acc 0.807 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":462.550405407,"data":"[focal_s42] epoch 15/60 | loss 0.111 | val QWK 0.867 (best 0.913 @ep4) | val acc 0.796 | 24s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":486.520413774,"data":"[focal_s42] epoch 16/60 | loss 0.098 | val QWK 0.892 (best 0.913 @ep4) | val acc 0.809 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":510.509996266,"data":"[focal_s42] epoch 17/60 | loss 0.112 | val QWK 0.870 (best 0.913 @ep4) | val acc 0.795 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":536.046337489,"data":"[focal_s42] epoch 18/60 | loss 0.107 | val QWK 0.866 (best 0.913 @ep4) | val acc 0.775 | 26s | ~18 min left | snapshot 3/10\n"}
+,{"stream_name":"stdout","time":560.126578321,"data":"[focal_s42] epoch 19/60 | loss 0.104 | val QWK 0.893 (best 0.913 @ep4) | val acc 0.820 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":584.219403036,"data":"[focal_s42] epoch 20/60 | loss 0.101 | val QWK 0.884 (best 0.913 @ep4) | val acc 0.802 | 24s | ~17 min left |\n"}
+,{"stream_name":"stdout","time":608.243801159,"data":"[focal_s42] epoch 21/60 | loss 0.099 | val QWK 0.888 (best 0.913 @ep4) | val acc 0.800 | 24s | ~17 min left |\n"}
+,{"stream_name":"stdout","time":632.257156417,"data":"[focal_s42] epoch 22/60 | loss 0.109 | val QWK 0.883 (best 0.913 @ep4) | val acc 0.791 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":656.249514526,"data":"[focal_s42] epoch 23/60 | loss 0.088 | val QWK 0.882 (best 0.913 @ep4) | val acc 0.798 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":681.547140781,"data":"[focal_s42] epoch 24/60 | loss 0.096 | val QWK 0.866 (best 0.913 @ep4) | val acc 0.789 | 25s | ~16 min left | snapshot 4/10\n"}
+,{"stream_name":"stdout","time":705.539113522,"data":"[focal_s42] epoch 25/60 | loss 0.084 | val QWK 0.865 (best 0.913 @ep4) | val acc 0.773 | 24s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":729.615920475,"data":"[focal_s42] epoch 26/60 | loss 0.099 | val QWK 0.884 (best 0.913 @ep4) | val acc 0.787 | 24s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":753.796536495,"data":"[focal_s42] epoch 27/60 | loss 0.090 | val QWK 0.886 (best 0.913 @ep4) | val acc 0.829 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":777.590842564,"data":"[focal_s42] epoch 28/60 | loss 0.083 | val QWK 0.881 (best 0.913 @ep4) | val acc 0.811 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":801.596837706,"data":"[focal_s42] epoch 29/60 | loss 0.098 | val QWK 0.878 (best 0.913 @ep4) | val acc 0.809 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":827.127973812,"data":"[focal_s42] epoch 30/60 | loss 0.087 | val QWK 0.853 (best 0.913 @ep4) | val acc 0.800 | 26s | ~13 min left | snapshot 5/10\n"}
+,{"stream_name":"stdout","time":851.32321352,"data":"[focal_s42] epoch 31/60 | loss 0.101 | val QWK 0.883 (best 0.913 @ep4) | val acc 0.800 | 24s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":875.330754641,"data":"[focal_s42] epoch 32/60 | loss 0.093 | val QWK 0.887 (best 0.913 @ep4) | val acc 0.831 | 24s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":899.287661526,"data":"[focal_s42] epoch 33/60 | loss 0.086 | val QWK 0.872 (best 0.913 @ep4) | val acc 0.778 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":923.27655067,"data":"[focal_s42] epoch 34/60 | loss 0.095 | val QWK 0.897 (best 0.913 @ep4) | val acc 0.838 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":947.388187207,"data":"[focal_s42] epoch 35/60 | loss 0.069 | val QWK 0.883 (best 0.913 @ep4) | val acc 0.798 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":972.777368767,"data":"[focal_s42] epoch 36/60 | loss 0.092 | val QWK 0.884 (best 0.913 @ep4) | val acc 0.807 | 25s | ~10 min left | snapshot 6/10\n"}
+,{"stream_name":"stdout","time":996.640678512,"data":"[focal_s42] epoch 37/60 | loss 0.086 | val QWK 0.895 (best 0.913 @ep4) | val acc 0.829 | 24s | ~10 min left |\n"}
+,{"stream_name":"stdout","time":1020.64029998,"data":"[focal_s42] epoch 38/60 | loss 0.084 | val QWK 0.879 (best 0.913 @ep4) | val acc 0.802 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":1044.733215307,"data":"[focal_s42] epoch 39/60 | loss 0.091 | val QWK 0.875 (best 0.913 @ep4) | val acc 0.798 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":1068.736809534,"data":"[focal_s42] epoch 40/60 | loss 0.087 | val QWK 0.897 (best 0.913 @ep4) | val acc 0.825 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":1092.769779335,"data":"[focal_s42] epoch 41/60 | loss 0.084 | val QWK 0.889 (best 0.913 @ep4) | val acc 0.784 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":1118.204670146,"data":"[focal_s42] epoch 42/60 | loss 0.086 | val QWK 0.871 (best 0.913 @ep4) | val acc 0.809 | 25s | ~8 min left | snapshot 7/10\n"}
+,{"stream_name":"stdout","time":1142.204061898,"data":"[focal_s42] epoch 43/60 | loss 0.076 | val QWK 0.888 (best 0.913 @ep4) | val acc 0.827 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":1166.278642425,"data":"[focal_s42] epoch 44/60 | loss 0.086 | val QWK 0.905 (best 0.913 @ep4) | val acc 0.825 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":1190.309538573,"data":"[focal_s42] epoch 45/60 | loss 0.083 | val QWK 0.868 (best 0.913 @ep4) | val acc 0.760 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":1214.278001746,"data":"[focal_s42] epoch 46/60 | loss 0.095 | val QWK 0.875 (best 0.913 @ep4) | val acc 0.800 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":1238.163474307,"data":"[focal_s42] epoch 47/60 | loss 0.089 | val QWK 0.893 (best 0.913 @ep4) | val acc 0.818 | 24s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":1263.487221925,"data":"[focal_s42] epoch 48/60 | loss 0.072 | val QWK 0.867 (best 0.913 @ep4) | val acc 0.807 | 25s | ~5 min left | snapshot 8/10\n"}
+,{"stream_name":"stdout","time":1287.548943259,"data":"[focal_s42] epoch 49/60 | loss 0.084 | val QWK 0.863 (best 0.913 @ep4) | val acc 0.778 | 24s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":1311.528648448,"data":"[focal_s42] epoch 50/60 | loss 0.076 | val QWK 0.893 (best 0.913 @ep4) | val acc 0.815 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":1335.523823888,"data":"[focal_s42] epoch 51/60 | loss 0.081 | val QWK 0.871 (best 0.913 @ep4) | val acc 0.804 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":1359.485361575,"data":"[focal_s42] epoch 52/60 | loss 0.088 | val QWK 0.860 (best 0.913 @ep4) | val acc 0.778 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":1383.399542211,"data":"[focal_s42] epoch 53/60 | loss 0.088 | val QWK 0.887 (best 0.913 @ep4) | val acc 0.809 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":1408.825241461,"data":"[focal_s42] epoch 54/60 | loss 0.092 | val QWK 0.885 (best 0.913 @ep4) | val acc 0.802 | 25s | ~2 min left | snapshot 9/10\n"}
+,{"stream_name":"stdout","time":1432.908286149,"data":"[focal_s42] epoch 55/60 | loss 0.085 | val QWK 0.884 (best 0.913 @ep4) | val acc 0.816 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":1456.853708938,"data":"[focal_s42] epoch 56/60 | loss 0.089 | val QWK 0.892 (best 0.913 @ep4) | val acc 0.816 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":1480.871151769,"data":"[focal_s42] epoch 57/60 | loss 0.086 | val QWK 0.878 (best 0.913 @ep4) | val acc 0.825 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":1504.809408817,"data":"[focal_s42] epoch 58/60 | loss 0.077 | val QWK 0.888 (best 0.913 @ep4) | val acc 0.807 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":1528.77832743,"data":"[focal_s42] epoch 59/60 | loss 0.085 | val QWK 0.887 (best 0.913 @ep4) | val acc 0.793 | 24s | ~0 min left |\n"}
+,{"stream_name":"stdout","time":1554.14986617,"data":"[focal_s42] epoch 60/60 | loss 0.083 | val QWK 0.874 (best 0.913 @ep4) | val acc 0.800 | 25s | ~0 min left | snapshot 10/10\n"}
+,{"stream_name":"stdout","time":1554.149928382,"data":"\n"}
+,{"stream_name":"stdout","time":1554.149933431,"data":"=== focal_s43 ===  loss=focal  seed=43  dedupe=False  lr=0.0001  epochs=60\n"}
+,{"stream_name":"stdout","time":1579.92966415,"data":"[focal_s43] epoch  1/60 | loss 0.524 | val QWK 0.808 (best 0.808 @ep1) | val acc 0.780 | 26s | ~25 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1605.511895139,"data":"[focal_s43] epoch  2/60 | loss 0.286 | val QWK 0.877 (best 0.877 @ep2) | val acc 0.813 | 26s | ~25 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1631.176100732,"data":"[focal_s43] epoch  3/60 | loss 0.246 | val QWK 0.885 (best 0.885 @ep3) | val acc 0.816 | 26s | ~24 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1656.930230715,"data":"[focal_s43] epoch  4/60 | loss 0.213 | val QWK 0.897 (best 0.897 @ep4) | val acc 0.833 | 26s | ~24 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1680.949597422,"data":"[focal_s43] epoch  5/60 | loss 0.195 | val QWK 0.889 (best 0.897 @ep4) | val acc 0.805 | 24s | ~23 min left |\n"}
+,{"stream_name":"stdout","time":1706.356117152,"data":"[focal_s43] epoch  6/60 | loss 0.178 | val QWK 0.881 (best 0.897 @ep4) | val acc 0.800 | 25s | ~23 min left | snapshot 1/10\n"}
+,{"stream_name":"stdout","time":1731.983284681,"data":"[focal_s43] epoch  7/60 | loss 0.165 | val QWK 0.903 (best 0.903 @ep7) | val acc 0.805 | 26s | ~22 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1756.138294808,"data":"[focal_s43] epoch  8/60 | loss 0.155 | val QWK 0.891 (best 0.903 @ep7) | val acc 0.822 | 24s | ~22 min left |\n"}
+,{"stream_name":"stdout","time":1780.222293837,"data":"[focal_s43] epoch  9/60 | loss 0.134 | val QWK 0.884 (best 0.903 @ep7) | val acc 0.809 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":1804.286368914,"data":"[focal_s43] epoch 10/60 | loss 0.127 | val QWK 0.898 (best 0.903 @ep7) | val acc 0.820 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":1828.327618074,"data":"[focal_s43] epoch 11/60 | loss 0.138 | val QWK 0.894 (best 0.903 @ep7) | val acc 0.829 | 24s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":1853.723324334,"data":"[focal_s43] epoch 12/60 | loss 0.124 | val QWK 0.894 (best 0.903 @ep7) | val acc 0.842 | 25s | ~20 min left | snapshot 2/10\n"}
+,{"stream_name":"stdout","time":1877.689356257,"data":"[focal_s43] epoch 13/60 | loss 0.116 | val QWK 0.894 (best 0.903 @ep7) | val acc 0.824 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":1901.668134751,"data":"[focal_s43] epoch 14/60 | loss 0.110 | val QWK 0.881 (best 0.903 @ep7) | val acc 0.802 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":1925.682180363,"data":"[focal_s43] epoch 15/60 | loss 0.104 | val QWK 0.889 (best 0.903 @ep7) | val acc 0.824 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":1949.759266384,"data":"[focal_s43] epoch 16/60 | loss 0.112 | val QWK 0.901 (best 0.903 @ep7) | val acc 0.831 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":1973.847276715,"data":"[focal_s43] epoch 17/60 | loss 0.097 | val QWK 0.894 (best 0.903 @ep7) | val acc 0.789 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":1999.218080456,"data":"[focal_s43] epoch 18/60 | loss 0.102 | val QWK 0.875 (best 0.903 @ep7) | val acc 0.809 | 25s | ~17 min left | snapshot 3/10\n"}
+,{"stream_name":"stdout","time":2023.358652533,"data":"[focal_s43] epoch 19/60 | loss 0.096 | val QWK 0.886 (best 0.903 @ep7) | val acc 0.811 | 24s | ~17 min left |\n"}
+,{"stream_name":"stdout","time":2047.363479265,"data":"[focal_s43] epoch 20/60 | loss 0.094 | val QWK 0.884 (best 0.903 @ep7) | val acc 0.805 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":2071.328658172,"data":"[focal_s43] epoch 21/60 | loss 0.104 | val QWK 0.863 (best 0.903 @ep7) | val acc 0.795 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":2095.373864499,"data":"[focal_s43] epoch 22/60 | loss 0.105 | val QWK 0.891 (best 0.903 @ep7) | val acc 0.813 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":2119.475190539,"data":"[focal_s43] epoch 23/60 | loss 0.097 | val QWK 0.873 (best 0.903 @ep7) | val acc 0.798 | 24s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":2144.80095263,"data":"[focal_s43] epoch 24/60 | loss 0.098 | val QWK 0.873 (best 0.903 @ep7) | val acc 0.800 | 25s | ~15 min left | snapshot 4/10\n"}
+,{"stream_name":"stdout","time":2168.780677339,"data":"[focal_s43] epoch 25/60 | loss 0.085 | val QWK 0.854 (best 0.903 @ep7) | val acc 0.791 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":2192.987071558,"data":"[focal_s43] epoch 26/60 | loss 0.091 | val QWK 0.880 (best 0.903 @ep7) | val acc 0.804 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":2216.931281092,"data":"[focal_s43] epoch 27/60 | loss 0.089 | val QWK 0.902 (best 0.903 @ep7) | val acc 0.827 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":2240.904386994,"data":"[focal_s43] epoch 28/60 | loss 0.083 | val QWK 0.855 (best 0.903 @ep7) | val acc 0.793 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":2265.062916129,"data":"[focal_s43] epoch 29/60 | loss 0.083 | val QWK 0.876 (best 0.903 @ep7) | val acc 0.776 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":2290.379014361,"data":"[focal_s43] epoch 30/60 | loss 0.087 | val QWK 0.895 (best 0.903 @ep7) | val acc 0.809 | 25s | ~12 min left | snapshot 5/10\n"}
+,{"stream_name":"stdout","time":2314.341979248,"data":"[focal_s43] epoch 31/60 | loss 0.103 | val QWK 0.863 (best 0.903 @ep7) | val acc 0.811 | 24s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":2339.83652958,"data":"[focal_s43] epoch 32/60 | loss 0.089 | val QWK 0.903 (best 0.903 @ep32) | val acc 0.818 | 25s | ~11 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":2363.904472469,"data":"[focal_s43] epoch 33/60 | loss 0.079 | val QWK 0.882 (best 0.903 @ep32) | val acc 0.818 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":2387.823753007,"data":"[focal_s43] epoch 34/60 | loss 0.095 | val QWK 0.898 (best 0.903 @ep32) | val acc 0.815 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":2413.333882537,"data":"[focal_s43] epoch 35/60 | loss 0.093 | val QWK 0.904 (best 0.904 @ep35) | val acc 0.827 | 26s | ~10 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":2438.821573621,"data":"[focal_s43] epoch 36/60 | loss 0.085 | val QWK 0.901 (best 0.904 @ep35) | val acc 0.831 | 25s | ~10 min left | snapshot 6/10\n"}
+,{"stream_name":"stdout","time":2462.938743841,"data":"[focal_s43] epoch 37/60 | loss 0.090 | val QWK 0.887 (best 0.904 @ep35) | val acc 0.820 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":2486.802773263,"data":"[focal_s43] epoch 38/60 | loss 0.090 | val QWK 0.897 (best 0.904 @ep35) | val acc 0.804 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":2510.882652241,"data":"[focal_s43] epoch 39/60 | loss 0.087 | val QWK 0.890 (best 0.904 @ep35) | val acc 0.809 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":2534.841093282,"data":"[focal_s43] epoch 40/60 | loss 0.080 | val QWK 0.881 (best 0.904 @ep35) | val acc 0.818 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":2558.795472986,"data":"[focal_s43] epoch 41/60 | loss 0.094 | val QWK 0.878 (best 0.904 @ep35) | val acc 0.816 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":2584.270808199,"data":"[focal_s43] epoch 42/60 | loss 0.083 | val QWK 0.884 (best 0.904 @ep35) | val acc 0.820 | 25s | ~7 min left | snapshot 7/10\n"}
+,{"stream_name":"stdout","time":2608.320321331,"data":"[focal_s43] epoch 43/60 | loss 0.087 | val QWK 0.873 (best 0.904 @ep35) | val acc 0.798 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":2632.311951254,"data":"[focal_s43] epoch 44/60 | loss 0.082 | val QWK 0.880 (best 0.904 @ep35) | val acc 0.816 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":2656.403075262,"data":"[focal_s43] epoch 45/60 | loss 0.080 | val QWK 0.886 (best 0.904 @ep35) | val acc 0.815 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":2680.373798549,"data":"[focal_s43] epoch 46/60 | loss 0.080 | val QWK 0.882 (best 0.904 @ep35) | val acc 0.804 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":2704.301176727,"data":"[focal_s43] epoch 47/60 | loss 0.086 | val QWK 0.877 (best 0.904 @ep35) | val acc 0.800 | 24s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":2729.549935085,"data":"[focal_s43] epoch 48/60 | loss 0.078 | val QWK 0.882 (best 0.904 @ep35) | val acc 0.805 | 25s | ~5 min left | snapshot 8/10\n"}
+,{"stream_name":"stdout","time":2753.533785771,"data":"[focal_s43] epoch 49/60 | loss 0.083 | val QWK 0.885 (best 0.904 @ep35) | val acc 0.818 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":2777.563023277,"data":"[focal_s43] epoch 50/60 | loss 0.093 | val QWK 0.884 (best 0.904 @ep35) | val acc 0.813 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":2801.421612952,"data":"[focal_s43] epoch 51/60 | loss 0.079 | val QWK 0.858 (best 0.904 @ep35) | val acc 0.796 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":2825.363119109,"data":"[focal_s43] epoch 52/60 | loss 0.076 | val QWK 0.889 (best 0.904 @ep35) | val acc 0.835 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":2849.336984921,"data":"[focal_s43] epoch 53/60 | loss 0.092 | val QWK 0.895 (best 0.904 @ep35) | val acc 0.818 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":2874.814840813,"data":"[focal_s43] epoch 54/60 | loss 0.088 | val QWK 0.898 (best 0.904 @ep35) | val acc 0.825 | 25s | ~2 min left | snapshot 9/10\n"}
+,{"stream_name":"stdout","time":2898.78485547,"data":"[focal_s43] epoch 55/60 | loss 0.077 | val QWK 0.899 (best 0.904 @ep35) | val acc 0.818 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":2922.679115324,"data":"[focal_s43] epoch 56/60 | loss 0.084 | val QWK 0.882 (best 0.904 @ep35) | val acc 0.822 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":2946.697352125,"data":"[focal_s43] epoch 57/60 | loss 0.081 | val QWK 0.891 (best 0.904 @ep35) | val acc 0.815 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":2970.774738918,"data":"[focal_s43] epoch 58/60 | loss 0.090 | val QWK 0.884 (best 0.904 @ep35) | val acc 0.813 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":2994.709465614,"data":"[focal_s43] epoch 59/60 | loss 0.084 | val QWK 0.877 (best 0.904 @ep35) | val acc 0.800 | 24s | ~0 min left |\n"}
+,{"stream_name":"stdout","time":3020.018196477,"data":"[focal_s43] epoch 60/60 | loss 0.079 | val QWK 0.873 (best 0.904 @ep35) | val acc 0.782 | 25s | ~0 min left | snapshot 10/10\n"}
+,{"stream_name":"stdout","time":3020.018228829,"data":"\n"}
+,{"stream_name":"stdout","time":3020.018235299,"data":"=== focal_s44 ===  loss=focal  seed=44  dedupe=False  lr=0.0001  epochs=60\n"}
+,{"stream_name":"stderr","time":3020.104133666,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":3020.104161823,"data":"\n"}
+,{"stream_name":"stderr","time":3020.104167755,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":3045.738503414,"data":"[focal_s44] epoch  1/60 | loss 0.551 | val QWK 0.780 (best 0.780 @ep1) | val acc 0.751 | 26s | ~25 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3071.37275457,"data":"[focal_s44] epoch  2/60 | loss 0.305 | val QWK 0.842 (best 0.842 @ep2) | val acc 0.804 | 26s | ~25 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3096.916395188,"data":"[focal_s44] epoch  3/60 | loss 0.244 | val QWK 0.893 (best 0.893 @ep3) | val acc 0.822 | 26s | ~24 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3121.086078921,"data":"[focal_s44] epoch  4/60 | loss 0.220 | val QWK 0.882 (best 0.893 @ep3) | val acc 0.820 | 24s | ~24 min left |\n"}
+,{"stream_name":"stdout","time":3146.627370621,"data":"[focal_s44] epoch  5/60 | loss 0.198 | val QWK 0.896 (best 0.896 @ep5) | val acc 0.822 | 26s | ~23 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3172.182805737,"data":"[focal_s44] epoch  6/60 | loss 0.171 | val QWK 0.900 (best 0.900 @ep6) | val acc 0.838 | 26s | ~23 min left | NEW BEST snapshot 1/10\n"}
+,{"stream_name":"stdout","time":3197.737572821,"data":"[focal_s44] epoch  7/60 | loss 0.157 | val QWK 0.902 (best 0.902 @ep7) | val acc 0.840 | 26s | ~22 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3221.824855746,"data":"[focal_s44] epoch  8/60 | loss 0.157 | val QWK 0.892 (best 0.902 @ep7) | val acc 0.796 | 24s | ~22 min left |\n"}
+,{"stream_name":"stdout","time":3245.972687144,"data":"[focal_s44] epoch  9/60 | loss 0.152 | val QWK 0.899 (best 0.902 @ep7) | val acc 0.824 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":3270.115610455,"data":"[focal_s44] epoch 10/60 | loss 0.135 | val QWK 0.889 (best 0.902 @ep7) | val acc 0.773 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":3294.153062634,"data":"[focal_s44] epoch 11/60 | loss 0.136 | val QWK 0.885 (best 0.902 @ep7) | val acc 0.815 | 24s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":3319.505449069,"data":"[focal_s44] epoch 12/60 | loss 0.126 | val QWK 0.878 (best 0.902 @ep7) | val acc 0.809 | 25s | ~20 min left | snapshot 2/10\n"}
+,{"stream_name":"stdout","time":3343.483072031,"data":"[focal_s44] epoch 13/60 | loss 0.116 | val QWK 0.890 (best 0.902 @ep7) | val acc 0.805 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":3367.491189054,"data":"[focal_s44] epoch 14/60 | loss 0.114 | val QWK 0.897 (best 0.902 @ep7) | val acc 0.815 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":3393.066683752,"data":"[focal_s44] epoch 15/60 | loss 0.104 | val QWK 0.905 (best 0.905 @ep15) | val acc 0.820 | 26s | ~19 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3417.122053336,"data":"[focal_s44] epoch 16/60 | loss 0.109 | val QWK 0.885 (best 0.905 @ep15) | val acc 0.807 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":3441.20636455,"data":"[focal_s44] epoch 17/60 | loss 0.112 | val QWK 0.903 (best 0.905 @ep15) | val acc 0.825 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":3466.802902203,"data":"[focal_s44] epoch 18/60 | loss 0.100 | val QWK 0.889 (best 0.905 @ep15) | val acc 0.824 | 26s | ~17 min left | snapshot 3/10\n"}
+,{"stream_name":"stdout","time":3490.739762797,"data":"[focal_s44] epoch 19/60 | loss 0.100 | val QWK 0.887 (best 0.905 @ep15) | val acc 0.825 | 24s | ~17 min left |\n"}
+,{"stream_name":"stdout","time":3514.770632402,"data":"[focal_s44] epoch 20/60 | loss 0.110 | val QWK 0.900 (best 0.905 @ep15) | val acc 0.795 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":3538.936048268,"data":"[focal_s44] epoch 21/60 | loss 0.104 | val QWK 0.876 (best 0.905 @ep15) | val acc 0.800 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":3562.900623591,"data":"[focal_s44] epoch 22/60 | loss 0.096 | val QWK 0.856 (best 0.905 @ep15) | val acc 0.793 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":3587.126135108,"data":"[focal_s44] epoch 23/60 | loss 0.084 | val QWK 0.893 (best 0.905 @ep15) | val acc 0.822 | 24s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":3612.614885146,"data":"[focal_s44] epoch 24/60 | loss 0.091 | val QWK 0.890 (best 0.905 @ep15) | val acc 0.809 | 25s | ~15 min left | snapshot 4/10\n"}
+,{"stream_name":"stdout","time":3636.776942412,"data":"[focal_s44] epoch 25/60 | loss 0.099 | val QWK 0.887 (best 0.905 @ep15) | val acc 0.813 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":3660.892665115,"data":"[focal_s44] epoch 26/60 | loss 0.089 | val QWK 0.878 (best 0.905 @ep15) | val acc 0.813 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":3685.072230266,"data":"[focal_s44] epoch 27/60 | loss 0.097 | val QWK 0.863 (best 0.905 @ep15) | val acc 0.769 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":3709.004512175,"data":"[focal_s44] epoch 28/60 | loss 0.091 | val QWK 0.888 (best 0.905 @ep15) | val acc 0.809 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":3732.891667479,"data":"[focal_s44] epoch 29/60 | loss 0.086 | val QWK 0.866 (best 0.905 @ep15) | val acc 0.787 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":3758.328444434,"data":"[focal_s44] epoch 30/60 | loss 0.092 | val QWK 0.897 (best 0.905 @ep15) | val acc 0.825 | 25s | ~12 min left | snapshot 5/10\n"}
+,{"stream_name":"stdout","time":3782.387653056,"data":"[focal_s44] epoch 31/60 | loss 0.094 | val QWK 0.884 (best 0.905 @ep15) | val acc 0.816 | 24s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":3806.282914261,"data":"[focal_s44] epoch 32/60 | loss 0.082 | val QWK 0.866 (best 0.905 @ep15) | val acc 0.771 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":3830.228598589,"data":"[focal_s44] epoch 33/60 | loss 0.080 | val QWK 0.872 (best 0.905 @ep15) | val acc 0.798 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":3854.360799476,"data":"[focal_s44] epoch 34/60 | loss 0.091 | val QWK 0.861 (best 0.905 @ep15) | val acc 0.804 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":3878.312022016,"data":"[focal_s44] epoch 35/60 | loss 0.082 | val QWK 0.883 (best 0.905 @ep15) | val acc 0.800 | 24s | ~10 min left |\n"}
+,{"stream_name":"stdout","time":3903.588682328,"data":"[focal_s44] epoch 36/60 | loss 0.080 | val QWK 0.891 (best 0.905 @ep15) | val acc 0.796 | 25s | ~10 min left | snapshot 6/10\n"}
+,{"stream_name":"stdout","time":3927.714229005,"data":"[focal_s44] epoch 37/60 | loss 0.082 | val QWK 0.864 (best 0.905 @ep15) | val acc 0.820 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":3951.71441469,"data":"[focal_s44] epoch 38/60 | loss 0.083 | val QWK 0.871 (best 0.905 @ep15) | val acc 0.807 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":3975.740397278,"data":"[focal_s44] epoch 39/60 | loss 0.084 | val QWK 0.892 (best 0.905 @ep15) | val acc 0.807 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":3999.610369981,"data":"[focal_s44] epoch 40/60 | loss 0.081 | val QWK 0.843 (best 0.905 @ep15) | val acc 0.784 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":4023.571108886,"data":"[focal_s44] epoch 41/60 | loss 0.095 | val QWK 0.874 (best 0.905 @ep15) | val acc 0.824 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":4048.977639204,"data":"[focal_s44] epoch 42/60 | loss 0.096 | val QWK 0.857 (best 0.905 @ep15) | val acc 0.804 | 25s | ~7 min left | snapshot 7/10\n"}
+,{"stream_name":"stdout","time":4073.033431717,"data":"[focal_s44] epoch 43/60 | loss 0.088 | val QWK 0.868 (best 0.905 @ep15) | val acc 0.800 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":4097.174543133,"data":"[focal_s44] epoch 44/60 | loss 0.099 | val QWK 0.897 (best 0.905 @ep15) | val acc 0.825 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":4121.150116285,"data":"[focal_s44] epoch 45/60 | loss 0.086 | val QWK 0.889 (best 0.905 @ep15) | val acc 0.813 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":4145.121431643,"data":"[focal_s44] epoch 46/60 | loss 0.083 | val QWK 0.894 (best 0.905 @ep15) | val acc 0.818 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":4169.226437195,"data":"[focal_s44] epoch 47/60 | loss 0.092 | val QWK 0.865 (best 0.905 @ep15) | val acc 0.795 | 24s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":4194.54623653,"data":"[focal_s44] epoch 48/60 | loss 0.082 | val QWK 0.888 (best 0.905 @ep15) | val acc 0.822 | 25s | ~5 min left | snapshot 8/10\n"}
+,{"stream_name":"stdout","time":4218.514575292,"data":"[focal_s44] epoch 49/60 | loss 0.082 | val QWK 0.889 (best 0.905 @ep15) | val acc 0.816 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":4242.642685323,"data":"[focal_s44] epoch 50/60 | loss 0.077 | val QWK 0.875 (best 0.905 @ep15) | val acc 0.804 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":4266.739795158,"data":"[focal_s44] epoch 51/60 | loss 0.086 | val QWK 0.881 (best 0.905 @ep15) | val acc 0.800 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":4290.72863724,"data":"[focal_s44] epoch 52/60 | loss 0.091 | val QWK 0.857 (best 0.905 @ep15) | val acc 0.804 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":4314.715497359,"data":"[focal_s44] epoch 53/60 | loss 0.083 | val QWK 0.849 (best 0.905 @ep15) | val acc 0.805 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":4339.985798046,"data":"[focal_s44] epoch 54/60 | loss 0.093 | val QWK 0.880 (best 0.905 @ep15) | val acc 0.815 | 25s | ~2 min left | snapshot 9/10\n"}
+,{"stream_name":"stdout","time":4364.032268038,"data":"[focal_s44] epoch 55/60 | loss 0.073 | val QWK 0.888 (best 0.905 @ep15) | val acc 0.807 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":4388.15222866,"data":"[focal_s44] epoch 56/60 | loss 0.082 | val QWK 0.893 (best 0.905 @ep15) | val acc 0.820 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":4412.060130355,"data":"[focal_s44] epoch 57/60 | loss 0.075 | val QWK 0.896 (best 0.905 @ep15) | val acc 0.820 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":4436.089854369,"data":"[focal_s44] epoch 58/60 | loss 0.098 | val QWK 0.881 (best 0.905 @ep15) | val acc 0.822 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":4460.149415857,"data":"[focal_s44] epoch 59/60 | loss 0.084 | val QWK 0.897 (best 0.905 @ep15) | val acc 0.815 | 24s | ~0 min left |\n"}
+,{"stream_name":"stdout","time":4485.479618476,"data":"[focal_s44] epoch 60/60 | loss 0.087 | val QWK 0.849 (best 0.905 @ep15) | val acc 0.815 | 25s | ~0 min left | snapshot 10/10\n"}
+,{"stream_name":"stdout","time":4485.479675666,"data":"\n"}
+,{"stream_name":"stdout","time":4485.479682813,"data":"=== ce_s42_k ===  loss=ce  seed=42  dedupe=False  lr=0.0001  epochs=60\n"}
+,{"stream_name":"stdout","time":4511.209910939,"data":"[ce_s42_k] epoch  1/60 | loss 0.927 | val QWK 0.808 (best 0.808 @ep1) | val acc 0.755 | 26s | ~25 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4536.901297395,"data":"[ce_s42_k] epoch  2/60 | loss 0.599 | val QWK 0.835 (best 0.835 @ep2) | val acc 0.796 | 26s | ~25 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4562.535441964,"data":"[ce_s42_k] epoch  3/60 | loss 0.512 | val QWK 0.889 (best 0.889 @ep3) | val acc 0.811 | 26s | ~24 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4587.972768172,"data":"[ce_s42_k] epoch  4/60 | loss 0.447 | val QWK 0.901 (best 0.901 @ep4) | val acc 0.820 | 25s | ~24 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4612.008153749,"data":"[ce_s42_k] epoch  5/60 | loss 0.452 | val QWK 0.885 (best 0.901 @ep4) | val acc 0.815 | 24s | ~23 min left |\n"}
+,{"stream_name":"stdout","time":4637.497829041,"data":"[ce_s42_k] epoch  6/60 | loss 0.386 | val QWK 0.889 (best 0.901 @ep4) | val acc 0.816 | 25s | ~23 min left | snapshot 1/10\n"}
+,{"stream_name":"stdout","time":4663.103551699,"data":"[ce_s42_k] epoch  7/60 | loss 0.384 | val QWK 0.910 (best 0.910 @ep7) | val acc 0.829 | 26s | ~22 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4687.272361256,"data":"[ce_s42_k] epoch  8/60 | loss 0.348 | val QWK 0.884 (best 0.910 @ep7) | val acc 0.818 | 24s | ~22 min left |\n"}
+,{"stream_name":"stdout","time":4711.411556348,"data":"[ce_s42_k] epoch  9/60 | loss 0.348 | val QWK 0.902 (best 0.910 @ep7) | val acc 0.816 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":4735.575098687,"data":"[ce_s42_k] epoch 10/60 | loss 0.287 | val QWK 0.909 (best 0.910 @ep7) | val acc 0.836 | 24s | ~21 min left |\n"}
+,{"stream_name":"stdout","time":4759.583947133,"data":"[ce_s42_k] epoch 11/60 | loss 0.295 | val QWK 0.888 (best 0.910 @ep7) | val acc 0.824 | 24s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":4784.926901045,"data":"[ce_s42_k] epoch 12/60 | loss 0.255 | val QWK 0.876 (best 0.910 @ep7) | val acc 0.809 | 25s | ~20 min left | snapshot 2/10\n"}
+,{"stream_name":"stdout","time":4808.938022338,"data":"[ce_s42_k] epoch 13/60 | loss 0.266 | val QWK 0.891 (best 0.910 @ep7) | val acc 0.820 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":4832.942672284,"data":"[ce_s42_k] epoch 14/60 | loss 0.266 | val QWK 0.898 (best 0.910 @ep7) | val acc 0.811 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":4856.996523752,"data":"[ce_s42_k] epoch 15/60 | loss 0.221 | val QWK 0.886 (best 0.910 @ep7) | val acc 0.815 | 24s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":4881.135538107,"data":"[ce_s42_k] epoch 16/60 | loss 0.220 | val QWK 0.896 (best 0.910 @ep7) | val acc 0.816 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":4905.262462095,"data":"[ce_s42_k] epoch 17/60 | loss 0.255 | val QWK 0.885 (best 0.910 @ep7) | val acc 0.813 | 24s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":4930.65699531,"data":"[ce_s42_k] epoch 18/60 | loss 0.245 | val QWK 0.889 (best 0.910 @ep7) | val acc 0.820 | 25s | ~17 min left | snapshot 3/10\n"}
+,{"stream_name":"stdout","time":4954.646446105,"data":"[ce_s42_k] epoch 19/60 | loss 0.211 | val QWK 0.884 (best 0.910 @ep7) | val acc 0.816 | 24s | ~17 min left |\n"}
+,{"stream_name":"stdout","time":4978.620071095,"data":"[ce_s42_k] epoch 20/60 | loss 0.213 | val QWK 0.890 (best 0.910 @ep7) | val acc 0.816 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":5002.737946189,"data":"[ce_s42_k] epoch 21/60 | loss 0.205 | val QWK 0.887 (best 0.910 @ep7) | val acc 0.815 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":5026.727333514,"data":"[ce_s42_k] epoch 22/60 | loss 0.213 | val QWK 0.887 (best 0.910 @ep7) | val acc 0.809 | 24s | ~16 min left |\n"}
+,{"stream_name":"stdout","time":5050.701053927,"data":"[ce_s42_k] epoch 23/60 | loss 0.193 | val QWK 0.878 (best 0.910 @ep7) | val acc 0.795 | 24s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":5076.242381184,"data":"[ce_s42_k] epoch 24/60 | loss 0.235 | val QWK 0.878 (best 0.910 @ep7) | val acc 0.807 | 26s | ~15 min left | snapshot 4/10\n"}
+,{"stream_name":"stdout","time":5100.164636729,"data":"[ce_s42_k] epoch 25/60 | loss 0.191 | val QWK 0.876 (best 0.910 @ep7) | val acc 0.796 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":5124.105440447,"data":"[ce_s42_k] epoch 26/60 | loss 0.211 | val QWK 0.859 (best 0.910 @ep7) | val acc 0.780 | 24s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":5148.261353454,"data":"[ce_s42_k] epoch 27/60 | loss 0.191 | val QWK 0.872 (best 0.910 @ep7) | val acc 0.789 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":5172.381208364,"data":"[ce_s42_k] epoch 28/60 | loss 0.221 | val QWK 0.891 (best 0.910 @ep7) | val acc 0.791 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":5196.299530012,"data":"[ce_s42_k] epoch 29/60 | loss 0.216 | val QWK 0.865 (best 0.910 @ep7) | val acc 0.784 | 24s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":5221.735539412,"data":"[ce_s42_k] epoch 30/60 | loss 0.211 | val QWK 0.883 (best 0.910 @ep7) | val acc 0.800 | 25s | ~12 min left | snapshot 5/10\n"}
+,{"stream_name":"stdout","time":5245.89342091,"data":"[ce_s42_k] epoch 31/60 | loss 0.217 | val QWK 0.887 (best 0.910 @ep7) | val acc 0.816 | 24s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":5269.967051795,"data":"[ce_s42_k] epoch 32/60 | loss 0.192 | val QWK 0.901 (best 0.910 @ep7) | val acc 0.829 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":5294.048438721,"data":"[ce_s42_k] epoch 33/60 | loss 0.204 | val QWK 0.887 (best 0.910 @ep7) | val acc 0.800 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":5318.056978152,"data":"[ce_s42_k] epoch 34/60 | loss 0.238 | val QWK 0.892 (best 0.910 @ep7) | val acc 0.822 | 24s | ~11 min left |\n"}
+,{"stream_name":"stdout","time":5341.943286041,"data":"[ce_s42_k] epoch 35/60 | loss 0.186 | val QWK 0.880 (best 0.910 @ep7) | val acc 0.816 | 24s | ~10 min left |\n"}
+,{"stream_name":"stdout","time":5367.356170031,"data":"[ce_s42_k] epoch 36/60 | loss 0.209 | val QWK 0.889 (best 0.910 @ep7) | val acc 0.807 | 25s | ~10 min left | snapshot 6/10\n"}
+,{"stream_name":"stdout","time":5391.481390035,"data":"[ce_s42_k] epoch 37/60 | loss 0.190 | val QWK 0.900 (best 0.910 @ep7) | val acc 0.818 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":5415.531799318,"data":"[ce_s42_k] epoch 38/60 | loss 0.188 | val QWK 0.867 (best 0.910 @ep7) | val acc 0.809 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":5439.667464345,"data":"[ce_s42_k] epoch 39/60 | loss 0.205 | val QWK 0.885 (best 0.910 @ep7) | val acc 0.820 | 24s | ~9 min left |\n"}
+,{"stream_name":"stdout","time":5463.786575878,"data":"[ce_s42_k] epoch 40/60 | loss 0.212 | val QWK 0.880 (best 0.910 @ep7) | val acc 0.802 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":5487.86004235,"data":"[ce_s42_k] epoch 41/60 | loss 0.209 | val QWK 0.869 (best 0.910 @ep7) | val acc 0.789 | 24s | ~8 min left |\n"}
+,{"stream_name":"stdout","time":5513.225496351,"data":"[ce_s42_k] epoch 42/60 | loss 0.200 | val QWK 0.896 (best 0.910 @ep7) | val acc 0.824 | 25s | ~7 min left | snapshot 7/10\n"}
+,{"stream_name":"stdout","time":5537.163433655,"data":"[ce_s42_k] epoch 43/60 | loss 0.189 | val QWK 0.885 (best 0.910 @ep7) | val acc 0.804 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":5561.372447541,"data":"[ce_s42_k] epoch 44/60 | loss 0.194 | val QWK 0.884 (best 0.910 @ep7) | val acc 0.825 | 24s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":5585.361660528,"data":"[ce_s42_k] epoch 45/60 | loss 0.213 | val QWK 0.875 (best 0.910 @ep7) | val acc 0.795 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":5609.310282662,"data":"[ce_s42_k] epoch 46/60 | loss 0.212 | val QWK 0.893 (best 0.910 @ep7) | val acc 0.809 | 24s | ~6 min left |\n"}
+,{"stream_name":"stdout","time":5633.26835317,"data":"[ce_s42_k] epoch 47/60 | loss 0.208 | val QWK 0.901 (best 0.910 @ep7) | val acc 0.796 | 24s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":5658.533005306,"data":"[ce_s42_k] epoch 48/60 | loss 0.184 | val QWK 0.892 (best 0.910 @ep7) | val acc 0.809 | 25s | ~5 min left | snapshot 8/10\n"}
+,{"stream_name":"stdout","time":5682.538086357,"data":"[ce_s42_k] epoch 49/60 | loss 0.188 | val QWK 0.875 (best 0.910 @ep7) | val acc 0.805 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":5706.495417142,"data":"[ce_s42_k] epoch 50/60 | loss 0.192 | val QWK 0.881 (best 0.910 @ep7) | val acc 0.815 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":5730.486255681,"data":"[ce_s42_k] epoch 51/60 | loss 0.174 | val QWK 0.889 (best 0.910 @ep7) | val acc 0.804 | 24s | ~4 min left |\n"}
+,{"stream_name":"stdout","time":5754.502972798,"data":"[ce_s42_k] epoch 52/60 | loss 0.226 | val QWK 0.838 (best 0.910 @ep7) | val acc 0.753 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":5778.601916472,"data":"[ce_s42_k] epoch 53/60 | loss 0.208 | val QWK 0.891 (best 0.910 @ep7) | val acc 0.815 | 24s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":5804.125377969,"data":"[ce_s42_k] epoch 54/60 | loss 0.198 | val QWK 0.883 (best 0.910 @ep7) | val acc 0.825 | 26s | ~2 min left | snapshot 9/10\n"}
+,{"stream_name":"stdout","time":5828.185362562,"data":"[ce_s42_k] epoch 55/60 | loss 0.200 | val QWK 0.867 (best 0.910 @ep7) | val acc 0.802 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":5852.110686626,"data":"[ce_s42_k] epoch 56/60 | loss 0.183 | val QWK 0.868 (best 0.910 @ep7) | val acc 0.780 | 24s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":5876.039050399,"data":"[ce_s42_k] epoch 57/60 | loss 0.189 | val QWK 0.894 (best 0.910 @ep7) | val acc 0.818 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":5900.216734463,"data":"[ce_s42_k] epoch 58/60 | loss 0.182 | val QWK 0.868 (best 0.910 @ep7) | val acc 0.787 | 24s | ~1 min left |\n"}
+,{"stream_name":"stdout","time":5924.146068567,"data":"[ce_s42_k] epoch 59/60 | loss 0.205 | val QWK 0.903 (best 0.910 @ep7) | val acc 0.811 | 24s | ~0 min left |\n"}
+,{"stream_name":"stdout","time":5949.271673367,"data":"[ce_s42_k] epoch 60/60 | loss 0.208 | val QWK 0.887 (best 0.910 @ep7) | val acc 0.816 | 25s | ~0 min left | snapshot 10/10\n"}
+,{"stream_name":"stdout","time":5949.271703754,"data":"finished Stage 4e runs: ['ce_s42_k', 'focal_s42', 'focal_s43', 'focal_s44']\n"}
+,{"stream_name":"stderr","time":5956.321923824,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":5956.321953327,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5956.508682469,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5956.508710352,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":5957.385801814,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":5957.907098799,"data":"[NbConvertApp] Writing 2966204 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":5960.585414699,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":5961.911852656,"data":"[NbConvertApp] Writing 2888043 bytes to __results__.html\n"}
+]

@@ -1,0 +1,9 @@
+kind,test_position,true,pred,top_left_share
+missed Severe,477,Severe,Moderate,0.33016958832740784
+missed Severe,484,Severe,Moderate,0.46368083357810974
+missed Severe,486,Severe,Moderate,0.3953322470188141
+missed Severe,487,Severe,Moderate,0.49807459115982056
+large error,508,PDR,Mild,0.5444318056106567
+large error,539,PDR,Mild,0.7719894647598267
+correct Severe/PDR,479,Severe,Severe,0.26874253153800964
+correct Severe/PDR,481,Severe,Severe,0.296556293964386

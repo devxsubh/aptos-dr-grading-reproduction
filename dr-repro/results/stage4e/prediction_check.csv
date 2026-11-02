@@ -1,0 +1,9 @@
+id,prediction,observed,confirmed,seeds
+Q1,focal does not change QWK under the same rule,E_vote - A +0.004; E_tuned - B +0.004,True,3
+Q2,focal raises Severe recall under the vote by >= 0.05,0.276 -> 0.241,False,3
+Q3,ordinal still beats focal (D > E_tuned),D - E_tuned +0.003,True,3
+Q4,class balancing raises Severe recall on top of ordinal by >= 0.05,0.402 -> 0.460,True,3
+Q5,class balancing costs no QWK (|F_tuned - D| < 0.01),F_tuned - D -0.006,True,3
+Q6,errors >= 2 grades do not rise by more than 10%,16.0 -> 16.0,True,3
+Q7,class balancing lifts PDR recall under rounding by >= 0.15,0.167 -> 0.220,False,3
+Q8,"sanity: Kaggle controls within 0.015 of Colab (A, D)",A +0.011; D -0.002,True,3
