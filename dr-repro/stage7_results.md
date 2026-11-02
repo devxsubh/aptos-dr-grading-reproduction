@@ -39,7 +39,7 @@ Only the last interval excludes 0: on seed 42, the EfficientNet-B3 is better tha
 | S6 | referable AUC ≥ CNN − 0.005 | 0.983 → 0.986 | confirmed |
 | S7 | sanity: mirror weights differ from ImageNet | relative difference 2.0 | confirmed |
 
-Two of seven held. The two that carry the hypothesis (S1, S2) both failed, and in the opposite direction.
+Three of seven held (S5, S6, S7), but none of them is the hypothesis itself. The two that carry it (S1, S2) both failed, and in the opposite direction.
 
 ## 4. Per-grade recall (seed 42, tuned arm)
 
