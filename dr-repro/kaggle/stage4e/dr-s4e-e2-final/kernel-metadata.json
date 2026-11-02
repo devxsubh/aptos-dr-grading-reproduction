@@ -1,0 +1,22 @@
+{
+  "id": "subhammahapatra004/dr-s4e-e2-final",
+  "title": "dr-s4e-e2-final",
+  "code_file": "notebook.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "subhammahapatra004/dr-stage4-outputs",
+    "subhammahapatra004/dr-stage4-weights"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "subhammahapatra004/dr-s4e-e0-quick",
+    "subhammahapatra004/dr-s4e-e1-focal",
+    "subhammahapatra004/dr-s4e-e1-cb"
+  ],
+  "model_sources": []
+}
