@@ -2,13 +2,14 @@
 
 A research-reproduction study of **Chilukoti et al., "A reliable diabetic retinopathy grading via transfer learning and ensemble learning with quadratic weighted kappa metric"**, *BMC Medical Informatics and Decision Making* 24:37 (2024), [open access](https://doi.org/10.1186/s12911-024-02446-x). The paper fine-tunes an EfficientNet-B3 with CLAHE + Gaussian-blur preprocessing and a snapshot ensemble, reporting **QWK 0.954** on APTOS 2019 (ImageNet init) and **0.967** (EyePACS init + ensemble).
 
-The paper has no public code, so the method was re-implemented from the text. This repository covers Stage 2 (base-paper selection and reproducibility checklist), Stage 3 (baseline reproduction), Stage 4 (ordinal regression) and Stages 4b–4d (closing the gap to 0.954 under a strict protocol).
+The paper has no public code, so the method was re-implemented from the text. This repository covers Stage 2 (base-paper selection and reproducibility checklist), Stage 3 (baseline reproduction), Stage 4 (ordinal regression), Stage 4e (focal loss and class-balanced ordinal regression, the two Phase 1 strategies not yet tested) and Stages 4b–4d (closing the gap to 0.954 under a strict protocol).
 
 **Current best (strict protocol, test set opened once): QWK 0.918 [0.900, 0.935]**, a 3-member 5-fold ensemble ([Stage 4c](#stages-4b-and-4c-closing-the-gap-to-the-paper)). The paper's 0.954 lies outside this interval.
 
 **Team:** Shivansh, Divyanshi, Vivek, Shubham
 
-**Report:** [`Stage2_3_Report.pdf`](Stage2_3_Report.pdf) (IEEE format, Stages 2 and 3)
+**Final report:** [`Final_Report.pdf`](Final_Report.pdf) (IEEE format, all stages; source in [`dr-repro/reports/final_report.tex`](dr-repro/reports/final_report.tex)). **Final defence slides:** [`DR_Grading_Final_Defence.pptx`](DR_Grading_Final_Defence.pptx).
+Earlier: [`Stage2_3_Report.pdf`](Stage2_3_Report.pdf) (Stages 2 and 3).
 
 > This is a reproduction study. No clinical claims are made.
 
@@ -57,7 +58,24 @@ Test set: 550 images (stratified 70/15/15 split, seed 42), never used for any de
 - **Neither part works alone.** The ordinal loss with plain rounding ties the baseline, because the regression output shrinks towards the mean grade: PDR recall drops to 0.17. The tuned cut-offs undo this shrinkage.
 - **The gain appears only in the ensemble.** As single models, all arms tie at about 0.90.
 - **The first Grad-CAM figure shows a padding artefact** of EfficientNet-B3 at 300 px (the peak is always in the top-left corner), not lesions.
-- **Post-hoc checks, pending a re-run with no training:** a soft-vote baseline to separate "averaging vs. voting" from the loss, and Grad-CAM restricted to the retina.
+- **Post-hoc checks** ([`dr-repro/stage4_posthoc_results.md`](dr-repro/stage4_posthoc_results.md), [`dr-repro/stage4e_results.md`](dr-repro/stage4e_results.md)): averaging the CE snapshots' probabilities (A_soft, 0.899) does not close the gap. D − A_soft = +0.015 [+0.002, +0.030], so the gain comes from the loss and cut-offs, not from averaging instead of voting. Misgraded images are blurrier (p = 0.0005). Restricting Grad-CAM to the retina removes the corner artefact in 6 of 8 images.
+
+## Stage 4e: focal loss and class-balanced ordinal regression (post-test)
+
+**Plan** ([`dr-repro/stage4e_plan.md`](dr-repro/stage4e_plan.md), predictions Q1–Q8 written before any run), **notebook** [`dr-repro/stage4e_imbalance.ipynb`](dr-repro/stage4e_imbalance.ipynb), Kaggle kernels from [`dr-repro/kaggle/stage4e/`](dr-repro/kaggle/stage4e/), **results** [`dr-repro/stage4e_results.md`](dr-repro/stage4e_results.md), raw files in [`dr-repro/results/stage4e/`](dr-repro/results/stage4e/). Phase 1 proposed five training strategies, and focal loss and class-balanced ordinal regression had not been run. Stage 4e runs both under the Stage 4 protocol (3 seeds). Only the loss changes. It ran after the test set was opened, so its numbers drive no choice.
+
+| Arm (10-snapshot ensemble, mean of 3 seeds) | QWK | Severe recall | PDR recall | Errors ≥ 2 grades |
+|---|---|---|---|---|
+| A: cross-entropy, vote | 0.897 | 0.28 | 0.61 | 21.7 |
+| E_vote: focal, vote | 0.901 | 0.24 | 0.58 | 21.0 |
+| E_tuned: focal, tuned cut-offs | 0.911 | 0.54 | 0.53 | 10.0 |
+| **D: ordinal MSE, tuned cut-offs** | **0.914** | 0.40 | 0.58 | 16.0 |
+| F_tuned: class-balanced MSE, tuned cut-offs | 0.908 | 0.46 | 0.55 | 16.0 |
+
+- **Focal loss ties cross-entropy** under every decision rule (+0.004, all CIs include 0) and does not raise Severe recall under the vote.
+- **Class balancing raises Severe recall on top of ordinal** (0.40 → 0.46) at −0.006 QWK. That meets the pre-registered bar, but the gain comes from one seed (0 / +0.17 / 0 by seed), and referable sensitivity falls. **D stays the recommended strategy.**
+- **The decision rule matters more than the loss.** Every tuned-cut-off arm scores 0.907–0.914, and every vote or rounding arm 0.888–0.903.
+- Six of eight predictions held. Q2 (focal raises Severe recall) and Q7 (class balancing fixes PDR under rounding) failed. Kaggle re-runs of two Stage 4 models land within 0.015 of Colab.
 
 ## Stages 4b and 4c: closing the gap to the paper
 
@@ -90,12 +108,14 @@ It tested whether the EyePACS arm failed because fine-tuning restarted at a high
 ## Gap analysis and open work
 
 - [`reports/Closing the APTOS 2019 QWK gap.md`](reports/Closing%20the%20APTOS%202019%20QWK%20gap.md) (before Stage 4c) and [`reports/APTOS QWK gap after Stage 4c.md`](reports/APTOS%20QWK%20gap%20after%20Stage%204c.md) review the literature and the paper's own tables; source notes are in [`research_notes/`](research_notes/). The second report finds that the paper's EyePACS confusion matrices do not reproduce its reported QWKs, and proposes a post-test experiment that splits before vs. after offline augmentation with the paper's recipe. That experiment has not been run.
-- Stage 4 post-hoc checks (soft-vote baseline, retina-restricted Grad-CAM) are still pending.
+- [`reports/Strict APTOS levers beyond Stage 4d.md`](reports/Strict%20APTOS%20levers%20beyond%20Stage%204d.md) (notes in [`research_notes/`](research_notes/)) estimates that every remaining strict lever is worth ≤ +0.004 OOF.
 
 ## Repository layout
 
 ```
 .
+├── Final_Report.pdf                             # final report, all stages (IEEE format)
+├── DR_Grading_Final_Defence.pptx                # final defence slides
 ├── Stage2_3_Report.pdf                          # Stage 2 + 3 report (IEEE format)
 ├── DR_Grading_Stage2_3_Presentation.{pdf,pptx}  # Stage 2 + 3 slides
 ├── Diabetic Retinopathy Grading Phase 1 (1).pdf # Stage 1 literature review
@@ -108,6 +128,13 @@ It tested whether the EyePACS arm failed because fine-tuning restarted at a high
     ├── stage4_hypothesis.md     # M3: hypothesis, predictions, experiment plan, draft Introduction
     ├── stage4_ordinal.ipynb     # M4/M5: ordinal-regression experiments, ablation, statistics, failure analysis (with outputs)
     ├── stage4_results.md        # M4/M5: results, prediction check, failure analysis, limitations
+    ├── stage4_posthoc_results.md # Stage 4 post-hoc: soft-vote baseline, paired and pooled bootstrap
+    ├── posthoc/                 # script for the soft-vote check (reads stage4_runs/)
+    ├── stage4e_plan.md          # Stage 4e (post-test): focal and class-balanced ordinal, predictions Q1-Q8
+    ├── stage4e_imbalance.ipynb  # Stage 4e notebook (Kaggle)
+    ├── stage4e_results.md       # Stage 4e results, prediction check, post-hoc checks
+    ├── results/stage4e/         # Stage 4e CSVs, figures, run outputs and kernel logs
+    ├── kaggle/stage4e/          # Stage 4e kernel builder and generated kernels
     ├── results/stage4/          # Stage 4 CSVs, cut-offs and figures (from MyDrive/dr-grading/stage4/)
     ├── stage4b_plan.md          # Stage 4b: plan, selection rules and predictions for closing the gap to 0.954
     ├── stage4b_push.ipynb       # Stage 4b: protocol gap, lever screening, backbones, 5-fold CV ensemble
@@ -122,7 +149,7 @@ It tested whether the EyePACS arm failed because fine-tuning restarted at a high
     ├── kaggle/*.ipynb           # earlier Kaggle train/submit notebooks and their builder
     ├── archive/                 # superseded notebooks (iteration-2 run with its training logs; Kaggle iteration-1 version)
     ├── runs/  results/          # Stage 3 local run (224 px): per-run outputs, figures, duplicate audit, leakage re-scoring
-    └── reports/                 # LaTeX sources of the Stage 2 + 3 report
+    └── reports/                 # LaTeX sources: Stage 2 + 3 report, final_report.tex, make_stage4e_tex.py
 ```
 
 `runs/`, `results/` and `reports/` were produced by the earlier local Python package (`src/`, `scripts/`), which has been replaced by the notebook. That code is still in commit `f84d254`: `git checkout f84d254 -- dr-repro/src dr-repro/scripts`.
@@ -146,7 +173,7 @@ The first run downloads APTOS from the Hugging Face mirror [`sngsfydy/aptos`](ht
 - The APTOS split, batch size and CLAHE parameters are not stated in the paper and were assumed.
 - Duplicate images with conflicting grades add label noise; the random split leaks 29 test images into training.
 - Single dataset, no external validation. EyePACS was tried only as 5 epochs of pre-training (Stages 4c-4d), so the paper's 0.967 remains out of scope.
-- The test set has been opened once (Stage 4c). Any later test number, such as Stage 4d's, is post-test and labelled as such.
+- The test set has been opened once (Stage 4c). Any later test number, such as Stage 4d's and Stage 4e's, is post-test and labelled as such.
 
 ## Citation
 

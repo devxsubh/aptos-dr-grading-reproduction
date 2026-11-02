@@ -1,0 +1,30 @@
+% Stage 4e discussion, written from ../results/stage4e (see ../stage4e_results.md).
+\textbf{Focal loss changes nothing under the paper's rule.} Focal ties cross-entropy under the vote (+0.004),
+averaging (+0.004) and tuned cut-offs (+0.004), and no interval excludes 0 (Q1). Under the vote, Severe recall
+falls rather than rises (0.28$\to$0.24, Q2 fails). This agrees with the +0.003 reported for focal loss on
+EyePACS~\cite{huang2023resnet}.
+
+\textbf{Class balancing gives a small, unstable gain in Severe recall.} With tuned cut-offs, class-balanced MSE
+raises mean Severe recall from 0.40 to 0.46 at an unchanged count of large errors (Q4, Q6). The gain comes from one
+seed, however: per seed it is 0, +0.17 and 0, which is five extra Severe images in seed~43. QWK falls in all three
+seeds ($-0.006$, CI $[-0.014, +0.000]$), so Q5 holds only narrowly, and referable sensitivity drops from 0.963 to
+0.943. With plain rounding, the weights do not undo the shrinkage of the regression output: PDR recall moves only
+from 0.17 to 0.22, and QWK falls ($-0.008$, CI excludes 0; Q7 fails).
+
+\textbf{The decision rule matters more than the loss.} The four arms with validation-tuned cut-offs (B, D,
+E$_\text{tuned}$, F$_\text{tuned}$) reach 0.907--0.914. The six arms with a vote, averaging or rounding reach
+0.888--0.903. Among the tuned arms, the loss moves QWK by at most 0.007.
+
+\textbf{Platform control.} The Kaggle re-runs of seed~42 land within 0.015 of Colab (Q8): D moves by $-0.002$ and
+A by $+0.011$. Against the same-platform controls, focal is lower than cross-entropy (0.896 vs.\ 0.908), and
+F$_\text{tuned}$ ties D (0.908 vs.\ 0.908). Both readings agree with the pooled contrasts.
+
+\textbf{Answer to the Phase~1 question.} By the reading rule fixed in the plan, class-balanced ordinal learning
+improves Severe NPDR recall at no significant QWK cost. Because the gain rests on five images in one seed and costs
+referable sensitivity, we keep ordinal regression with tuned cut-offs (D) as our recommended strategy. Class
+balancing remains an optional trade toward Severe recall.
+
+\textbf{An unplanned observation.} Focal loss with tuned cut-offs makes the fewest errors of two or more grades in
+every seed (9, 10, 11, against 15--18 for B, D and F$_\text{tuned}$). It also has the highest Severe recall (0.54),
+at the cost of Moderate recall (0.64 vs.\ 0.80 for D). This was not predicted and was seen after the test set was
+opened, so it is a lead for future work, not a result.

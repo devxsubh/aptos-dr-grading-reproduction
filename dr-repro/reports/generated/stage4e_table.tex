@@ -1,0 +1,26 @@
+\begin{table}[t]
+\centering
+\caption{Stage 4e (post-test) with the Stage 4 arms, 10-snapshot ensemble, mean over seeds. CB-MSE: class-balanced MSE. Columns as in Table~\ref{tab:stage4}.}
+\label{tab:stage4e}
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Arm & QWK & Sev. & PDR & $\ge$2 & Sens./Spec. \\
+\midrule
+A: CE, vote & $0.897\pm.004$ & 0.28 & 0.61 & 21.7 & .946/.904 \\
+A$_\text{soft}$: CE, averaged & $0.899\pm.001$ & 0.25 & 0.61 & 21.3 & .949/.904 \\
+B: CE, tuned & $0.907\pm.007$ & 0.44 & 0.57 & 15.7 & .982/.879 \\
+\midrule
+E$_\text{vote}$: focal, vote & $0.901\pm.004$ & 0.24 & 0.58 & 21.0 & .945/.914 \\
+E$_\text{soft}$: focal, averaged & $0.903\pm.001$ & 0.23 & 0.60 & 20.7 & .948/.915 \\
+E$_\text{tuned}$: focal, tuned & $0.911\pm.003$ & 0.54 & 0.53 & 10.0 & .982/.889 \\
+\midrule
+C: MSE, rounding & $0.896\pm.001$ & 0.47 & 0.17 & 17.0 & .900/.948 \\
+D: MSE, tuned & $0.914\pm.004$ & 0.40 & 0.58 & 16.0 & .963/.909 \\
+\midrule
+F$_\text{round}$: CB-MSE, rounding & $0.888\pm.011$ & 0.45 & 0.22 & 18.0 & .873/.956 \\
+F$_\text{tuned}$: CB-MSE, tuned & $0.908\pm.001$ & 0.46 & 0.55 & 16.0 & .943/.915 \\
+\bottomrule
+\end{tabular}
+\end{table}
