@@ -1,0 +1,8 @@
+id,prediction,observed,confirmed
+R1,QWK of H_b within 0.01 of H,H_b 0.909 vs H 0.916 (diff -0.007),True
+R2,error share in the blurriest third falls by >= 2 points,0.262 -> 0.317 (+0.055),False
+R3,errors >= 2 grades of H_b <= 1.10 x H,14.7 -> 14.7,True
+R4,shuffled control is not better on the blurriest third (seed 42),"real 0.273, shuffled 0.279",True
+R5,sharpest third not hurt (<= +1 point),0.071 -> 0.080,True
+R6,referable AUC within 0.01,0.983 -> 0.980,True
+R7,sanity: under H the blurriest third has more errors than the sharpest,0.262 vs 0.071,True
