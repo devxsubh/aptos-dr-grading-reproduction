@@ -1,0 +1,9 @@
+id,prediction,observed,confirmed
+Q1,G - A QWK between +0.005 and +0.025,G - A = +0.011,True
+Q2,errors >= 2 grades of H at least 20% below A,21.7 -> 14.7,True
+Q3,H ties the Stage 4 ordinal regression (abs(H - D) < 0.01),H 0.916 vs D 0.914,True
+Q4,Severe recall of G stays >= 0.23,A 0.276 -> G 0.241,True
+Q5,referable AUC of G within 0.01 of A,A 0.979 -> G 0.983,True
+Q6,tuned cut-offs add more than the soft target: (H - G) > (G - A),H - G +0.008 vs G - A +0.011,False
+Q7,"sigma 1.0 does not beat sigma 0.5 by more than 0.005 (seed 42, rule H)","sigma 0.5 0.922, sigma 1.0 0.914",True
+Q8,"sanity: re-scored controls match Stage 4e (A and D, seed 42)",largest gap 0.0000,True
