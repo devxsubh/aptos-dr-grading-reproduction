@@ -4,19 +4,20 @@ __pycache__/
 .DS_Store
 
 # APTOS 2019 images may not be redistributed (Kaggle competition rules); the Colab notebook downloads them.
-dr-repro/data/
+/data/
+experiments/*/data/
 
 # Model weights (45 MB each) and resume checkpoints.
 *.pt
 *.tmp
 
 # LaTeX build artefacts
-dr-repro/reports/*.aux
-dr-repro/reports/*.log
-dr-repro/reports/*.bbl
-dr-repro/reports/*.blg
-dr-repro/reports/*.out
-dr-repro/reports/*.pdf
+docs/reports/latex/*.aux
+docs/reports/latex/*.log
+docs/reports/latex/*.bbl
+docs/reports/latex/*.blg
+docs/reports/latex/*.out
+docs/reports/latex/*.pdf
 
 dr-repro.zip
 

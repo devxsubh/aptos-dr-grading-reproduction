@@ -1,0 +1,198 @@
+[{"stream_name":"stderr","time":6.230617209,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.230651654,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.230657097,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.230660842,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":6.783404623,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.7834305950000005,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.783435429,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.783439116,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":24.433459501,"data":"device: cuda | Tesla T4\n"}
+,{"stream_name":"stdout","time":24.45385966,"data":"{\n"}
+,{"stream_name":"stdout","time":24.453881528,"data":"  \"image_size\": 224,\n"}
+,{"stream_name":"stdout","time":24.453887627,"data":"  \"epochs\": 25,\n"}
+,{"stream_name":"stdout","time":24.453891882,"data":"  \"batch_size\": 16,\n"}
+,{"stream_name":"stdout","time":24.453908373,"data":"  \"lr\": 0.0003,\n"}
+,{"stream_name":"stdout","time":24.453912397,"data":"  \"weight_decay\": 0.05,\n"}
+,{"stream_name":"stdout","time":24.453915877,"data":"  \"grad_clip\": 1.0,\n"}
+,{"stream_name":"stdout","time":24.453919138,"data":"  \"n_snapshots\": 5,\n"}
+,{"stream_name":"stdout","time":24.45392241,"data":"  \"seed\": 42,\n"}
+,{"stream_name":"stdout","time":24.453925549,"data":"  \"backbone\": \"retfound\",\n"}
+,{"stream_name":"stdout","time":24.453928964,"data":"  \"pretrained\": true,\n"}
+,{"stream_name":"stdout","time":24.453952786,"data":"  \"use_amp\": true,\n"}
+,{"stream_name":"stdout","time":24.453956394,"data":"  \"augment\": true,\n"}
+,{"stream_name":"stdout","time":24.453959645,"data":"  \"loss\": \"soft\",\n"}
+,{"stream_name":"stdout","time":24.453963096,"data":"  \"layer_decay\": 0.65,\n"}
+,{"stream_name":"stdout","time":24.45396654,"data":"  \"warmup_epochs\": 3,\n"}
+,{"stream_name":"stdout","time":24.453969954,"data":"  \"drop_path\": 0.2,\n"}
+,{"stream_name":"stdout","time":24.453973217,"data":"  \"sigma\": 0.5,\n"}
+,{"stream_name":"stdout","time":24.453976515,"data":"  \"dedupe\": false,\n"}
+,{"stream_name":"stdout","time":24.453979923,"data":"  \"max_train_batches\": 0\n"}
+,{"stream_name":"stdout","time":24.453983995,"data":"}\n"}
+,{"stream_name":"stdout","time":24.453987452,"data":"experiments: retfound_s42, retfound_s43, retfound_s44, imagenet_vitl_s42\n"}
+,{"stream_name":"stdout","time":24.802464804,"data":"downloading train-00000-of-00013-b6971806b485b32b.parquet\n"}
+,{"stream_name":"stdout","time":67.253104669,"data":"  282 images so far\n"}
+,{"stream_name":"stdout","time":67.253951667,"data":"downloading train-00001-of-00013-3ef9284bda48b8de.parquet\n"}
+,{"stream_name":"stdout","time":108.114843584,"data":"  564 images so far\n"}
+,{"stream_name":"stdout","time":108.115724177,"data":"downloading train-00002-of-00013-3007d5f3a80d01a9.parquet\n"}
+,{"stream_name":"stdout","time":146.306614788,"data":"  846 images so far\n"}
+,{"stream_name":"stdout","time":146.307391189,"data":"downloading train-00003-of-00013-719dc2a41d6066fd.parquet\n"}
+,{"stream_name":"stdout","time":182.754676316,"data":"  1128 images so far\n"}
+,{"stream_name":"stdout","time":182.755467718,"data":"downloading train-00004-of-00013-1f950a0df3320b4b.parquet\n"}
+,{"stream_name":"stdout","time":221.700909553,"data":"  1410 images so far\n"}
+,{"stream_name":"stdout","time":221.701843547,"data":"downloading train-00005-of-00013-c0ede249a4a1709b.parquet\n"}
+,{"stream_name":"stdout","time":260.374410598,"data":"  1692 images so far\n"}
+,{"stream_name":"stdout","time":260.375281818,"data":"downloading train-00006-of-00013-da6bef6a92e83c30.parquet\n"}
+,{"stream_name":"stdout","time":324.240520876,"data":"  1974 images so far\n"}
+,{"stream_name":"stdout","time":324.241340831,"data":"downloading train-00007-of-00013-4f07a72750e770a9.parquet\n"}
+,{"stream_name":"stdout","time":410.106139416,"data":"  2256 images so far\n"}
+,{"stream_name":"stdout","time":410.107137601,"data":"downloading train-00008-of-00013-f29fe432adc405e3.parquet\n"}
+,{"stream_name":"stdout","time":498.407882412,"data":"  2538 images so far\n"}
+,{"stream_name":"stdout","time":498.408752507,"data":"downloading train-00009-of-00013-8df8c03a53f6153a.parquet\n"}
+,{"stream_name":"stdout","time":585.344848037,"data":"  2819 images so far\n"}
+,{"stream_name":"stdout","time":585.345948865,"data":"downloading train-00010-of-00013-5ce8efdfff11f693.parquet\n"}
+,{"stream_name":"stdout","time":670.300491258,"data":"  3100 images so far\n"}
+,{"stream_name":"stdout","time":670.301278842,"data":"downloading train-00011-of-00013-dc0bde52a2716ecc.parquet\n"}
+,{"stream_name":"stdout","time":757.951114083,"data":"  3381 images so far\n"}
+,{"stream_name":"stdout","time":757.951904877,"data":"downloading train-00012-of-00013-2fde0e05e0019c87.parquet\n"}
+,{"stream_name":"stdout","time":850.292462439,"data":"  3662 images so far\n"}
+,{"stream_name":"stdout","time":850.334998137,"data":"saving a cache to Drive for next time ...\n"}
+,{"stream_name":"stdout","time":850.335019441,"data":"3662 images, 3534 distinct files\n"}
+,{"stream_name":"stdout","time":851.090196197,"data":"123 groups of identical images, 30 of them with conflicting grades\n"}
+,{"stream_name":"stdout","time":851.090224057,"data":"\n"}
+,{"stream_name":"stdout","time":851.090229639,"data":"all images (Stage 3 split): 3662 images, 29 test images with a twin in training\n"}
+,{"stream_name":"stdout","time":851.090234368,"data":"       No DR  Mild  Moderate  Severe  PDR\n"}
+,{"stream_name":"stdout","time":851.090239452,"data":"train   1263   258       699     135  207\n"}
+,{"stream_name":"stdout","time":851.090244165,"data":"val      271    56       150      29   44\n"}
+,{"stream_name":"stdout","time":851.09024849,"data":"test     271    56       150      29   44\n"}
+,{"stream_name":"stdout","time":851.090253236,"data":"\n"}
+,{"stream_name":"stdout","time":851.090257453,"data":"de-duplicated: 3504 images, 0 test images with a twin in training\n"}
+,{"stream_name":"stdout","time":851.09026192,"data":"       No DR  Mild  Moderate  Severe  PDR\n"}
+,{"stream_name":"stdout","time":851.090266111,"data":"train   1257   236       646     124  189\n"}
+,{"stream_name":"stdout","time":851.090270633,"data":"val      269    51       138      27   41\n"}
+,{"stream_name":"stdout","time":851.090274957,"data":"test     270    51       138      26   41\n"}
+,{"stream_name":"stdout","time":864.940071725,"data":"(3662, 224, 224, 3), 0.55 GB, 14s\n"}
+,{"stream_name":"stdout","time":880.431261376,"data":"downloading the RETFound CFP weights (1.2 GB) ...\n"}
+,{"stream_name":"stdout","time":904.772278971,"data":"patch-embedding weights: same shape True, relative difference RETFound vs ImageNet = 2.000\n"}
+,{"stream_name":"stdout","time":904.772337004,"data":"position embedding relative difference = 1.500\n"}
+,{"stream_name":"stdout","time":905.102818472,"data":"\n"}
+,{"stream_name":"stdout","time":905.102847185,"data":"=== retfound_s42 ===  loss=soft  backbone=retfound  sigma=0.5  seed=42  lr=0.0003  epochs=25\n"}
+,{"stream_name":"stdout","time":1005.022604689,"data":"[retfound_s42] epoch  1/25 | loss 1.208 | val QWK 0.637 (best 0.637 @ep1) | val acc 0.713 | 95s | ~38 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1107.722232768,"data":"[retfound_s42] epoch  2/25 | loss 0.991 | val QWK 0.775 (best 0.775 @ep2) | val acc 0.740 | 103s | ~38 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1211.020607755,"data":"[retfound_s42] epoch  3/25 | loss 0.906 | val QWK 0.789 (best 0.789 @ep3) | val acc 0.765 | 103s | ~37 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1314.094788052,"data":"[retfound_s42] epoch  4/25 | loss 0.859 | val QWK 0.874 (best 0.874 @ep4) | val acc 0.800 | 103s | ~35 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1415.958586023,"data":"[retfound_s42] epoch  5/25 | loss 0.821 | val QWK 0.828 (best 0.874 @ep4) | val acc 0.798 | 102s | ~34 min left | snapshot 1/5\n"}
+,{"stream_name":"stdout","time":1513.216110958,"data":"[retfound_s42] epoch  6/25 | loss 0.813 | val QWK 0.827 (best 0.874 @ep4) | val acc 0.800 | 97s | ~32 min left |\n"}
+,{"stream_name":"stdout","time":1615.619612601,"data":"[retfound_s42] epoch  7/25 | loss 0.784 | val QWK 0.887 (best 0.887 @ep7) | val acc 0.820 | 102s | ~30 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":1712.59856147,"data":"[retfound_s42] epoch  8/25 | loss 0.767 | val QWK 0.873 (best 0.887 @ep7) | val acc 0.816 | 97s | ~28 min left |\n"}
+,{"stream_name":"stdout","time":1809.506624328,"data":"[retfound_s42] epoch  9/25 | loss 0.759 | val QWK 0.877 (best 0.887 @ep7) | val acc 0.818 | 97s | ~27 min left |\n"}
+,{"stream_name":"stdout","time":1912.022778917,"data":"[retfound_s42] epoch 10/25 | loss 0.745 | val QWK 0.896 (best 0.896 @ep10) | val acc 0.831 | 103s | ~25 min left | NEW BEST snapshot 2/5\n"}
+,{"stream_name":"stdout","time":2014.645286197,"data":"[retfound_s42] epoch 11/25 | loss 0.740 | val QWK 0.899 (best 0.899 @ep11) | val acc 0.845 | 103s | ~23 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":2111.588593822,"data":"[retfound_s42] epoch 12/25 | loss 0.733 | val QWK 0.884 (best 0.899 @ep11) | val acc 0.833 | 97s | ~22 min left |\n"}
+,{"stream_name":"stdout","time":2208.646990983,"data":"[retfound_s42] epoch 13/25 | loss 0.736 | val QWK 0.884 (best 0.899 @ep11) | val acc 0.824 | 97s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":2305.799613076,"data":"[retfound_s42] epoch 14/25 | loss 0.724 | val QWK 0.893 (best 0.899 @ep11) | val acc 0.833 | 97s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":2407.573606109,"data":"[retfound_s42] epoch 15/25 | loss 0.713 | val QWK 0.883 (best 0.899 @ep11) | val acc 0.838 | 102s | ~17 min left | snapshot 3/5\n"}
+,{"stream_name":"stdout","time":2504.611796623,"data":"[retfound_s42] epoch 16/25 | loss 0.716 | val QWK 0.896 (best 0.899 @ep11) | val acc 0.838 | 97s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":2601.693337549,"data":"[retfound_s42] epoch 17/25 | loss 0.705 | val QWK 0.889 (best 0.899 @ep11) | val acc 0.836 | 97s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":2698.65369407,"data":"[retfound_s42] epoch 18/25 | loss 0.703 | val QWK 0.885 (best 0.899 @ep11) | val acc 0.838 | 97s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":2795.545623568,"data":"[retfound_s42] epoch 19/25 | loss 0.701 | val QWK 0.897 (best 0.899 @ep11) | val acc 0.842 | 97s | ~10 min left |\n"}
+,{"stream_name":"stdout","time":2896.826187378,"data":"[retfound_s42] epoch 20/25 | loss 0.693 | val QWK 0.897 (best 0.899 @ep11) | val acc 0.844 | 101s | ~8 min left | snapshot 4/5\n"}
+,{"stream_name":"stdout","time":2993.796303915,"data":"[retfound_s42] epoch 21/25 | loss 0.692 | val QWK 0.880 (best 0.899 @ep11) | val acc 0.831 | 97s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":3090.767462676,"data":"[retfound_s42] epoch 22/25 | loss 0.686 | val QWK 0.881 (best 0.899 @ep11) | val acc 0.835 | 97s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":3187.607155656,"data":"[retfound_s42] epoch 23/25 | loss 0.684 | val QWK 0.886 (best 0.899 @ep11) | val acc 0.838 | 97s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":3284.476949285,"data":"[retfound_s42] epoch 24/25 | loss 0.690 | val QWK 0.886 (best 0.899 @ep11) | val acc 0.838 | 97s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":3382.53613713,"data":"[retfound_s42] epoch 25/25 | loss 0.692 | val QWK 0.886 (best 0.899 @ep11) | val acc 0.838 | 98s | ~0 min left | snapshot 5/5\n"}
+,{"stream_name":"stdout","time":3382.536176101,"data":"\n"}
+,{"stream_name":"stdout","time":3382.536181866,"data":"=== imagenet_vitl_s42 ===  loss=soft  backbone=vit_large_imagenet  sigma=0.5  seed=42  lr=0.0003  epochs=25\n"}
+,{"stream_name":"stdout","time":3489.124178341,"data":"[imagenet_vitl_s42] epoch  1/25 | loss 1.109 | val QWK 0.778 (best 0.778 @ep1) | val acc 0.758 | 102s | ~41 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3591.861657377,"data":"[imagenet_vitl_s42] epoch  2/25 | loss 0.895 | val QWK 0.849 (best 0.849 @ep2) | val acc 0.784 | 103s | ~39 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3688.312349303,"data":"[imagenet_vitl_s42] epoch  3/25 | loss 0.855 | val QWK 0.826 (best 0.849 @ep2) | val acc 0.738 | 96s | ~37 min left |\n"}
+,{"stream_name":"stdout","time":3790.29013316,"data":"[imagenet_vitl_s42] epoch  4/25 | loss 0.797 | val QWK 0.883 (best 0.883 @ep4) | val acc 0.789 | 102s | ~35 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":3892.640485052,"data":"[imagenet_vitl_s42] epoch  5/25 | loss 0.770 | val QWK 0.888 (best 0.888 @ep5) | val acc 0.771 | 102s | ~34 min left | NEW BEST snapshot 1/5\n"}
+,{"stream_name":"stdout","time":3988.875633652,"data":"[imagenet_vitl_s42] epoch  6/25 | loss 0.753 | val QWK 0.801 (best 0.888 @ep5) | val acc 0.736 | 96s | ~32 min left |\n"}
+,{"stream_name":"stdout","time":4090.881336165,"data":"[imagenet_vitl_s42] epoch  7/25 | loss 0.713 | val QWK 0.889 (best 0.889 @ep7) | val acc 0.800 | 102s | ~30 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4186.994225402,"data":"[imagenet_vitl_s42] epoch  8/25 | loss 0.705 | val QWK 0.865 (best 0.889 @ep7) | val acc 0.798 | 96s | ~28 min left |\n"}
+,{"stream_name":"stdout","time":4288.928770764,"data":"[imagenet_vitl_s42] epoch  9/25 | loss 0.689 | val QWK 0.897 (best 0.897 @ep9) | val acc 0.813 | 102s | ~27 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":4390.961343131,"data":"[imagenet_vitl_s42] epoch 10/25 | loss 0.664 | val QWK 0.911 (best 0.911 @ep10) | val acc 0.825 | 102s | ~25 min left | NEW BEST snapshot 2/5\n"}
+,{"stream_name":"stdout","time":4487.09961711,"data":"[imagenet_vitl_s42] epoch 11/25 | loss 0.658 | val QWK 0.883 (best 0.911 @ep10) | val acc 0.820 | 96s | ~23 min left |\n"}
+,{"stream_name":"stdout","time":4583.153524011,"data":"[imagenet_vitl_s42] epoch 12/25 | loss 0.633 | val QWK 0.892 (best 0.911 @ep10) | val acc 0.807 | 96s | ~22 min left |\n"}
+,{"stream_name":"stdout","time":4679.152078489,"data":"[imagenet_vitl_s42] epoch 13/25 | loss 0.639 | val QWK 0.882 (best 0.911 @ep10) | val acc 0.798 | 96s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":4775.165353755,"data":"[imagenet_vitl_s42] epoch 14/25 | loss 0.620 | val QWK 0.883 (best 0.911 @ep10) | val acc 0.816 | 96s | ~18 min left |\n"}
+,{"stream_name":"stdout","time":4875.76955778,"data":"[imagenet_vitl_s42] epoch 15/25 | loss 0.611 | val QWK 0.888 (best 0.911 @ep10) | val acc 0.822 | 101s | ~17 min left | snapshot 3/5\n"}
+,{"stream_name":"stdout","time":4971.597635837,"data":"[imagenet_vitl_s42] epoch 16/25 | loss 0.598 | val QWK 0.892 (best 0.911 @ep10) | val acc 0.818 | 96s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":5067.632896949,"data":"[imagenet_vitl_s42] epoch 17/25 | loss 0.588 | val QWK 0.884 (best 0.911 @ep10) | val acc 0.789 | 96s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":5163.618354483,"data":"[imagenet_vitl_s42] epoch 18/25 | loss 0.585 | val QWK 0.884 (best 0.911 @ep10) | val acc 0.805 | 96s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":5259.68067672,"data":"[imagenet_vitl_s42] epoch 19/25 | loss 0.580 | val QWK 0.896 (best 0.911 @ep10) | val acc 0.824 | 96s | ~10 min left |\n"}
+,{"stream_name":"stdout","time":5360.040748293,"data":"[imagenet_vitl_s42] epoch 20/25 | loss 0.566 | val QWK 0.896 (best 0.911 @ep10) | val acc 0.818 | 100s | ~8 min left | snapshot 4/5\n"}
+,{"stream_name":"stdout","time":5456.172838348,"data":"[imagenet_vitl_s42] epoch 21/25 | loss 0.567 | val QWK 0.898 (best 0.911 @ep10) | val acc 0.816 | 96s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":5552.277220927,"data":"[imagenet_vitl_s42] epoch 22/25 | loss 0.562 | val QWK 0.898 (best 0.911 @ep10) | val acc 0.816 | 96s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":5648.197809695,"data":"[imagenet_vitl_s42] epoch 23/25 | loss 0.561 | val QWK 0.895 (best 0.911 @ep10) | val acc 0.813 | 96s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":5744.135623856,"data":"[imagenet_vitl_s42] epoch 24/25 | loss 0.565 | val QWK 0.897 (best 0.911 @ep10) | val acc 0.816 | 96s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":5841.450951597,"data":"[imagenet_vitl_s42] epoch 25/25 | loss 0.555 | val QWK 0.897 (best 0.911 @ep10) | val acc 0.816 | 97s | ~0 min left | snapshot 5/5\n"}
+,{"stream_name":"stdout","time":5841.450991298,"data":"\n"}
+,{"stream_name":"stdout","time":5841.450997295,"data":"=== retfound_s43 ===  loss=soft  backbone=retfound  sigma=0.5  seed=43  lr=0.0003  epochs=25\n"}
+,{"stream_name":"stdout","time":5948.851076482,"data":"[retfound_s43] epoch  1/25 | loss 1.175 | val QWK 0.543 (best 0.543 @ep1) | val acc 0.693 | 102s | ~41 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6051.885638628,"data":"[retfound_s43] epoch  2/25 | loss 1.011 | val QWK 0.734 (best 0.734 @ep2) | val acc 0.720 | 103s | ~39 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6155.061141332,"data":"[retfound_s43] epoch  3/25 | loss 0.928 | val QWK 0.734 (best 0.734 @ep3) | val acc 0.756 | 103s | ~38 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6258.111537767,"data":"[retfound_s43] epoch  4/25 | loss 0.851 | val QWK 0.822 (best 0.822 @ep4) | val acc 0.796 | 103s | ~36 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6361.331816777,"data":"[retfound_s43] epoch  5/25 | loss 0.828 | val QWK 0.850 (best 0.850 @ep5) | val acc 0.793 | 103s | ~34 min left | NEW BEST snapshot 1/5\n"}
+,{"stream_name":"stdout","time":6464.043302994,"data":"[retfound_s43] epoch  6/25 | loss 0.799 | val QWK 0.873 (best 0.873 @ep6) | val acc 0.785 | 103s | ~33 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6567.068406503,"data":"[retfound_s43] epoch  7/25 | loss 0.794 | val QWK 0.887 (best 0.887 @ep7) | val acc 0.804 | 103s | ~31 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6670.13503018,"data":"[retfound_s43] epoch  8/25 | loss 0.773 | val QWK 0.888 (best 0.888 @ep8) | val acc 0.816 | 103s | ~29 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6773.175431868,"data":"[retfound_s43] epoch  9/25 | loss 0.770 | val QWK 0.888 (best 0.888 @ep9) | val acc 0.807 | 103s | ~27 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":6875.132251589,"data":"[retfound_s43] epoch 10/25 | loss 0.757 | val QWK 0.863 (best 0.888 @ep9) | val acc 0.811 | 102s | ~26 min left | snapshot 2/5\n"}
+,{"stream_name":"stdout","time":6972.461417506,"data":"[retfound_s43] epoch 11/25 | loss 0.747 | val QWK 0.886 (best 0.888 @ep9) | val acc 0.816 | 97s | ~24 min left |\n"}
+,{"stream_name":"stdout","time":7075.209603181,"data":"[retfound_s43] epoch 12/25 | loss 0.754 | val QWK 0.896 (best 0.896 @ep12) | val acc 0.833 | 103s | ~22 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":7172.729026358,"data":"[retfound_s43] epoch 13/25 | loss 0.735 | val QWK 0.878 (best 0.896 @ep12) | val acc 0.816 | 98s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":7275.720459527,"data":"[retfound_s43] epoch 14/25 | loss 0.739 | val QWK 0.897 (best 0.897 @ep14) | val acc 0.829 | 103s | ~19 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":7377.489480128,"data":"[retfound_s43] epoch 15/25 | loss 0.716 | val QWK 0.870 (best 0.897 @ep14) | val acc 0.811 | 102s | ~17 min left | snapshot 3/5\n"}
+,{"stream_name":"stdout","time":7474.617703911,"data":"[retfound_s43] epoch 16/25 | loss 0.729 | val QWK 0.891 (best 0.897 @ep14) | val acc 0.824 | 97s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":7571.655251729,"data":"[retfound_s43] epoch 17/25 | loss 0.719 | val QWK 0.896 (best 0.897 @ep14) | val acc 0.822 | 97s | ~14 min left |\n"}
+,{"stream_name":"stdout","time":7674.623259156,"data":"[retfound_s43] epoch 18/25 | loss 0.707 | val QWK 0.900 (best 0.900 @ep18) | val acc 0.827 | 103s | ~12 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":7777.440015374,"data":"[retfound_s43] epoch 19/25 | loss 0.705 | val QWK 0.904 (best 0.904 @ep19) | val acc 0.829 | 103s | ~10 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":7879.020180015,"data":"[retfound_s43] epoch 20/25 | loss 0.705 | val QWK 0.901 (best 0.904 @ep19) | val acc 0.833 | 102s | ~8 min left | snapshot 4/5\n"}
+,{"stream_name":"stdout","time":7981.766695221,"data":"[retfound_s43] epoch 21/25 | loss 0.700 | val QWK 0.906 (best 0.906 @ep21) | val acc 0.833 | 103s | ~7 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":8078.845749366,"data":"[retfound_s43] epoch 22/25 | loss 0.698 | val QWK 0.905 (best 0.906 @ep21) | val acc 0.833 | 97s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":8175.923544529,"data":"[retfound_s43] epoch 23/25 | loss 0.692 | val QWK 0.904 (best 0.906 @ep21) | val acc 0.831 | 97s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":8273.16305789,"data":"[retfound_s43] epoch 24/25 | loss 0.697 | val QWK 0.903 (best 0.906 @ep21) | val acc 0.829 | 97s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":8371.539904547,"data":"[retfound_s43] epoch 25/25 | loss 0.691 | val QWK 0.903 (best 0.906 @ep21) | val acc 0.829 | 98s | ~0 min left | snapshot 5/5\n"}
+,{"stream_name":"stdout","time":8371.539935915,"data":"\n"}
+,{"stream_name":"stdout","time":8371.539941457,"data":"=== retfound_s44 ===  loss=soft  backbone=retfound  sigma=0.5  seed=44  lr=0.0003  epochs=25\n"}
+,{"stream_name":"stdout","time":8479.483273583,"data":"[retfound_s44] epoch  1/25 | loss 1.182 | val QWK 0.586 (best 0.586 @ep1) | val acc 0.702 | 103s | ~41 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":8582.665652681,"data":"[retfound_s44] epoch  2/25 | loss 1.007 | val QWK 0.689 (best 0.689 @ep2) | val acc 0.736 | 103s | ~39 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":8685.580808383,"data":"[retfound_s44] epoch  3/25 | loss 0.934 | val QWK 0.742 (best 0.742 @ep3) | val acc 0.747 | 103s | ~38 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":8788.659916799,"data":"[retfound_s44] epoch  4/25 | loss 0.864 | val QWK 0.789 (best 0.789 @ep4) | val acc 0.785 | 103s | ~36 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":8891.707724992,"data":"[retfound_s44] epoch  5/25 | loss 0.833 | val QWK 0.831 (best 0.831 @ep5) | val acc 0.780 | 103s | ~34 min left | NEW BEST snapshot 1/5\n"}
+,{"stream_name":"stdout","time":8994.682870676,"data":"[retfound_s44] epoch  6/25 | loss 0.808 | val QWK 0.840 (best 0.840 @ep6) | val acc 0.807 | 103s | ~33 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":9097.662228256,"data":"[retfound_s44] epoch  7/25 | loss 0.793 | val QWK 0.875 (best 0.875 @ep7) | val acc 0.807 | 103s | ~31 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":9194.920057507,"data":"[retfound_s44] epoch  8/25 | loss 0.786 | val QWK 0.864 (best 0.875 @ep7) | val acc 0.822 | 97s | ~29 min left |\n"}
+,{"stream_name":"stdout","time":9297.931256919,"data":"[retfound_s44] epoch  9/25 | loss 0.768 | val QWK 0.879 (best 0.879 @ep9) | val acc 0.829 | 103s | ~27 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":9400.944285561,"data":"[retfound_s44] epoch 10/25 | loss 0.763 | val QWK 0.887 (best 0.887 @ep10) | val acc 0.825 | 103s | ~26 min left | NEW BEST snapshot 2/5\n"}
+,{"stream_name":"stdout","time":9503.776138185,"data":"[retfound_s44] epoch 11/25 | loss 0.747 | val QWK 0.888 (best 0.888 @ep11) | val acc 0.811 | 103s | ~24 min left | NEW BEST\n"}
+,{"stream_name":"stdout","time":9600.882310327,"data":"[retfound_s44] epoch 12/25 | loss 0.742 | val QWK 0.887 (best 0.888 @ep11) | val acc 0.818 | 97s | ~22 min left |\n"}
+,{"stream_name":"stdout","time":9698.088808083,"data":"[retfound_s44] epoch 13/25 | loss 0.737 | val QWK 0.876 (best 0.888 @ep11) | val acc 0.820 | 97s | ~20 min left |\n"}
+,{"stream_name":"stdout","time":9795.260016807,"data":"[retfound_s44] epoch 14/25 | loss 0.740 | val QWK 0.887 (best 0.888 @ep11) | val acc 0.833 | 97s | ~19 min left |\n"}
+,{"stream_name":"stdout","time":9898.044042309,"data":"[retfound_s44] epoch 15/25 | loss 0.717 | val QWK 0.891 (best 0.891 @ep15) | val acc 0.824 | 103s | ~17 min left | NEW BEST snapshot 3/5\n"}
+,{"stream_name":"stdout","time":9995.198440703,"data":"[retfound_s44] epoch 16/25 | loss 0.719 | val QWK 0.891 (best 0.891 @ep15) | val acc 0.833 | 97s | ~15 min left |\n"}
+,{"stream_name":"stdout","time":10092.238487869,"data":"[retfound_s44] epoch 17/25 | loss 0.707 | val QWK 0.889 (best 0.891 @ep15) | val acc 0.824 | 97s | ~13 min left |\n"}
+,{"stream_name":"stdout","time":10189.182708989,"data":"[retfound_s44] epoch 18/25 | loss 0.701 | val QWK 0.887 (best 0.891 @ep15) | val acc 0.824 | 97s | ~12 min left |\n"}
+,{"stream_name":"stdout","time":10285.994672943,"data":"[retfound_s44] epoch 19/25 | loss 0.710 | val QWK 0.882 (best 0.891 @ep15) | val acc 0.827 | 97s | ~10 min left |\n"}
+,{"stream_name":"stdout","time":10387.221640972,"data":"[retfound_s44] epoch 20/25 | loss 0.695 | val QWK 0.881 (best 0.891 @ep15) | val acc 0.825 | 101s | ~8 min left | snapshot 4/5\n"}
+,{"stream_name":"stdout","time":10483.887539677,"data":"[retfound_s44] epoch 21/25 | loss 0.695 | val QWK 0.878 (best 0.891 @ep15) | val acc 0.825 | 97s | ~7 min left |\n"}
+,{"stream_name":"stdout","time":10580.506319272,"data":"[retfound_s44] epoch 22/25 | loss 0.697 | val QWK 0.888 (best 0.891 @ep15) | val acc 0.827 | 97s | ~5 min left |\n"}
+,{"stream_name":"stdout","time":10677.292194673,"data":"[retfound_s44] epoch 23/25 | loss 0.697 | val QWK 0.888 (best 0.891 @ep15) | val acc 0.827 | 97s | ~3 min left |\n"}
+,{"stream_name":"stdout","time":10774.001916031,"data":"[retfound_s44] epoch 24/25 | loss 0.686 | val QWK 0.888 (best 0.891 @ep15) | val acc 0.827 | 97s | ~2 min left |\n"}
+,{"stream_name":"stdout","time":10872.10640414,"data":"[retfound_s44] epoch 25/25 | loss 0.686 | val QWK 0.888 (best 0.891 @ep15) | val acc 0.827 | 98s | ~0 min left | snapshot 5/5\n"}
+,{"stream_name":"stdout","time":10872.334184015,"data":"Stage 5 baseline runs found for seeds: [42, 43, 44]\n"}
+,{"stream_name":"stdout","time":10874.87477028,"data":"3 of 7 predictions confirmed\n"}
+,{"stream_name":"stderr","time":10881.327145867,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":10881.327182876,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":10881.498858679,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":10881.498899389,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":10882.253257137,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":10882.544547335,"data":"[NbConvertApp] Writing 1455079 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":10884.962489434,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":10885.896731899,"data":"[NbConvertApp] Support files will be in __results___files/\n"}
+,{"stream_name":"stderr","time":10885.89675622,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":10885.897012023,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":10885.897228124,"data":"[NbConvertApp] Writing 1532954 bytes to __results__.html\n"}
+]

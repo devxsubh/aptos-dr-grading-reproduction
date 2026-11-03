@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Diabetic Retinopathy Grading on APTOS 2019: Reproduction and Hypothesis Testing</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; @bottom-center { content: counter(page) " / " counter(pages); font: 9pt Helvetica, Arial, sans-serif; color: #666; } }
+  :root { --ink: #1a1a1a; --muted: #555; --rule: #cfcfcf; --accent: #1f4e79; --good: #1b7a3d; --bad: #b3261e; --mid: #8a6d00; --tint: #f3f6fa; }
+  * { box-sizing: border-box; }
+  body { font: 10.3pt/1.45 Georgia, "Times New Roman", serif; color: var(--ink); margin: 0; }
+  h1, h2, h3, h4, table, .cap, .box, .meta { font-family: Helvetica, Arial, sans-serif; }
+  h1 { font-size: 22pt; line-height: 1.15; margin: 0 0 6pt; color: var(--accent); }
+  h2 { font-size: 14pt; color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 3pt; margin: 20pt 0 8pt; break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 14pt 0 4pt; break-after: avoid; }
+  h4 { font-size: 10.3pt; margin: 10pt 0 3pt; break-after: avoid; }
+  p { margin: 0 0 7pt; text-align: justify; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; } li { margin-bottom: 2.5pt; }
+  .meta { color: var(--muted); font-size: 10pt; margin-bottom: 14pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 6pt 0 4pt; } tr { break-inside: avoid; } thead { display: table-header-group; }
+  th, td { border: 1px solid var(--rule); padding: 3pt 5pt; text-align: left; vertical-align: top; }
+  th { background: var(--tint); font-weight: 600; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.hl td { background: #fff8e1; font-weight: 600; }
+  .cap { font-size: 8.6pt; color: var(--muted); margin: 0 0 11pt; }
+  figure { margin: 8pt 0 2pt; break-inside: avoid; text-align: center; } figure img { max-width: 100%; }
+  .box { border: 1px solid var(--accent); background: var(--tint); padding: 8pt 11pt; margin: 8pt 0 11pt; font-size: 9.6pt; break-inside: avoid; }
+  .box p { text-align: left; font-family: inherit; }
+  .yes { color: var(--good); font-weight: 600; } .no { color: var(--bad); font-weight: 600; } .part { color: var(--mid); font-weight: 600; }
+  .hyp { border-left: 4px solid var(--accent); padding-left: 10pt; margin: 8pt 0 10pt; }
+  .small { font-size: 9pt; color: var(--muted); }
+  .pb { break-before: page; }
+  code { font: 8.8pt Menlo, Consolas, monospace; background: #f1f1f1; padding: 0 2pt; overflow-wrap: anywhere; }
+  td, th { overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+
+<h1>Diabetic Retinopathy Grading on APTOS 2019:<br>Reproduction of a Published Method and Nine Hypotheses Tested</h1>
+<div class="meta">Computer Vision research-reproduction project &middot; Team: Shivansh, Divyanshi, Vivek, Shubham &middot; November 2026<br>
+Final project report (final phase). Reproduction study, <b>no clinical claims are made</b>. All numbers come from files in the project repository (<code>experiments/*/results/</code>).</div>
+
+<h2>1. Summary</h2>
+<p><b>What we did.</b> We selected one published method, re-implemented it (it has no public code), ran it on the public APTOS 2019 dataset, and measured how far our result is from the paper's. We then tested a series of hypotheses, each written down with numeric predictions <i>before</i> it was run, and report each result as it fell, including the failures.</p>
+<div class="box">
+<p><b>Base paper.</b> Chilukoti et al., "A reliable diabetic retinopathy grading via transfer learning and ensemble learning with quadratic weighted kappa metric", <i>BMC Medical Informatics and Decision Making</i> 24:37 (2024). EfficientNet-B3, CLAHE + Gaussian-blur pre-processing, cross-entropy, 10-snapshot majority-vote ensemble. Reported <b>QWK 0.954</b> on APTOS 2019.</p>
+<p><b>What we reproduced.</b> Run exactly as published (300 px, 60 epochs, batch 16, lr 1e-3) the method gives <b>QWK 0.81&ndash;0.82</b>. With a lower learning rate (1e-4) and flip/rotation augmentation it reaches <b>0.897 &plusmn; 0.004</b> (3 seeds). That is our baseline. The best result of any kind we reached is <b>0.918</b> (a 3-member 5-fold ensemble, test set opened once). <b>The paper's 0.954 was not reproduced</b> and lies outside our 95% interval [0.900, 0.935].</p>
+<p><b>What the hypotheses showed.</b> Only one idea gave a consistent, pre-registered gain: using the <i>order</i> of the grades (ordinal regression, +0.016 QWK, fewer large errors). Soft ordinal labels match it. Focal loss, class weighting, blur-aware training, a retina-pretrained backbone (RETFound), and a stacked training recipe did not beat the baseline family. Everything lands between 0.90 and 0.92, and the differences are about the size of run-to-run noise (about &plusmn;0.01).</p>
+</div>
+
+<h3>All hypotheses at a glance</h3>
+<table>
+<tr><th>#</th><th>Stage</th><th>Hypothesis (one change)</th><th class="n">Test QWK</th><th class="n">vs baseline</th><th>Predictions that held</th><th>Verdict</th></tr>
+<tr><td></td><td>3</td><td>Baseline: paper pipeline + augmentation + lr 1e-4, cross-entropy, snapshot vote</td><td class="n">0.897 &plusmn; 0.004</td><td class="n">&ndash;</td><td>&ndash;</td><td>reference</td></tr>
+<tr><td>H1</td><td>4</td><td>Ordinal regression (MSE on the grade, tuned cut-offs) beats 5-class cross-entropy</td><td class="n">0.914 &plusmn; 0.004</td><td class="n">+0.017</td><td>5 of 8</td><td class="part">Supported, not significant in every seed</td></tr>
+<tr><td>H2</td><td>4e</td><td>Focal loss helps rare grades</td><td class="n">0.901 / 0.911</td><td class="n">+0.004 / +0.004</td><td>6 of 8 (with H3)</td><td class="no">Not supported</td></tr>
+<tr><td>H3</td><td>4e</td><td>Class-balanced ordinal regression raises Severe recall</td><td class="n">0.908</td><td class="n">&minus;0.006 vs H1</td><td>(see H2)</td><td class="part">Weak: one seed drives the gain</td></tr>
+<tr><td>H4</td><td>4b&ndash;4c</td><td>Training levers, bigger backbones and 5-fold ensembles close the gap</td><td class="n">0.918</td><td class="n">+0.021</td><td>4 of 7</td><td class="part">Helps, gap to paper remains (0.036)</td></tr>
+<tr><td>H5</td><td>4d</td><td>EyePACS pre-training fails only because of a high fine-tune lr</td><td class="n">OOF 0.906</td><td class="n">&minus;0.014 vs ImageNet</td><td>2 of 7</td><td class="no">Rejected</td></tr>
+<tr><td>H6</td><td>5</td><td>Gaussian soft ordinal labels (sigma 0.5)</td><td class="n">0.916 &plusmn; 0.005</td><td class="n">+0.019</td><td>7 of 8</td><td class="part">Ties H1; fewest large errors</td></tr>
+<tr><td>H7</td><td>6</td><td>Blur-aware label width lowers errors on blurry images</td><td class="n">0.909 &plusmn; 0.006</td><td class="n">&minus;0.007 vs H6</td><td>6 of 7</td><td class="no">Not supported</td></tr>
+<tr><td>H8</td><td>7</td><td>Retina-pretrained ViT-L (RETFound) beats ImageNet pre-training</td><td class="n">0.899 &plusmn; 0.006</td><td class="n">&minus;0.017 vs H6</td><td>3 of 7</td><td class="no">Not supported</td></tr>
+<tr><td>H9</td><td>8</td><td>Stage 4b training levers stack on soft labels</td><td class="n">0.903 &plusmn; 0.002</td><td class="n">&minus;0.013 vs H6</td><td>1 of 8</td><td class="no">Not supported</td></tr>
+</table>
+<p class="cap">Test QWK is on the same 550 images throughout, 10-snapshot ensemble with validation-tuned cut-offs unless noted (H8, H9 are single models with TTA; H8 uses 5 snapshots). "vs baseline" compares with the 0.897 baseline unless another reference is named. The baseline re-run on Kaggle (seed 42) scored 0.908 instead of 0.898, so platform and re-run noise is about &plusmn;0.01.</p>
+
+<div class="box"><p><b>Final conclusion in one paragraph.</b> We could not reproduce the paper's QWK of 0.954 under a strict protocol: the method as published gives 0.81&ndash;0.82, our tuned baseline 0.897 &plusmn; 0.004, and the best result we reached is 0.918 [0.900, 0.935]. Of nine hypotheses, the order of the grades was the one useful signal (ordinal regression 0.914, soft ordinal labels 0.916, both with about 26&ndash;32% fewer large errors); the other seven ideas gave no gain beyond noise. The work is complete and every claim is backed by the result files in the repository. Full conclusion in Section 8.</p></div>
+
+<h2 class="pb">2. The base paper we selected</h2>
+<h3>2.1 The paper</h3>
+<p>Chilukoti S.V., Shan L., Tida V.S., Maida A.S., Hei X. (2024), <i>BMC Medical Informatics and Decision Making</i> 24:37, doi 10.1186/s12911-024-02446-x (open access, CC BY 4.0). The task is five-class grading of diabetic retinopathy (DR) from colour fundus photographs: 0 No DR, 1 Mild, 2 Moderate, 3 Severe, 4 Proliferative (PDR).</p>
+<table>
+<tr><th>Component</th><th>What the paper describes</th></tr>
+<tr><td>Pre-processing</td><td>CLAHE on the luminance channel, then Gaussian blur</td></tr>
+<tr><td>Model</td><td>ImageNet-pretrained EfficientNet-B3 with a 3-layer fully connected head (512, 512, 5)</td></tr>
+<tr><td>Training</td><td>Adam, lr 1e-3, weight decay 1e-4, gradient clipping 0.1, 60 epochs (strategy 1)</td></tr>
+<tr><td>Ensemble</td><td>Snapshot ensemble: predictions from 10 evenly spaced epochs combined by majority vote</td></tr>
+<tr><td>Metric</td><td>Quadratic weighted kappa (QWK), which penalises an error by the square of its distance in grades</td></tr>
+<tr><td>Reported</td><td>QWK <b>0.954</b> on APTOS 2019 (ImageNet init, single model, accuracy 0.942); <b>0.967</b> with EyePACS pre-training and the ensemble</td></tr>
+</table>
+<h3>2.2 Why we selected it</h3>
+<ul>
+<li><b>It matches our literature review.</b> It treats QWK, an ordinal agreement metric, as primary, uses a transfer-learning CNN that fits free GPUs (Colab / Kaggle T4), and evaluates on the public five-class APTOS 2019 data.</li>
+<li><b>It leaves our two review gaps untouched:</b> no imbalance-aware loss and no ordinal-aware training objective. That makes it a clean base for single-variable hypotheses.</li>
+</ul>
+<h3>2.3 Reproducibility check (Stage 2)</h3>
+<table>
+<tr><th>Item</th><th>Finding</th></tr>
+<tr><td>Public code</td><td>None. We re-implemented the method from the text.</td></tr>
+<tr><td>Dataset</td><td>Public: APTOS 2019, 3,662 images, class counts 1805 / 370 / 999 / 193 / 295</td></tr>
+<tr><td>Split</td><td>Not stated for APTOS (70/15/15 is stated only for EyePACS). <b>We assumed a stratified 70/15/15, seed 42.</b></td></tr>
+<tr><td>Hyper-parameters</td><td>Partly stated. Not stated: batch size, loss, CLAHE parameters, blur kernel, checkpoint rule, test-set size.</td></tr>
+<tr><td>Red flags noted before reproducing</td><td>Several reported numbers are internally inconsistent (for example precision, recall and QWK of one model all exactly 0.867; a constant predictor with AUC below 0.5; accuracy, precision, recall and F1 within 0.01 on an imbalanced dataset).</td></tr>
+</table>
+
+<h2>3. Data and protocol</h2>
+<p><b>Dataset.</b> APTOS 2019 Blindness Detection: 3,662 fundus photographs from Aravind Eye Hospital, graded 0&ndash;4. The images are not redistributed (competition rules); notebooks download a Hugging Face mirror.</p>
+<table>
+<tr><th>Images</th><th class="n">No DR</th><th class="n">Mild</th><th class="n">Moderate</th><th class="n">Severe</th><th class="n">PDR</th><th class="n">Total</th></tr>
+<tr><td>Whole dataset</td><td class="n">1805</td><td class="n">370</td><td class="n">999</td><td class="n">193</td><td class="n">295</td><td class="n">3662</td></tr>
+<tr><td>Test set (stratified 15%, seed 42; never used for a decision)</td><td class="n">271</td><td class="n">56</td><td class="n">150</td><td class="n">29</td><td class="n">44</td><td class="n">550</td></tr>
+</table>
+<p class="cap">Split sizes 2,562 train / 550 validation / 550 test. The small Severe (29) and PDR (44) test counts make per-grade recall noisy.</p>
+<p><b>Duplicate audit.</b> Hashing the raw files found <b>123 groups of byte-identical images</b>, <b>30 of them with conflicting grades</b> (the same photograph labelled, for example, Moderate and PDR). Under a random split, 29 of the 550 test images (5.3%) have an identical copy in training. Re-scoring without them changes QWK by &le; 0.007, so leakage does not explain the gap to the paper.</p>
+<p><b>Metrics.</b> QWK (primary), accuracy, macro-F1, macro one-vs-rest AUC, per-grade recall, the number of predictions off by two or more grades, and confusion matrices. Intervals are 95% paired bootstraps over the 550 test images (2,000 resamples); they cover test-set sampling noise, not training randomness (that is what the 3 seeds are for).</p>
+<p><b>Compute.</b> Free Colab T4 and Kaggle T4 GPUs. Every experiment has its hypothesis and numeric predictions committed to the repository <i>before</i> its first run.</p>
+
+<h2 class="pb">4. What we reproduced (Stage 3)</h2>
+<h3>4.1 The method as implemented</h3>
+<table>
+<tr><th>Component</th><th>Setting</th></tr>
+<tr><td>Backbone</td><td>EfficientNet-B3, ImageNet-pretrained (<code>timm</code>), fully fine-tuned</td></tr>
+<tr><td>Head</td><td>FC(1536&rarr;512), Dropout 0.5, ReLU, FC(512&rarr;512), Dropout 0.25, ReLU, FC(512&rarr;5)</td></tr>
+<tr><td>Pre-processing</td><td>CLAHE on LAB luminance (clip 2.0, 8&times;8 tiles), 5&times;5 Gaussian blur, square resize, ImageNet normalisation</td></tr>
+<tr><td>Optimiser</td><td>Adam, lr 1e-3, weight decay 1e-4, global gradient-norm clipping 0.1, cross-entropy</td></tr>
+<tr><td>Protocol</td><td>300 px, 60 epochs, batch 16 (Colab T4); split and loss are our assumptions</td></tr>
+<tr><td>Ensemble</td><td>Predictions from 10 evenly spaced epochs, majority vote</td></tr>
+</table>
+<h3>4.2 Results of the reproduction (test set, 550 images)</h3>
+<table>
+<tr><th>Configuration</th><th class="n">QWK single</th><th class="n">QWK vote</th><th class="n">Vote 95% CI</th><th class="n">Macro AUC</th><th class="n">Severe recall</th><th class="n">PDR recall</th></tr>
+<tr><td><i>Paper (reported)</i></td><td class="n"><i>0.954</i></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr class="hl"><td>Paper recipe exactly (lr 1e-3)</td><td class="n">0.824</td><td class="n">0.813</td><td></td><td></td><td class="n">0.00</td><td class="n">&ndash;</td></tr>
+<tr><td>Only change: lr 1e-4</td><td class="n">0.846</td><td class="n">0.884</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>+ augmentation, retina crop</td><td class="n">0.883</td><td class="n">0.893</td><td class="n">0.862&ndash;0.918</td><td class="n">0.934</td><td class="n">0.24</td><td class="n">0.57</td></tr>
+<tr class="hl"><td><b>+ augmentation (our baseline)</b></td><td class="n"><b>0.908</b></td><td class="n"><b>0.898</b></td><td class="n">0.868&ndash;0.921</td><td class="n">0.940</td><td class="n">0.28</td><td class="n">0.59</td></tr>
+<tr><td>+ augmentation + crop, paper lr 1e-3</td><td class="n">0.838</td><td class="n">0.831</td><td class="n">0.805&ndash;0.856</td><td class="n">0.924</td><td class="n">0.00</td><td class="n">0.11</td></tr>
+<tr><td>+ class-weighted cross-entropy</td><td class="n">0.878</td><td class="n">0.897</td><td class="n">0.867&ndash;0.921</td><td class="n">0.942</td><td class="n">0.48</td><td class="n">0.55</td></tr>
+<tr><td>+ cosine lr decay</td><td class="n">0.906</td><td class="n">0.883</td><td class="n">0.848&ndash;0.909</td><td class="n">0.935</td><td class="n">0.28</td><td class="n">0.52</td></tr>
+<tr><td>+ class weights + cosine</td><td class="n">0.893</td><td class="n">0.884</td><td class="n">0.852&ndash;0.909</td><td class="n">0.942</td><td class="n">0.24</td><td class="n">0.55</td></tr>
+</table>
+<p class="cap">One training run per row (Stage 3). The 3-seed baseline in Stage 4 is 0.897 &plusmn; 0.004 (vote). A first local run on an Apple M2 (224 px, 30 epochs) gave 0.827 (lr 1e-3) and 0.887 (lr 1e-4).</p>
+<h3>4.3 The reproduction gap</h3>
+<ul>
+<li><b>As published, the method scores 0.81&ndash;0.82, about 0.13 below the paper's 0.954.</b> Training at lr 1e-3 is unstable: validation QWK repeatedly collapses (to &minus;0.006 at one epoch) and the model never predicts Severe NPDR (recall 0.00).</li>
+<li><b>The snapshot ensemble, the paper's central idea, did not help</b> under unstable training (0.827 &rarr; 0.788 locally), because only the final snapshot is strong.</li>
+<li><b>Lowering the learning rate to 1e-4 and adding augmentation closes more than half of the gap</b> (baseline 0.897; best single run 0.908), but not all of it.</li>
+<li><b>Accuracy is the sharper warning sign.</b> The paper reports 0.942 accuracy. None of our models exceeds 0.83 on this split, including every optimistic analysis where the test set was used for selection.</li>
+</ul>
+<figure><img src="../../experiments/01_baseline_reproduction/results/figures/s2_faithful_curves.png" style="width:78%"><img src="../../experiments/01_baseline_reproduction/results/figures/s2_lr1e4_curves.png" style="width:78%"></figure>
+<p class="cap">Figure 1. Training curves of the first local run. Top: the paper's lr 1e-3, validation QWK collapses repeatedly. Bottom: lr 1e-4 is stable.</p>
+
+<h2 class="pb">5. The hypotheses we tested</h2>
+<p>Each hypothesis changes one thing, states a mechanism, and carries numeric predictions written before the run. "Held" means the prediction came true as written. Reference values: baseline A (cross-entropy, snapshot vote) QWK 0.897, Severe recall 0.28, PDR recall 0.61, 21.7 errors of two or more grades.</p>
+
+<h3>H1 (Stage 4). Ordinal regression</h3>
+<div class="hyp"><p><b>Hypothesis.</b> Replacing the five-class cross-entropy output with ordinal regression (one output, mean-squared error against the grade, grade decoded by four cut-offs tuned on the validation set) raises QWK and reduces large errors, because the loss then matches the ordered grades and the quadratic penalty inside QWK.</p>
+<p><b>Why we expected it.</b> The model ranked severity well but decided poorly (macro AUC 0.94, macro-F1 only 0.65); cross-entropy treats "No DR called PDR" like "Moderate called Severe"; class weighting alone moved errors without reducing them.</p></div>
+<table>
+<tr><th>Arm (10-snapshot ensemble, mean &plusmn; std, 3 seeds)</th><th class="n">QWK</th><th class="n">Severe recall</th><th class="n">PDR recall</th><th class="n">Errors &ge; 2 grades</th><th class="n">Referable sens. / spec. / AUC</th></tr>
+<tr><td>A: cross-entropy, majority vote (baseline)</td><td class="n">0.897 &plusmn; 0.004</td><td class="n">0.28</td><td class="n">0.61</td><td class="n">21.7</td><td class="n">0.946 / 0.904 / 0.979</td></tr>
+<tr><td>B: cross-entropy, tuned cut-offs</td><td class="n">0.907 &plusmn; 0.007</td><td class="n">0.44</td><td class="n">0.57</td><td class="n">15.7</td><td class="n">0.982 / 0.879 / 0.979</td></tr>
+<tr><td>C: ordinal, plain rounding</td><td class="n">0.896 &plusmn; 0.001</td><td class="n">0.47</td><td class="n">0.17</td><td class="n">17.0</td><td class="n">0.900 / 0.948 / 0.984</td></tr>
+<tr class="hl"><td>D: ordinal, tuned cut-offs (hypothesis)</td><td class="n">0.914 &plusmn; 0.004</td><td class="n">0.40</td><td class="n">0.58</td><td class="n">16.0</td><td class="n">0.963 / 0.909 / 0.984</td></tr>
+</table>
+<table>
+<tr><th>Prediction</th><th>Observed</th><th></th></tr>
+<tr><td>P1 QWK +0.01 to +0.03, significant in at least 2 seeds</td><td>+0.016; interval above 0 in 1 of 3 seeds</td><td class="no">not held</td></tr>
+<tr><td>P2 errors &ge; 2 grades fall &ge; 25%</td><td>21.7 &rarr; 16.0 (&minus;26%)</td><td class="yes">held</td></tr>
+<tr><td>P3 Severe recall +10 points</td><td>0.28 &rarr; 0.40</td><td class="yes">held</td></tr>
+<tr><td>P4 risk: PDR recall falls</td><td>0.61 &rarr; 0.58</td><td class="yes">held</td></tr>
+<tr><td>P5 referable AUC unchanged (&le; 0.01)</td><td>0.979 &rarr; 0.984</td><td class="yes">held</td></tr>
+<tr><td>P6 decision rule alone gains less than half</td><td>B &minus; A +0.009 vs D &minus; A +0.016</td><td class="no">not held</td></tr>
+<tr><td>P7 ordinal loss helps with plain rounding</td><td>C &minus; A &minus;0.001</td><td class="no">not held</td></tr>
+<tr><td>P8 same sign on de-duplicated data</td><td>+0.016 main, +0.010 de-duplicated</td><td class="yes">held</td></tr>
+</table>
+<p><b>Verdict: supported, with caveats (5 of 8 held).</b> D beats A in every seed and on de-duplicated data, and cuts large errors by 26%. But the gain is only about +0.016 and statistically firm in one seed of three. <b>Neither part works alone:</b> ordinal loss with plain rounding ties the baseline because the regression output shrinks towards the middle (PDR recall falls to 0.17), and the tuned cut-offs undo that. D trades accuracy for QWK (0.828 &rarr; 0.804): more near-miss errors and fewer far ones, which QWK rewards.</p>
+
+<h3>H2 and H3 (Stage 4e). Focal loss, and class-balanced ordinal regression</h3>
+<div class="hyp"><p><b>H2.</b> Replacing cross-entropy with focal loss (gamma 2) raises recall on the rare grades, because it down-weights easy majority examples. <b>H3.</b> Class-balancing the ordinal loss (weights proportional to n<sup>&minus;1/2</sup>) raises Severe recall without costing QWK. These were the two of our Phase 1 literature-review strategies that Stage 4 had not run.</p></div>
+<table>
+<tr><th>Arm (10-snapshot ensemble, mean of 3 seeds)</th><th class="n">QWK</th><th class="n">Severe recall</th><th class="n">PDR recall</th><th class="n">Errors &ge; 2</th></tr>
+<tr><td>A: cross-entropy, vote</td><td class="n">0.897</td><td class="n">0.28</td><td class="n">0.61</td><td class="n">21.7</td></tr>
+<tr><td>E_vote: focal, vote</td><td class="n">0.901</td><td class="n">0.24</td><td class="n">0.58</td><td class="n">21.0</td></tr>
+<tr><td>E_tuned: focal, tuned cut-offs</td><td class="n">0.911</td><td class="n">0.54</td><td class="n">0.53</td><td class="n">10.0</td></tr>
+<tr class="hl"><td>D: ordinal MSE, tuned cut-offs</td><td class="n">0.914</td><td class="n">0.40</td><td class="n">0.58</td><td class="n">16.0</td></tr>
+<tr><td>F_tuned: class-balanced MSE, tuned cut-offs</td><td class="n">0.908</td><td class="n">0.46</td><td class="n">0.55</td><td class="n">16.0</td></tr>
+</table>
+<p><b>Verdict.</b> <b>H2 not supported:</b> focal loss ties cross-entropy under every decision rule (+0.004, intervals include 0) and does not raise Severe recall under the paper's vote (0.28 &rarr; 0.24). <b>H3 weak:</b> Severe recall rises 0.40 &rarr; 0.46 at &minus;0.006 QWK, but the gain comes from one seed (0 / +0.17 / 0 by seed) and referable-DR sensitivity falls. Six of eight predictions held; the two that failed were exactly "focal raises Severe recall" and "class balancing fixes PDR under rounding". <b>The decision rule mattered more than the loss:</b> every tuned-cut-off arm scores 0.907&ndash;0.914, every vote or rounding arm 0.888&ndash;0.903.</p>
+
+<h3>H4 (Stages 4b&ndash;4c). Close the gap with training levers, backbones and ensembles</h3>
+<div class="hyp"><p><b>Hypothesis.</b> Under a strict protocol (ImageNet weights, APTOS only, test set opened once), tuned training choices plus larger backbones and 5-fold ensembles can approach the paper's 0.954. Predicted final test QWK 0.925&ndash;0.945; chance of reaching 0.954 about 20&ndash;30%.</p></div>
+<table>
+<tr><th>Lever (one change from the 20-epoch EMA recipe, 2 seeds)</th><th class="n">Cross-fitted val QWK (TTA)</th><th class="n">Gain</th><th>Adopted</th></tr>
+<tr><td>Base recipe R0</td><td class="n">0.895</td><td class="n">&ndash;</td><td></td></tr>
+<tr><td>Peak lr 3e-4</td><td class="n">0.913</td><td class="n">+0.017</td><td class="yes">yes</td></tr>
+<tr><td>Ben Graham pre-processing</td><td class="n">0.910</td><td class="n">+0.014</td><td class="yes">yes</td></tr>
+<tr><td>Strong augmentation</td><td class="n">0.909</td><td class="n">+0.013</td><td class="yes">yes</td></tr>
+<tr><td>Remove contradictory duplicates</td><td class="n">0.906</td><td class="n">+0.010</td><td class="yes">yes</td></tr>
+<tr><td>30 instead of 20 epochs</td><td class="n">0.889</td><td class="n">&minus;0.006</td><td class="no">no</td></tr>
+</table>
+<table>
+<tr><th>Model (test set, opened once)</th><th class="n">QWK [95% CI]</th><th class="n">Accuracy</th><th class="n">Errors &ge; 2</th></tr>
+<tr><td>Stage 4 A: cross-entropy, vote (seed 42)</td><td class="n">0.898 [0.868, 0.921]</td><td class="n">0.829</td><td class="n">22</td></tr>
+<tr><td>Stage 4 D: ordinal (seed 42)</td><td class="n">0.910 [0.887, 0.929]</td><td class="n">0.802</td><td class="n">17</td></tr>
+<tr><td>4b headline: blend of B4-NS 380 and B3 384, 5-fold</td><td class="n">0.916 [0.896, 0.932]</td><td class="n">0.802</td><td class="n">14</td></tr>
+<tr class="hl"><td><b>4c headline: + B4-NS 512</b></td><td class="n"><b>0.918 [0.900, 0.935]</b></td><td class="n">0.807</td><td class="n">14</td></tr>
+<tr><td><i>Optimistic, not a result: best subset and cut-offs both chosen on test</i></td><td class="n"><i>0.928</i></td><td class="n"><i>0.791</i></td><td class="n"><i>6</i></td></tr>
+<tr><td><i>Paper (reported)</i></td><td class="n"><i>0.954</i></td><td class="n"><i>0.942</i></td><td></td></tr>
+</table>
+<p><b>Verdict: helps, but the paper's number stays out of reach (4 of 7 predictions held).</b> Test QWK moved from 0.898 to 0.918 and the gap to the paper from 0.056 to 0.036; 0.954 lies outside our 95% interval. ConvNeXt-Tiny and SE-ResNeXt50 failed their predictions, and the last step (4c over 4b) is +0.003 [&minus;0.003, +0.009], inside the noise. Using the test set for every selection reaches only 0.928, and accuracy never exceeds 0.83 against the paper's 0.942.</p>
+
+<h3>H5 (Stage 4d, post-test). Was EyePACS pre-training hurt only by a high learning rate?</h3>
+<p>We tried 5 epochs of EyePACS-2015 pre-training in Stage 4c; it was worse than ImageNet (out-of-fold QWK 0.913 vs 0.920). We hypothesised the fine-tune restarted at too high a learning rate. <b>Rejected:</b> a low lr (3e-5, no warm-up) removed the mid-training dip but ended lower (OOF 0.906). The short EyePACS weights are a worse starting point than Noisy-Student ImageNet weights at every lr tried (2 of 7 predictions held).</p>
+
+<h3 class="pb">H6 (Stage 5). Gaussian soft ordinal labels</h3>
+<div class="hyp"><p><b>Hypothesis.</b> Replacing the one-hot target with a Gaussian soft-label target over the grades (sigma 0.5; a Moderate image gets about 79% on Moderate and 10% on each neighbour) raises QWK and reduces large errors, because the loss knows Moderate is closer to Severe than to No DR, while the network keeps five probabilities and does not shrink rare grades towards the middle as MSE regression does.</p></div>
+<table>
+<tr><th>Arm (10-snapshot ensemble, mean &plusmn; std, 3 seeds)</th><th class="n">QWK</th><th class="n">Accuracy</th><th class="n">Severe recall</th><th class="n">PDR recall</th><th class="n">Errors &ge; 2</th><th class="n">Referable AUC</th></tr>
+<tr><td>A: cross-entropy, vote</td><td class="n">0.897 &plusmn; 0.004</td><td class="n">0.828</td><td class="n">0.28</td><td class="n">0.61</td><td class="n">21.7</td><td class="n">0.979</td></tr>
+<tr><td>D: ordinal MSE, tuned</td><td class="n">0.914 &plusmn; 0.004</td><td class="n">0.804</td><td class="n">0.40</td><td class="n">0.58</td><td class="n">16.0</td><td class="n">0.984</td></tr>
+<tr><td>G: soft labels, vote</td><td class="n">0.908 &plusmn; 0.004</td><td class="n">0.839</td><td class="n">0.24</td><td class="n">0.58</td><td class="n">19.7</td><td class="n">0.983</td></tr>
+<tr class="hl"><td>H: soft labels, tuned cut-offs</td><td class="n">0.916 &plusmn; 0.005</td><td class="n">0.811</td><td class="n">0.39</td><td class="n">0.62</td><td class="n">14.7</td><td class="n">0.983</td></tr>
+</table>
+<table>
+<tr><th>Paired bootstrap, seed 42</th><th class="n">&Delta;QWK</th><th class="n">95% interval</th></tr>
+<tr><td>G &minus; A</td><td class="n">&minus;0.006</td><td class="n">[&minus;0.022, +0.010]</td></tr>
+<tr><td>H &minus; B (cross-entropy + tuned cut-offs)</td><td class="n">+0.006</td><td class="n">[&minus;0.003, +0.015]</td></tr>
+<tr><td>H &minus; D (ordinal MSE)</td><td class="n">+0.014</td><td class="n">[&minus;0.001, +0.031]</td></tr>
+<tr><td>sigma 1.0 &minus; sigma 0.5 (rule H)</td><td class="n">&minus;0.007</td><td class="n">[&minus;0.018, +0.004]</td></tr>
+</table>
+<p><b>Verdict: ties ordinal regression, not a proven improvement (7 of 8 held).</b> Held: QWK +0.011 over cross-entropy under the vote, errors &ge; 2 grades &minus;32%, H ties D, Severe recall did not collapse, referable AUC unchanged, sigma 1.0 no better, sanity check. Not held: that the cut-offs add more than the soft target. No paired interval excludes 0. The soft-label model has the fewest large errors of any arm (14.7), but Mild recall falls to 0.27 (0.38 under cross-entropy).</p>
+
+<h3>H7 (Stage 6). Blur-aware soft labels</h3>
+<div class="hyp"><p><b>Hypothesis.</b> Making the soft-label width depend on sharpness (sigma 0.7 for the blurriest training images down to 0.3 for the sharpest, mean kept at 0.5) lowers the error rate on blurry test images, because a blurry photo carries less evidence for its exact grade. <b>Why:</b> Stage 4 found misgraded images are blurrier (Mann-Whitney p = 0.0005). <b>Control:</b> the same sigma values assigned to images at random.</p></div>
+<table>
+<tr><th>Share of test images graded wrongly, by sharpness third (mean of 3 seeds)</th><th class="n">blurriest</th><th class="n">middle</th><th class="n">sharpest</th></tr>
+<tr><td>Stage 5 H (fixed sigma)</td><td class="n">0.262</td><td class="n">0.235</td><td class="n">0.071</td></tr>
+<tr class="hl"><td>Stage 6 H (blur-aware sigma)</td><td class="n">0.317</td><td class="n">0.266</td><td class="n">0.080</td></tr>
+<tr><td>Control H (shuffled sigma, seed 42)</td><td class="n">0.279</td><td class="n">0.230</td><td class="n">0.076</td></tr>
+</table>
+<table>
+<tr><th>Arm (3 seeds)</th><th class="n">QWK</th><th class="n">Accuracy</th><th class="n">Severe recall</th><th class="n">PDR recall</th><th class="n">Errors &ge; 2</th></tr>
+<tr><td>Stage 5 H (fixed sigma)</td><td class="n">0.916 &plusmn; 0.005</td><td class="n">0.811</td><td class="n">0.39</td><td class="n">0.62</td><td class="n">14.7</td></tr>
+<tr><td>Stage 6 H (blur-aware)</td><td class="n">0.909 &plusmn; 0.006</td><td class="n">0.779</td><td class="n">0.48</td><td class="n">0.60</td><td class="n">14.7</td></tr>
+</table>
+<p><b>Verdict: not supported (6 of 7 held, but the one that failed is the one that matters).</b> Blur does predict errors strongly (26% wrong in the blurriest third against 7% in the sharpest), but training with wider labels for blurry images did not reduce that rate (it rose to 32%), QWK did not improve (&minus;0.008 vs Stage 5, interval [&minus;0.019, +0.002]), and the shuffled control was no worse. Our untested explanation: the blurriest images are hard because lesions are not visible, and softer labels cannot restore that information.</p>
+
+<h3>H8 (Stage 7). Retina-pretrained backbone (RETFound)</h3>
+<div class="hyp"><p><b>Hypothesis.</b> Initialising a ViT-Large from RETFound weights (masked-autoencoder pre-training on retinal photographs) instead of ImageNet raises QWK and rare-grade recall, because its features were learned on retinal lesions and vessels, which 2,560 APTOS images are too few to teach. <b>Control:</b> the same ViT-Large, same recipe, ImageNet-21k weights, which isolates the pre-training domain from the change of architecture.</p></div>
+<table>
+<tr><th>Backbone (soft labels, tuned rule, snapshot ensemble)</th><th class="n">QWK</th><th class="n">Severe recall</th><th class="n">PDR recall</th><th class="n">Errors &ge; 2</th><th class="n">Referable AUC</th></tr>
+<tr><td>EfficientNet-B3, ImageNet (Stage 5, 3 seeds)</td><td class="n">0.916 &plusmn; 0.005</td><td class="n">0.39</td><td class="n">0.62</td><td class="n">14.7</td><td class="n">0.983</td></tr>
+<tr><td>ViT-L, ImageNet (control, 1 seed)</td><td class="n">0.910</td><td class="n">0.48</td><td class="n">0.61</td><td class="n">17</td><td class="n">0.980</td></tr>
+<tr class="hl"><td>ViT-L, RETFound (3 seeds)</td><td class="n">0.899 &plusmn; 0.006</td><td class="n">0.44</td><td class="n">0.48</td><td class="n">16.3</td><td class="n">0.986</td></tr>
+</table>
+<table>
+<tr><th>Paired bootstrap, seed 42</th><th class="n">&Delta;QWK</th><th class="n">95% interval</th></tr>
+<tr><td>RETFound &minus; ImageNet ViT-L (tuned)</td><td class="n">&minus;0.018</td><td class="n">[&minus;0.039, +0.004]</td></tr>
+<tr><td>RETFound ViT-L &minus; EfficientNet-B3 (Stage 5 H)</td><td class="n">&minus;0.030</td><td class="n">[&minus;0.051, &minus;0.009]</td></tr>
+</table>
+<p><b>Verdict: not supported (3 of 7 held; the two that carry the hypothesis failed).</b> Retina pre-training did not beat ImageNet at the same architecture and <i>lowered</i> rare-grade recall (on seed 42 it finds 7 of 29 Severe images, against 14 of 29 for the ImageNet ViT-L). The EfficientNet-B3 is significantly better on seed 42. <b>Caveats:</b> RETFound's training loss stayed high (0.69 vs 0.56), so our fine-tuning recipe may have under-trained it; we did no learning-rate search; the control has one seed; the weights come from a third-party mirror of the official gated file. This is "not helpful in our setup", not a verdict on RETFound.</p>
+
+<h3>H9 (Stage 8). Stacking the Stage 4b levers on soft labels</h3>
+<div class="hyp"><p><b>Hypothesis.</b> Combining the four levers that each helped in Stage 4b (peak lr 3e-4, strong augmentation, Ben Graham pre-processing, contradictory duplicates removed) on a single soft-label model in the 20-epoch EMA recipe with test-time augmentation raises test QWK above Stage 5's 0.916, because the levers fix separate causes and their gains partly add up. Predicted &ge; 0.920; we put the chance of &ge; 0.925 at about 35%.</p></div>
+<table>
+<tr><th>Single model (EMA + 8-view TTA), tuned rule, test set</th><th class="n">QWK</th><th class="n">Severe recall</th><th class="n">PDR recall</th><th class="n">Errors &ge; 2</th></tr>
+<tr><td>Stage 5 H: 60 epochs, 10-snapshot ensemble</td><td class="n">0.916 &plusmn; 0.005</td><td class="n">0.39</td><td class="n">0.62</td><td class="n">14.7</td></tr>
+<tr><td>R0: cheap 20-epoch recipe alone (3 seeds)</td><td class="n">0.904 &plusmn; 0.003</td><td class="n">0.54</td><td class="n">0.52</td><td class="n">17.0</td></tr>
+<tr class="hl"><td>FULL: all four levers (3 seeds)</td><td class="n">0.903 &plusmn; 0.002</td><td class="n">0.47</td><td class="n">0.48</td><td class="n">16.7</td></tr>
+</table>
+<table>
+<tr><th>Leave-one-out, seed 42 (FULL minus one lever)</th><th class="n">Test QWK</th><th class="n">Cross-fitted val QWK</th></tr>
+<tr><td>FULL</td><td class="n">0.902</td><td class="n">0.917</td></tr>
+<tr><td>minus lr 3e-4</td><td class="n">0.900</td><td class="n">0.917</td></tr>
+<tr><td>minus strong augmentation</td><td class="n">0.906</td><td class="n">0.911</td></tr>
+<tr><td>minus Ben Graham</td><td class="n">0.916</td><td class="n">0.917</td></tr>
+<tr><td>minus label cleaning</td><td class="n">0.915</td><td class="n">0.922</td></tr>
+</table>
+<p><b>Verdict: not supported (1 of 8 held, the sanity check).</b> The levers did not stack: FULL (0.903) is no better than the cheap recipe alone (0.904) and is significantly below Stage 5 on seed 42 (&minus;0.020, [&minus;0.039, &minus;0.003]). Removing Ben Graham or label cleaning even raised test QWK to about 0.916 (single seeds, suggestive only). Two separate effects: the cheap single model gives up about 0.012 to the 60-epoch snapshot ensemble, and the Stage 4b gains, measured on validation with a different head, did not transfer to test.</p>
+
+<h3>H10 (Stage 3 ablations). Three small checks</h3>
+<p>Alongside the baseline, three single-change checks were run (one run each): <b>retina crop</b> (0.883 vs 0.908, no help), <b>cosine decay</b> (0.906, ties), <b>class-weighted cross-entropy</b> (Severe recall 0.28 &rarr; 0.48 but Moderate recall fell and QWK did not move). All lr 1e-4 variants are statistically tied (overlapping bootstrap intervals, about &plusmn;0.03).</p>
+
+<h2 class="pb">6. Failure analysis</h2>
+<h3>6.1 Which grades get confused</h3>
+<ul>
+<li><b>Errors are mostly one grade off.</b> About 96% of test predictions are within one grade of the truth. The large error cells are neighbours: Mild&rarr;Moderate, Moderate&rarr;Severe, and PDR called Moderate.</li>
+<li><b>Ordinal training trades far errors for near ones.</b> Seed-42 confusion matrices, A &rarr; D: Severe&rarr;Moderate falls from 15 to 7, but Moderate&rarr;Severe rises from 5 to 19 and Mild&rarr;Moderate from 25 to 38. This is why QWK rises while accuracy falls (0.828 &rarr; 0.804), and why referable-DR specificity matters for screening.</li>
+</ul>
+<figure><img src="../../experiments/07_soft_labels/results/figures/confusion_matrices.png" style="width:100%"></figure>
+<p class="cap">Figure 2. Seed-42 test confusion matrices (rows true, columns predicted): A cross-entropy vote, D ordinal MSE, H soft labels with tuned cut-offs.</p>
+
+<h3>6.2 Per-grade recall: did the rare grades improve?</h3>
+<table>
+<tr><th>Grade (test n)</th><th class="n">A: CE vote</th><th class="n">D: ordinal MSE</th><th class="n">G: soft, vote</th><th class="n">H: soft, tuned</th><th class="n">ViT-L RETFound</th><th class="n">FULL recipe</th></tr>
+<tr><td>No DR (271)</td><td class="n">0.989</td><td class="n">0.970</td><td class="n">0.982</td><td class="n">0.978</td><td class="n">0.970</td><td class="n">0.982</td></tr>
+<tr><td>Mild (56)</td><td class="n">0.375</td><td class="n">0.589</td><td class="n">0.446</td><td class="n">0.268</td><td class="n">0.250</td><td class="n">0.429</td></tr>
+<tr><td>Moderate (150)</td><td class="n">0.927</td><td class="n">0.760</td><td class="n">0.900</td><td class="n">0.787</td><td class="n">0.867</td><td class="n">0.780</td></tr>
+<tr><td>Severe (29)</td><td class="n">0.276</td><td class="n">0.414</td><td class="n">0.276</td><td class="n">0.448</td><td class="n">0.241</td><td class="n">0.517</td></tr>
+<tr><td>PDR (44)</td><td class="n">0.614</td><td class="n">0.568</td><td class="n">0.614</td><td class="n">0.636</td><td class="n">0.500</td><td class="n">0.432</td></tr>
+</table>
+<p class="cap">Seed-42 test recall (ensemble for A, D, G, H; single models for RETFound and FULL). Mild and Severe are the weakest grades throughout; tuned cut-offs raise Severe recall but cost Mild and Moderate, which is the trade QWK rewards. With 29 Severe and 44 PDR test images, one image changes recall by 2&ndash;3 points.</p>
+
+<h3>6.3 What the misgraded images look like</h3>
+<figure><img src="../../experiments/07_soft_labels/results/figures/failure_images.png" style="width:100%"></figure>
+<p class="cap">Figure 3. Misgraded test images from the soft-label model (true grade &rarr; predicted). Five of the eight are PDR called Moderate, two are No DR called Moderate, and one is a Moderate image called PDR.</p>
+<ul>
+<li><b>PDR called Moderate is the most frequent large miss</b> (12 PDR images in Stage 4 seed 42). PDR depends on new-vessel growth, which is small and hard to see at 300 px. Several of these photographs are hazy or low-contrast. We have no clinician review, so we make no statement about which lesions are present.</li>
+<li><b>Blur is the clearest measurable cause.</b> Misgraded test images are blurrier (sharpness, Mann-Whitney p = 0.0005, Stage 4). Under the Stage 5 model, <b>26% of the blurriest third of test images are graded wrongly against 7% of the sharpest third</b>, and no training change we tried (H7) reduced it.</li>
+</ul>
+<figure><img src="../../experiments/08_blur_aware/results/figures/error_by_sharpness.png" style="width:62%"></figure>
+<p class="cap">Figure 4. Error rate by sharpness of the test image. Blur-aware training (orange) did not lower the error rate on blurry images.</p>
+
+<h3>6.4 Label noise and data issues</h3>
+<ul>
+<li><b>APTOS contains 123 groups of byte-identical images, 30 with conflicting grades.</b> Such labels cannot all be right, and 29 test images (5.3%) have a twin in training. Re-scoring without the twins moves QWK by &le; 0.007, so leakage inflates nothing, but the conflicting labels set a floor on achievable accuracy.</li>
+<li><b>Grader disagreement is intrinsic.</b> Published studies report moderate agreement between DR graders, so a model cannot be expected to exceed the label quality. This is context from the literature, not something we measured.</li>
+</ul>
+
+<h3>6.5 Model-behaviour findings</h3>
+<ul>
+<li><b>The model ranks well but decides poorly.</b> Macro AUC is about 0.94 while macro-F1 is about 0.65: the ordering of patients is good, and the loss is in the decision on rare grades.</li>
+<li><b>The decision rule matters more than the loss.</b> Every tuned-cut-off arm scores 0.907&ndash;0.916; every vote or rounding arm scores 0.888&ndash;0.908.</li>
+<li><b>Grad-CAM, first version, showed a padding artefact</b> of EfficientNet-B3 at 300 px (the peak sits in the top-left corner), not lesions. Restricting Grad-CAM to the retina removes the corner artefact in 6 of 8 images.</li>
+<li><b>Late over-fitting.</b> Validation QWK of the CNNs falls from its best (about 0.91) to about 0.89 by the last epoch, which is why we use the best epoch and snapshot averaging.</li>
+<li><b>RETFound failure mode:</b> the highest referable AUC (0.986) but the lowest Severe and PDR recall, so it ranks patients well and decides the rare high grades badly under the same cut-off rule.</li>
+</ul>
+
+<h3>6.6 Why we think the paper's 0.954 is not reachable in our protocol</h3>
+<ul>
+<li><b>Measured effects stop at 0.928.</b> Choosing cut-offs, ensemble members and subsets on the test set lifts our 0.918 blend to only 0.928, and cut-off tuning on test adds +0.006 to +0.024 on weaker models.</li>
+<li><b>Accuracy is the sharper diagnostic.</b> Every selection effect leaves our accuracy between 0.79 and 0.83, against the paper's 0.942. QWK forgives one-grade errors; accuracy does not. The literature we reviewed reports best-effort ImageNet-only QWK around 0.93 on APTOS.</li>
+<li><b>The paper's own tables raise questions.</b> Recomputing QWK from the EyePACS confusion matrices it prints does not give the values it reports (details and calculations in the top-level <code>docs/gap-analysis/02-after-stage4c.md</code>), and the APTOS split, test-set size, epoch count and duplicate handling are not stated.</li>
+<li><b>Our conclusion.</b> The remaining gap is unlikely to come from modelling choices we can document. A reporting or evaluation-set explanation cannot be tested without the authors' code or split. We do not claim the paper is wrong; we report that the number could not be reproduced under a strict protocol.</li>
+</ul>
+
+<h2>7. Limitations</h2>
+<ul>
+<li>One dataset, no external validation, and no clinical claim of any kind.</li>
+<li>Small test set (550 images; 29 Severe and 44 PDR), so per-grade recall is noisy and QWK differences below about 0.01 are not resolvable.</li>
+<li>Most settings have 3 training seeds or fewer (some one); seed standard deviation (0.003&ndash;0.008) is the size of most effects we measured.</li>
+<li>Paired-bootstrap intervals cover test-set sampling noise on seed 42 only, not training randomness.</li>
+<li>Baselines come from Colab and later runs from Kaggle; the same seed differed by up to 0.011 QWK between platforms.</li>
+<li>The APTOS split, batch size and CLAHE parameters are not stated in the paper and were assumed.</li>
+<li>The test set was opened in Stage 4c. Stages 4d&ndash;8 are post-test experiments: their numbers are reported for comparison and drove no earlier choice.</li>
+<li>H8 used a third-party mirror of the RETFound weights, one control seed and an untuned fine-tuning recipe.</li>
+</ul>
+
+<h2 class="pb">8. Conclusion</h2>
+<p>This is the final phase of the project. We close by stating what the work established, what it did not, and how far each result can be trusted.</p>
+
+<h3>8.1 What we set out to do, and what we found</h3>
+<ol>
+<li><b>Reproduction.</b> We selected Chilukoti et al. (2024) and re-implemented it from the text, since no code is public. Run exactly as published (300 px, 60 epochs, batch 16, lr 1e-3, snapshot vote), it reaches QWK <b>0.81&ndash;0.82</b> against the reported <b>0.954</b>, with unstable training and no Severe-grade predictions. A learning rate of 1e-4 plus flip/rotation augmentation gives our baseline, <b>0.897 &plusmn; 0.004</b> over three seeds.</li>
+<li><b>Best strict-protocol result.</b> With stronger recipes, larger backbones and a 5-fold ensemble, and the test set opened once, we reached <b>0.918 [0.900, 0.935]</b>. The paper's 0.954 lies outside that interval. The remaining gap (0.036 QWK and about 13 points of accuracy) is not explained by test-set selection (which reaches at most 0.928) or by duplicate leakage (at most 0.007).</li>
+<li><b>Hypotheses.</b> We tested nine single-change hypotheses, each with numeric predictions written before the run. One gave a consistent gain, one refined it, and seven did not help (Table in Section 1).</li>
+</ol>
+
+<h3>8.2 Answer to our research question</h3>
+<p>Our literature review ended with the question: <i>can class-balanced ordinal learning improve Severe NPDR and PDR recognition while reducing clinically large grading errors?</i> Our evidence answers it in parts.</p>
+<table>
+<tr><th>Part of the question</th><th>Answer</th><th>Evidence</th></tr>
+<tr><td>Reduce large grading errors</td><td class="yes">Yes</td><td>Errors of two or more grades fall from 21.7 to 16.0 (ordinal regression, &minus;26%) and to 14.7 (soft labels, &minus;32%)</td></tr>
+<tr><td>Improve Severe NPDR recall</td><td class="part">Partly</td><td>0.28 &rarr; 0.40 (ordinal) and 0.39 (soft labels), but with seed std 0.05&ndash;0.07; class balancing adds more (0.46) in only one of three seeds</td></tr>
+<tr><td>Improve PDR recall</td><td class="no">No</td><td>0.61 &rarr; 0.58 (ordinal) and 0.62 (soft labels); no arm improved it beyond noise</td></tr>
+<tr><td>Without losing overall agreement</td><td class="part">At a cost</td><td>QWK rises by 0.017&ndash;0.019, but accuracy falls (0.828 &rarr; 0.804&ndash;0.811) and Mild recall drops to 0.27&ndash;0.39</td></tr>
+</table>
+
+<h3>8.3 The result we stand behind</h3>
+<div class="box"><p><b>Using the order of the grades is the one idea that helped.</b> Training with an ordered-aware objective, either ordinal regression (Stage 4, H1) or Gaussian soft ordinal labels (Stage 5, H6), and decoding the grade with cut-offs tuned on the validation set, gives QWK <b>0.914 &plusmn; 0.004</b> and <b>0.916 &plusmn; 0.005</b> against the baseline's 0.897, with 26&ndash;32% fewer large errors. The two approaches are statistically equivalent. The honest strength of this claim is "consistent and in the same direction in every seed and on de-duplicated data", not "conclusive": the gain is of the order of the run-to-run noise (about &plusmn;0.01), and the paired-bootstrap interval excludes zero in only some comparisons.</p></div>
+<p>Two supporting findings come with it. <b>The decision rule matters more than the loss:</b> every arm with validation-tuned cut-offs scored 0.907&ndash;0.916, every vote or rounding arm 0.888&ndash;0.908. And <b>neither half works alone:</b> the ordinal loss with plain rounding ties the baseline, because a single regression output shrinks towards the middle grades.</p>
+
+<h3>8.4 What did not work, and why that is useful</h3>
+<ul>
+<li><b>Focal loss (H2)</b> tied cross-entropy (+0.004) and did not raise Severe recall under the paper's vote. <b>Class weighting</b> moved errors between grades without reducing them.</li>
+<li><b>Blur-aware label width (H7)</b> was motivated by a real effect: 26% of the blurriest test images are graded wrongly against 7% of the sharpest. Training changes did not reduce it, which suggests the information is missing from the image, not from the loss.</li>
+<li><b>A retina-pretrained backbone, RETFound (H8)</b>, did not beat ImageNet pre-training at the same architecture and scored lower on Severe and PDR recall. Under our untuned fine-tuning recipe, pre-training domain was not the bottleneck.</li>
+<li><b>Stacking the Stage 4b training levers on soft labels (H9)</b> gave 0.903, below the 0.916 of Stage 5, so levers that each helped on validation did not add up on test.</li>
+<li><b>EyePACS pre-training (H5)</b> was a worse starting point than ImageNet at every learning rate tried.</li>
+</ul>
+<p>Taken together, loss functions, input handling, backbones and recipe tuning all end between 0.90 and 0.92. That plateau, reached by independent routes, is itself the main evidence that the remaining gap to the paper is not a modelling gap we can close with documented methods.</p>
+
+<h3>8.5 Where the paper's 0.954 stands</h3>
+<p>We do not claim the paper is wrong. We report that its number could not be reproduced under a strict, documented protocol, that the measurable effects (test-set selection, duplicates, split luck) account for at most a small part of the difference, and that the paper leaves the APTOS split, test-set size, epoch count and duplicate handling unstated while some of its printed tables are internally inconsistent. Settling the question would need the authors' code or split, which are not public.</p>
+
+<h3>8.6 Limits of these conclusions</h3>
+<ul>
+<li>One dataset, no external validation, and a 550-image test set (29 Severe, 44 PDR) that resolves QWK differences only down to about 0.01.</li>
+<li>Three seeds or fewer per setting; bootstrap intervals cover test-set noise on seed 42 only; baselines and later runs came from different platforms (up to 0.011 QWK apart for the same seed).</li>
+<li>Stages 4d&ndash;8 are post-test experiments and drove no earlier choice. The RETFound result used a third-party copy of the weights and an untuned recipe, so it says "not helpful in our setup", not "RETFound does not work".</li>
+<li><b>No clinical claim is made.</b> This is a reproduction study on a public research dataset; none of these models is validated for patient care.</li>
+</ul>
+
+<h3>8.7 What we would do next</h3>
+<ol>
+<li>Evaluate the main arms on out-of-fold predictions for all 3,662 images, which roughly halves the test-set noise and would put a significance interval on every comparison made here.</li>
+<li>Audit and relabel the contradictory duplicate images with a second grader, since label quality, not modelling, looks like the limiting factor.</li>
+<li>Re-test the retina-pretrained backbone with a proper learning-rate search and the original gated weights.</li>
+<li>Ask the paper's authors for their APTOS split and code.</li>
+</ol>
+
+<h2>Appendix A. Where everything is</h2>
+<table>
+<tr><th>Stage</th><th>Hypothesis / plan</th><th>Notebook</th><th>Results</th></tr>
+<tr><td>2&ndash;3</td><td><code>docs/reports/Stage2_3_Report.pdf</code></td><td><code>experiments/01_baseline_reproduction/01_baseline_reproduction.ipynb</code></td><td><code>experiments/01_baseline_reproduction/results.md</code>, <code>experiments/01_baseline_reproduction/results/</code></td></tr>
+<tr><td>4</td><td><code>experiments/02_ordinal_regression/hypothesis.md</code></td><td><code>experiments/02_ordinal_regression/02_ordinal_regression.ipynb</code></td><td><code>experiments/02_ordinal_regression/results.md</code>, <code>experiments/02_ordinal_regression/results_posthoc.md</code></td></tr>
+<tr><td>4b&ndash;4d</td><td><code>experiments/03_levers_and_backbones/hypothesis.md</code>, <code>experiments/04_ensembles_and_eyepacs/hypothesis.md</code>, <code>experiments/05_eyepacs_finetune/hypothesis.md</code></td><td><code>experiments/03_levers_and_backbones/03_levers_and_backbones.ipynb</code>, <code>experiments/04_ensembles_and_eyepacs/04_ensembles_and_eyepacs.ipynb</code>, <code>experiments/05_eyepacs_finetune/05_eyepacs_finetune.ipynb</code></td><td><code>experiments/04_ensembles_and_eyepacs/results.md</code>, <code>experiments/05_eyepacs_finetune/results.md</code></td></tr>
+<tr><td>4e</td><td><code>experiments/06_imbalance_losses/hypothesis.md</code></td><td><code>experiments/06_imbalance_losses/06_imbalance_losses.ipynb</code></td><td><code>experiments/06_imbalance_losses/results.md</code></td></tr>
+<tr><td>5</td><td><code>experiments/07_soft_labels/hypothesis.md</code></td><td><code>experiments/07_soft_labels/07_soft_labels.ipynb</code></td><td><code>experiments/07_soft_labels/results.md</code></td></tr>
+<tr><td>6</td><td><code>experiments/08_blur_aware/hypothesis.md</code></td><td><code>experiments/08_blur_aware/08_blur_aware.ipynb</code></td><td><code>experiments/08_blur_aware/results.md</code></td></tr>
+<tr><td>7</td><td><code>experiments/09_retfound/hypothesis.md</code></td><td><code>experiments/09_retfound/09_retfound.ipynb</code></td><td><code>experiments/09_retfound/results.md</code></td></tr>
+<tr><td>8</td><td><code>experiments/10_stacked_recipe/hypothesis.md</code></td><td><code>experiments/10_stacked_recipe/10_stacked_recipe.ipynb</code></td><td><code>experiments/10_stacked_recipe/results.md</code></td></tr>
+</table>
+<p class="small">All paths are relative to the repository root. Kaggle kernel builders are in each experiment&rsquo;s <code>kaggle/</code> folder, and the experiment index is <code>experiments/README.md</code>. Reference: S. V. Chilukoti, L. Shan, V. S. Tida, A. S. Maida, X. Hei, "A reliable diabetic retinopathy grading via transfer learning and ensemble learning with quadratic weighted kappa metric," <i>BMC Med. Inform. Decis. Mak.</i>, vol. 24, art. 37, 2024.</p>
+
+</body>
+</html>

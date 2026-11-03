@@ -1,0 +1,15 @@
+# Environment for running the notebooks locally. On Colab and Kaggle most of these are preinstalled.
+# Versions are lower bounds from the environments the experiments ran in; the project does not pin exact versions.
+torch>=2.0
+timm>=1.0
+numpy
+pandas
+scipy
+scikit-learn
+opencv-python-headless
+pillow
+pyarrow
+matplotlib
+tqdm
+# only to build or push Kaggle kernels
+kaggle>=2.0
