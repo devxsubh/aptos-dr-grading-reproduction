@@ -16,16 +16,16 @@ NN_name/
 |---|---|---|---|---|---|---|
 | 01 | [`01_baseline_reproduction`](01_baseline_reproduction/) | 2–3 | The paper's method, re-implemented, then tuned | Colab, local M2 | [`01_baseline_reproduction.ipynb`](01_baseline_reproduction/01_baseline_reproduction.ipynb) (saved outputs) | 0.81–0.82 as published, 0.897 baseline |
 | 02 | [`02_ordinal_regression`](02_ordinal_regression/) | 4 | Ordinal regression (H1) | Colab | [`02_ordinal_regression.ipynb`](02_ordinal_regression/02_ordinal_regression.ipynb) (saved outputs) | 0.914 |
-| 03 | [`03_levers_and_backbones`](03_levers_and_backbones/) | 4b | Training levers, resolution, backbones, 5-fold CV (H4) | Kaggle | none recoverable¹ | levers +0.010 to +0.017 (validation) |
-| 04 | [`04_ensembles_and_eyepacs`](04_ensembles_and_eyepacs/) | 4c | Diverse members, EyePACS arm, test set opened once (H4) | Kaggle | none recoverable¹ | **0.918** (best overall) |
-| 05 | [`05_eyepacs_finetune`](05_eyepacs_finetune/) | 4d | Corrected EyePACS fine-tune (H5) | Kaggle | none recoverable¹ | OOF 0.906 (rejected) |
+| 03 | [`03_levers_and_backbones`](03_levers_and_backbones/) | 4b | Training levers, resolution, backbones, 5-fold CV (H4) | Kaggle | [`kaggle/dr-s4b-*/executed.ipynb`](03_levers_and_backbones/kaggle/)¹ | levers +0.010 to +0.017 (validation) |
+| 04 | [`04_ensembles_and_eyepacs`](04_ensembles_and_eyepacs/) | 4c | Diverse members, EyePACS arm, test set opened once (H4) | Kaggle | [`kaggle/dr-s4c-*/executed.ipynb`](04_ensembles_and_eyepacs/kaggle/)¹ | **0.918** (best overall) |
+| 05 | [`05_eyepacs_finetune`](05_eyepacs_finetune/) | 4d | Corrected EyePACS fine-tune (H5) | Kaggle | [`kaggle/dr-s4d-*/executed.ipynb`](05_eyepacs_finetune/kaggle/)¹ | OOF 0.906 (rejected) |
 | 06 | [`06_imbalance_losses`](06_imbalance_losses/) | 4e | Focal loss and class-balanced ordinal (H2, H3) | Kaggle | [`kaggle/dr-s4e-*/executed.ipynb`](06_imbalance_losses/kaggle/) | 0.911 / 0.908 |
 | 07 | [`07_soft_labels`](07_soft_labels/) | 5 | Gaussian soft ordinal labels (H6) | Kaggle | [`kaggle/dr-s5-train/executed.ipynb`](07_soft_labels/kaggle/dr-s5-train/executed.ipynb) | 0.916 |
 | 08 | [`08_blur_aware`](08_blur_aware/) | 6 | Blur-aware label width (H7) | Kaggle | [`kaggle/dr-s6-train/executed.ipynb`](08_blur_aware/kaggle/dr-s6-train/executed.ipynb) | 0.909 |
 | 09 | [`09_retfound`](09_retfound/) | 7 | Retina-pretrained ViT-L, RETFound (H8) | Kaggle | [`kaggle/dr-s7-train/executed.ipynb`](09_retfound/kaggle/dr-s7-train/executed.ipynb) | 0.899 |
 | 10 | [`10_stacked_recipe`](10_stacked_recipe/) | 8 | Stage 4b levers stacked on soft labels (H9) | Kaggle | [`kaggle/dr-s8-train/executed.ipynb`](10_stacked_recipe/kaggle/dr-s8-train/executed.ipynb) | 0.903 |
 
-¹ Experiments 03–05 ran on a teammate's Kaggle account. Their notebooks, generated kernels, result CSVs and figures are here, but their kernel logs were not available to us, so no executed notebook could be built.
+¹ The executed notebooks for experiments 03–05 were rebuilt from the kernel logs (kept in each experiment's `results/kernel_logs/`), downloaded from the Kaggle account the kernels ran on. `dr-s4b-k4-final` (the kernel that opened the test set for experiment 03) could not be retrieved, so it has no log or executed notebook. In these notebooks the tables and figures are taken from the experiment's final `results/` folder, so in intermediate and quick kernels they show files written by later kernels (including test-set results in kernels whose log says the test set was locked); the printed text is each kernel's own.
 
 **About `executed.ipynb`.** Kaggle returns a kernel's log and saved files but not the executed notebook. `executed.ipynb` therefore contains the cells exactly as they ran with their outputs put back by [`tools/attach_kaggle_outputs.py`](../tools/attach_kaggle_outputs.py): printed text comes from the kernel log (kept in `results/kernel_logs/`), tables and figures from the files the cell saved. A banner at the top of each file says so.
 

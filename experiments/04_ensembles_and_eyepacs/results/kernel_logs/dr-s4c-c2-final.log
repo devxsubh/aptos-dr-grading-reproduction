@@ -1,0 +1,57 @@
+[{"stream_name":"stderr","time":7.839296544,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.839372294,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.839378436,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.839382287,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.511811754,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.51185517,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.511859007,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.511861936,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":81.626903619,"data":"restored from ['/kaggle/input/datasets/subhammahapatra004/dr-stage4-outputs', '/kaggle/input/notebooks/subhammahapatra004/dr-s4c-c1-ab/dr-grading', '/kaggle/input/notebooks/subhammahapatra004/dr-s4c-c1-b2c/dr-grading', '/kaggle/input/notebooks/subhammahapatra004/dr-s4c-c1-x/dr-grading']: 62 finished runs\n"}
+,{"stream_name":"stdout","time":81.626940148,"data":"device: cuda | Tesla T4\n"}
+,{"stream_name":"stdout","time":81.656910631,"data":"{\n"}
+,{"stream_name":"stdout","time":81.656937569,"data":"  \"backbone\": \"efficientnet_b3\",\n"}
+,{"stream_name":"stdout","time":81.656943505,"data":"  \"image_size\": 300,\n"}
+,{"stream_name":"stdout","time":81.656948465,"data":"  \"preproc\": \"clahe\",\n"}
+,{"stream_name":"stdout","time":81.656953137,"data":"  \"aug\": \"base\",\n"}
+,{"stream_name":"stdout","time":81.656957602,"data":"  \"epochs\": 20,\n"}
+,{"stream_name":"stdout","time":81.656962019,"data":"  \"warmup_epochs\": 1,\n"}
+,{"stream_name":"stdout","time":81.656966565,"data":"  \"batch_size\": 16,\n"}
+,{"stream_name":"stdout","time":81.656971075,"data":"  \"lr\": 0.0001,\n"}
+,{"stream_name":"stdout","time":81.656975315,"data":"  \"weight_decay\": 0.0001,\n"}
+,{"stream_name":"stdout","time":81.656979993,"data":"  \"grad_clip\": 0.1,\n"}
+,{"stream_name":"stdout","time":81.656984637,"data":"  \"ema_decay\": 0.998,\n"}
+,{"stream_name":"stdout","time":81.656988973,"data":"  \"clean_labels\": false,\n"}
+,{"stream_name":"stdout","time":81.656993456,"data":"  \"seed\": 42,\n"}
+,{"stream_name":"stdout","time":81.656997832,"data":"  \"pretrained\": true,\n"}
+,{"stream_name":"stdout","time":81.657002211,"data":"  \"use_amp\": true,\n"}
+,{"stream_name":"stdout","time":81.657007153,"data":"  \"max_train_batches\": 0\n"}
+,{"stream_name":"stdout","time":81.657011713,"data":"}\n"}
+,{"stream_name":"stdout","time":81.7738421,"data":"restoring cached images ...\n"}
+,{"stream_name":"stdout","time":82.745010534,"data":"3662 images, 3534 distinct files\n"}
+,{"stream_name":"stdout","time":84.705895949,"data":"train 2562, val 550, test 550; 62 images with conflicting duplicate grades; 36 test images have a twin in train + val\n"}
+,{"stream_name":"stdout","time":84.705934858,"data":"fold sizes (held out): [622, 626, 623, 626, 615]\n"}
+,{"stream_name":"stdout","time":98.073447626,"data":"Test QWK of the Stage 4 runs under honest and optimistic protocols (mean over seeds):\n"}
+,{"stream_name":"stdout","time":111.494000546,"data":"TTA gain (mean over Block 1 runs): +0.0025\n"}
+,{"stream_name":"stdout","time":111.49403406,"data":"Block 1 complete. Adopted levers: ['lr3e-4', 'strong_aug', 'clean_labels', 'graham']\n"}
+,{"stream_name":"stdout","time":116.276383421,"data":"Combined recipe: {'preproc': 'graham', 'aug': 'strong', 'lr': 0.0003, 'clean_labels': True}\n"}
+,{"stream_name":"stdout","time":116.276437863,"data":"Block 2 complete. Going to Block 3: ['b4ns_380', 'b3_384']\n"}
+,{"stream_name":"stdout","time":117.496092614,"data":"b4ns_380: OOF QWK (cross-fitted, TTA) 0.9195 on 3112 images\n"}
+,{"stream_name":"stdout","time":118.238771824,"data":"b3_384: OOF QWK (cross-fitted, TTA) 0.9220 on 3112 images\n"}
+,{"stream_name":"stdout","time":123.953643147,"data":"Test set: 550 images (36 with a twin in train + val). Paper (reported): QWK 0.954.\n"}
+,{"stream_name":"stdout","time":154.444827405,"data":"Strict blend selection (headline):\n"}
+,{"stream_name":"stdout","time":163.457504838,"data":"Blend selection with external data (separate row, never the headline):\n"}
+,{"stream_name":"stdout","time":163.459650817,"data":"Stage 4c finished arms: ['A_b4ns380_crop_aux', 'B_convnextT448', 'B2_seresnext50_512', 'C_b4ns512', 'X_b4ns380_eyepacs'] | waiting for: nothing\n"}
+,{"stream_name":"stdout","time":181.645223278,"data":"Test set: 550 images (36 with a twin in train + val). Paper (reported): QWK 0.954.\n"}
+,{"stream_name":"stderr","time":190.276305555,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":190.276351895,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":190.447406243,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":190.447435113,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":191.267911311,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":191.372655577,"data":"[NbConvertApp] Writing 275898 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":193.854385479,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":194.719365327,"data":"[NbConvertApp] Support files will be in __results___files/\n"}
+,{"stream_name":"stderr","time":194.719390745,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":194.719552495,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":194.719758062,"data":"[NbConvertApp] Making directory __results___files\n"}
+,{"stream_name":"stderr","time":194.71997496,"data":"[NbConvertApp] Writing 703711 bytes to __results__.html\n"}
+]
