@@ -2,13 +2,15 @@
 
 A research-reproduction study of **Chilukoti et al., "A reliable diabetic retinopathy grading via transfer learning and ensemble learning with quadratic weighted kappa metric"**, *BMC Medical Informatics and Decision Making* 24:37 (2024), [open access](https://doi.org/10.1186/s12911-024-02446-x). The paper fine-tunes an EfficientNet-B3 with CLAHE + Gaussian-blur preprocessing and a snapshot ensemble, reporting **QWK 0.954** on APTOS 2019 (ImageNet init) and **0.967** (EyePACS init + ensemble).
 
-The paper has no public code, so the method was re-implemented from the text. This repository covers Stage 2 (base-paper selection and reproducibility checklist), Stage 3 (baseline reproduction), Stage 4 (ordinal regression), Stage 4e (focal loss and class-balanced ordinal regression, the two Phase 1 strategies not yet tested) and Stages 4b–4d (closing the gap to 0.954 under a strict protocol).
+The paper has no public code, so the method was re-implemented from the text. This repository covers Stage 2 (base-paper selection and reproducibility checklist), Stage 3 (baseline reproduction), Stage 4 (ordinal regression), Stage 4e (focal loss and class-balanced ordinal regression, the two Phase 1 strategies not yet tested) Stages 4b–4d (closing the gap to 0.954 under a strict protocol) and Stages 5–8 (soft ordinal labels, blur-aware training, a retina-pretrained backbone, and a stacked training recipe, all post-test).
 
 **Current best (strict protocol, test set opened once): QWK 0.918 [0.900, 0.935]**, a 3-member 5-fold ensemble ([Stage 4c](#stages-4b-and-4c-closing-the-gap-to-the-paper)). The paper's 0.954 lies outside this interval.
 
 **Team:** Shivansh, Divyanshi, Vivek, Shubham
 
-**Final report:** [`Final_Report.pdf`](Final_Report.pdf) (IEEE format, all stages; source in [`dr-repro/reports/final_report.tex`](dr-repro/reports/final_report.tex)). **Final defence slides:** [`DR_Grading_Final_Defence.pptx`](DR_Grading_Final_Defence.pptx).
+**Full project report (Stages 1–8, base paper, reproduction, every hypothesis with values, failure analysis, conclusion):** [`Full_Project_Report.pdf`](Full_Project_Report.pdf) (source: [`dr-repro/reports/full_report.html`](dr-repro/reports/full_report.html)).
+
+**Earlier final report:** [`Final_Report.pdf`](Final_Report.pdf) (IEEE format, all stages; source in [`dr-repro/reports/final_report.tex`](dr-repro/reports/final_report.tex)). **Final defence slides:** [`DR_Grading_Final_Defence.pptx`](DR_Grading_Final_Defence.pptx).
 Earlier: [`Stage2_3_Report.pdf`](Stage2_3_Report.pdf) (Stages 2 and 3).
 
 > This is a reproduction study. No clinical claims are made.
@@ -105,6 +107,24 @@ Protocol: ImageNet-pretrained backbones, APTOS data only, the same 550 test imag
 
 It tested whether the EyePACS arm failed because fine-tuning restarted at a high learning rate. It did not: a low lr (3e-5, no warm-up) removed the mid-training dip but ended lower (OOF 0.906 vs 0.913 for the original arm and 0.920 for the ImageNet start). The 5-epoch EyePACS weights are a worse starting point than Noisy Student ImageNet weights at every lr tried. Two of seven predictions were confirmed, plus one trivially; the headline is unchanged.
 
+## Stages 5–8: four more hypotheses (post-test)
+
+Each stage has a hypothesis file with numeric predictions committed **before** its first run, a notebook (run on a Kaggle T4 through the kernel builders in [`dr-repro/kaggle/`](dr-repro/kaggle/)), and a results file with the prediction check. All four ran after the test set was opened (Stage 4c), so none of their numbers drove an earlier choice. Test set, 550 images, tuned-cut-off rule; baseline A (paper pipeline + augmentation + lr 1e-4, cross-entropy, vote) is 0.897 ± 0.004 on Colab, and 0.908 when re-run on Kaggle (seed 42), so platform and re-run noise is about ±0.01.
+
+| Stage | Hypothesis | Test QWK | Predictions held | Verdict |
+|---|---|---|---|---|
+| [5](dr-repro/stage5_hypothesis.md) | Gaussian soft ordinal labels (sigma 0.5) | **0.916 ± 0.005** (3 seeds) | 7 of 8 | Ties ordinal regression (0.914); fewest large errors (14.7 vs 21.7). Not significant on the seed-42 paired bootstrap. |
+| [6](dr-repro/stage6_hypothesis.md) | Label width that grows with image blur | 0.909 ± 0.006 | 6 of 7 | Not supported: error rate on the blurriest third rose (0.26 → 0.32) |
+| [7](dr-repro/stage7_hypothesis.md) | Retina-pretrained ViT-L (RETFound) beats ImageNet at the same architecture | 0.899 ± 0.006 | 3 of 7 | Not supported: lower than the ImageNet ViT-L control (0.910) and the EfficientNet-B3 |
+| [8](dr-repro/stage8_hypothesis.md) | Stage 4b levers (lr 3e-4, strong augmentation, Ben Graham, label cleaning) stack on soft labels | 0.903 ± 0.002 | 1 of 8 | Not supported: no better than the cheap recipe alone (0.904), below Stage 5 |
+
+Results files: [`stage5_results.md`](dr-repro/stage5_results.md), [`stage6_results.md`](dr-repro/stage6_results.md), [`stage7_results.md`](dr-repro/stage7_results.md), [`stage8_results.md`](dr-repro/stage8_results.md); raw files in `dr-repro/results/stage5` to `stage8`.
+
+- **Only the order of the grades helped.** Ordinal regression (Stage 4) and soft ordinal labels (Stage 5) both reach about 0.914–0.916 and cut errors of two or more grades by 26–32%, at the cost of accuracy and Mild recall.
+- **Blur predicts errors but training cannot fix it:** 26% of the blurriest third of test images are graded wrongly against 7% of the sharpest.
+- **Everything lands between 0.90 and 0.92** across loss, input handling, backbone and recipe, with differences about the size of the noise. The paper's 0.954 is still not reproduced.
+- **RETFound caveat:** the official weights are gated, so Stage 7 used a third-party copy and an untuned fine-tuning recipe. Read it as "not helpful in our setup".
+
 ## Gap analysis and open work
 
 - [`reports/Closing the APTOS 2019 QWK gap.md`](reports/Closing%20the%20APTOS%202019%20QWK%20gap.md) (before Stage 4c) and [`reports/APTOS QWK gap after Stage 4c.md`](reports/APTOS%20QWK%20gap%20after%20Stage%204c.md) review the literature and the paper's own tables; source notes are in [`research_notes/`](research_notes/). The second report finds that the paper's EyePACS confusion matrices do not reproduce its reported QWKs, and proposes a post-test experiment that splits before vs. after offline augmentation with the paper's recipe. That experiment has not been run.
@@ -114,7 +134,8 @@ It tested whether the EyePACS arm failed because fine-tuning restarted at a high
 
 ```
 .
-├── Final_Report.pdf                             # final report, all stages (IEEE format)
+├── Full_Project_Report.pdf                      # full project report: base paper, reproduction, Stages 3-8, failure analysis, conclusion
+├── Final_Report.pdf                             # earlier final report (IEEE format, up to Stage 4e)
 ├── DR_Grading_Final_Defence.pptx                # final defence slides
 ├── Stage2_3_Report.pdf                          # Stage 2 + 3 report (IEEE format)
 ├── DR_Grading_Stage2_3_Presentation.{pdf,pptx}  # Stage 2 + 3 slides
@@ -146,6 +167,21 @@ It tested whether the EyePACS arm failed because fine-tuning restarted at a high
     ├── stage4d_results.md       # Stage 4d results, prediction check
     ├── results/stage4b/         # Stage 4b-4d CSVs and figures (from the Kaggle kernel outputs)
     ├── kaggle/stage4b/          # kernel builder and generated Kaggle kernels for Stages 4b-4d
+    ├── stage5_hypothesis.md     # Stage 5 (post-test): soft ordinal labels, predictions Q1-Q8
+    ├── stage5_soft_ordinal.ipynb# Stage 5 notebook (Colab or Kaggle)
+    ├── stage5_results.md        # Stage 5 results, prediction check, failure analysis
+    ├── stage6_hypothesis.md     # Stage 6: blur-aware soft labels, predictions R1-R7
+    ├── stage6_blur_aware.ipynb  # Stage 6 notebook
+    ├── stage6_results.md        # Stage 6 results
+    ├── stage7_hypothesis.md     # Stage 7: RETFound ViT-L vs ImageNet ViT-L, predictions S1-S7
+    ├── stage7_retfound.ipynb    # Stage 7 notebook
+    ├── stage7_results.md        # Stage 7 results
+    ├── stage8_hypothesis.md     # Stage 8: stacked training levers on soft labels, predictions T1-T8
+    ├── stage8_stacked_recipe.ipynb # Stage 8 notebook
+    ├── stage8_results.md        # Stage 8 results
+    ├── results/stage5/ ... results/stage8/  # CSVs, figures, per-run logs for Stages 5-8
+    ├── kaggle/stage5/ ... kaggle/stage8/    # kernel builders and generated Kaggle kernels for Stages 5-8
+    ├── reports/full_report.html # source of Full_Project_Report.pdf
     ├── kaggle/*.ipynb           # earlier Kaggle train/submit notebooks and their builder
     ├── archive/                 # superseded notebooks (iteration-2 run with its training logs; Kaggle iteration-1 version)
     ├── runs/  results/          # Stage 3 local run (224 px): per-run outputs, figures, duplicate audit, leakage re-scoring
@@ -173,7 +209,9 @@ The first run downloads APTOS from the Hugging Face mirror [`sngsfydy/aptos`](ht
 - The APTOS split, batch size and CLAHE parameters are not stated in the paper and were assumed.
 - Duplicate images with conflicting grades add label noise; the random split leaks 29 test images into training.
 - Single dataset, no external validation. EyePACS was tried only as 5 epochs of pre-training (Stages 4c-4d), so the paper's 0.967 remains out of scope.
-- The test set has been opened once (Stage 4c). Any later test number, such as Stage 4d's and Stage 4e's, is post-test and labelled as such.
+- The test set has been opened once (Stage 4c). Any later test number, such as those of Stages 4d, 4e and 5–8, is post-test and labelled as such.
+- Baselines come from Colab and Stages 5–8 from Kaggle; the same seed differed by up to 0.011 QWK between platforms, so differences below about 0.01 are not resolvable.
+- Stage 7 used a third-party copy of the RETFound weights and an untuned fine-tuning recipe.
 
 ## Citation
 
